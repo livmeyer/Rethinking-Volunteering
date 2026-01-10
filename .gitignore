@@ -1,0 +1,12 @@
+.idea/
+*.iml
+
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
+
+.DS_Store
+Thumbs.db
+Thumbs.db
+
+*.logs

@@ -1,3 +1,44 @@
+# Setup
+
+## Voraussetzungen
+- Node.js 18+ (für Frontend)
+- Java 17+ (für Backend)
+
+## Installation (muss nur einmal ausgeführt werden)
+
+### Frontend
+```bash
+cd frontend
+npm install
+```
+
+### Backend
+```bash
+cd backend
+./mvnw install
+```
+
+## App starten (auf LocalHost)
+
+### Backend starten (port 8080)
+```bash
+cd backend
+./mvnw spring-boot:run
+```
+
+### Frontend starten (neues Terminal, port 3000 oder 5137)
+```bash
+cd frontend
+npm run dev
+```
+
+
+
+
+
+
+<!--
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -68,3 +109,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+-->
