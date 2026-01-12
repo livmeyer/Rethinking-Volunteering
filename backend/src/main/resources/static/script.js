@@ -1,185 +1,104 @@
-// Google Translate Integration
-function googleTranslateElementInit() {
-    new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-}
+/* File: script.js */
 
-let selectedLocation = null;
-let selectedDate = null;
-let selectedTime = null;
-let currentCategory = null;
-
-function openBooking(category) {
-    currentCategory = category;
-    document.getElementById('modalCategory').textContent = category;
-    document.getElementById('bookingModal').style.display = 'block';
-    generateCalendar();
-}
-
-function selectLocation(element, location) {
-    document.querySelectorAll('.location-option').forEach(opt => opt.classList.remove('selected'));
-    element.classList.add('selected');
-    selectedLocation = location;
-    checkConfirmButton();
-}
-
-function generateCalendar() {
-    const calendar = document.getElementById('calendar');
-    calendar.innerHTML = '';
-    const today = new Date();
-    
-    for (let i = 0; i < 14; i++) {
-        const date = new Date(today);
-        date.setDate(today.getDate() + i);
-        const day = document.createElement('div');
-        day.className = 'calendar-day';
-        day.innerHTML = `<div>${date.toLocaleDateString('en-US', {weekday: 'short'})}</div><div>${date.getDate()}</div>`;
-        day.onclick = function() {
-            document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
-            this.classList.add('selected');
-            selectedDate = date.toLocaleDateString('en-GB'); // Format: DD/MM/YYYY
-            checkConfirmButton();
-        };
-        calendar.appendChild(day);
+// 1. Translation Dictionary
+const translations = {
+    en: {
+        // Header
+        nav_login: "Volunteer Login",
+        nav_lang: "🌐 English | Deutsch",
+        
+        // Hero
+        hero_title: "How can we help you?",
+        hero_subtitle: "Select a category for your appointment",
+        
+        // Cards
+        card_docs_title: "Documents & Registration",
+        card_docs_desc: "Government, IDs, Registration",
+        card_travel_title: "Tickets & Travel",
+        card_travel_desc: "MVV, Deutschlandticket, Parking",
+        card_new_title: "New in Munich",
+        card_new_desc: "Registration, Integration, Orientation",
+        card_general_title: "General Questions",
+        card_general_desc: "Other digital assistance",
+        
+        // Trust Section
+        trust_title: "Find help at your convenience",
+        trust_text_1: "Your step towards a simplified digital experience",
+        trust_text_2: "All volunteers are verified and supported by the City of Munich.",
+        trust_badge: "✓ Certified Helpers of the City of Munich",
+        
+        // // Volunteer Section
+        // vol_title: "Want to help others?",
+        // vol_desc: "Become a DigiCoach! Help people in Munich with digital questions.",
+        // vol_btn: "Become a DigiCoach",
+        
+        // Footer
+        footer_text: "© 2026 City of Munich | BeurocraticHelper Program"
+    },
+    de: {
+        // Header
+        nav_login: "Freiwilligen Login",
+        nav_lang: "🌐 Deutsch | English",
+        
+        // Hero
+        hero_title: "Wie können wir Ihnen helfen?",
+        hero_subtitle: "Wählen Sie eine Kategorie für Ihren Termin",
+        
+        // Cards
+        card_docs_title: "Dokumente & Meldewesen",
+        card_docs_desc: "Behörden, Ausweise, Anmeldung",
+        card_travel_title: "Tickets & Reisen",
+        card_travel_desc: "MVV, Deutschlandticket, Parken",
+        card_new_title: "Neu in München",
+        card_new_desc: "Registrierung, Integration, Orientierung",
+        card_general_title: "Allgemeine Fragen",
+        card_general_desc: "Sonstige digitale Unterstützung",
+        
+        // Trust Section
+        trust_title: "Hilfe finden, wann es Ihnen passt",
+        trust_text_1: "Ihr Schritt zu einem einfacheren digitalen Erlebnis",
+        trust_text_2: "Alle Freiwilligen sind von der Stadt München geprüft und unterstützt",
+        trust_badge: "✓ Zertifizierte Helfer der Stadt München",
+        
+        // // Volunteer Section
+        // vol_title: "Möchten Sie anderen helfen?",
+        // vol_desc: "Werden Sie DigiCoach! Helfen Sie Menschen in München bei digitalen Fragen.",
+        // vol_btn: "DigiCoach werden",
+        
+        // Footer
+        footer_text: "© 2026 Stadt München | BeurocraticHelper Programm"
     }
-}
+};
 
-function selectTime(element) {
-    document.querySelectorAll('.time-slot').forEach(slot => slot.classList.remove('selected'));
-    element.classList.add('selected');
-    selectedTime = element.textContent;
-    checkConfirmButton();
-}
+let currentLang = 'en';
 
-function checkConfirmButton() {
-    const btn = document.getElementById('confirmBtn');
-    // Only enable if all fields are selected
-    btn.disabled = !(selectedLocation && selectedDate && selectedTime);
-}
-
-// --- UPDATED: Async Booking Submission ---
-async function confirmBooking() {
-    const confirmBtn = document.getElementById('confirmBtn');
+function toggleLanguage() {
+    // 1. Toggle State
+    currentLang = currentLang === 'en' ? 'de' : 'en';
     
-    // UX: Show loading state
-    const originalText = confirmBtn.textContent;
-    confirmBtn.textContent = "Processing...";
-    confirmBtn.disabled = true;
-
-    const bookingData = {
-        category: currentCategory,
-        location: selectedLocation,
-        date: selectedDate,
-        time: selectedTime
-    };
-
-    try {
-        // Send data to the backend
-        const response = await fetch('/api/bookings', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(bookingData)
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-            // Success: Show confirmation and close modal
-            alert(`Appointment Confirmed!\n\nReference ID: ${data.booking.id}\nCategory: ${currentCategory}\nLocation: ${selectedLocation}\nDate: ${selectedDate}\nTime: ${selectedTime}`);
-            closeModal('bookingModal');
-            resetBooking();
-        } else {
-            // Server error (e.g., validation failed)
-            alert('Booking failed: ' + (data.message || 'Unknown error'));
+    // 2. Update all elements with data-i18n attribute
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        if (translations[currentLang][key]) {
+            element.textContent = translations[currentLang][key];
         }
-    } catch (error) {
-        // Network error
-        console.error('Booking Error:', error);
-        alert('Could not connect to the server. Please check your internet connection.');
-    } finally {
-        // Reset button state
-        confirmBtn.textContent = originalText;
-        checkConfirmButton(); // Re-evaluate disabled state
-    }
+    });
+    
+    // 3. Update Language Button Text specifically
+    // (Optional: if the button itself has a data-i18n tag, this isn't needed, but safe to keep)
+    const langBtn = document.querySelector('.language-toggle');
+    if(langBtn) langBtn.textContent = translations[currentLang].nav_lang;
 }
 
-function resetBooking() {
-    selectedLocation = null;
-    selectedDate = null;
-    selectedTime = null;
-    document.querySelectorAll('.location-option').forEach(opt => opt.classList.remove('selected'));
-    document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
-    document.querySelectorAll('.time-slot').forEach(slot => slot.classList.remove('selected'));
-}
-
-function closeModal(modalId) {
-    document.getElementById(modalId).style.display = 'none';
-    if (modalId === 'bookingModal') resetBooking();
-}
+// --- Keep your existing logic for Modals/Links below ---
+// (If you removed modals in favor of separate pages, you can remove the modal functions)
 
 function openLoginModal() {
-    document.getElementById('loginModal').style.display = 'block';
+    // Redirect to new login page
+    window.location.href = 'volunteer-login.html';
 }
 
 function openSignupModal() {
-    document.getElementById('signupModal').style.display = 'block';
-}
-
-// --- UPDATED: Async Login Handling ---
-async function handleLogin(event) {
-    event.preventDefault();
-    
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value; // Ensure your HTML input has id="password"
-    const submitBtn = event.target.querySelector('button[type="submit"]');
-    
-    // UX: Visual feedback
-    const originalText = submitBtn.textContent;
-    submitBtn.textContent = "Verifying...";
-    submitBtn.disabled = true;
-
-    try {
-        const response = await fetch('/api/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password })
-        });
-        
-        const data = await response.json();
-        
-        if (data.success) {
-            // Success: Redirect to dashboard
-            alert(`Login successful! Welcome back, ${data.user.name}.`);
-            window.location.href = '/dashboard'; 
-        } else {
-            // Failed: Show server message
-            alert(data.message || "Invalid email or password.");
-        }
-    } catch (error) {
-        console.error('Login error:', error);
-        alert('An error occurred connecting to the server.');
-    } finally {
-        // Reset button
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-    }
-}
-
-function handleSignup(event) {
-    event.preventDefault();
-    const name = document.getElementById('signupName').value;
-    const email = document.getElementById('signupEmail').value;
-    // Note: For a real app, you would also convert this to an async fetch('/api/signup') call similar to handleLogin
-    alert(`Account Created!\n\nWelcome ${name}!\n\nYour volunteer account has been created. Please check ${email} for verification.\n\nYou will be contacted by our team within 48 hours for orientation.`);
-    closeModal('signupModal');
-}
-
-function toggleLanguage() {
-    alert('Language switch functionality would be implemented here.\n\nThis would toggle between English and German versions of the entire site.');
-}
-
-// Close modal when clicking outside
-window.onclick = function(event) {
-    if (event.target.classList.contains('modal')) {
-        event.target.style.display = 'none';
-    }
+    // Redirect to new login page (signup section could be handled via query param if desired)
+    window.location.href = 'volunteer-login.html';
 }
