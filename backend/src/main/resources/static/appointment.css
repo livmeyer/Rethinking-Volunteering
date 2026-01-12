@@ -1,0 +1,264 @@
+/* --- Global Page Layout --- */
+.booking-page {
+    background-color: #f2f6fa; /* Official Munich Light Blue/Grey */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 3rem 15px;
+}
+
+/* --- The Central Card --- */
+.booking-card {
+    background: #fff;
+    width: 100%;
+    max-width: 850px; /* Constrains width for centralization */
+    border: 1px solid #bdd4ea; /* Subtle border */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-radius: 2px; /* Square/Official corners */
+    overflow: hidden;
+}
+
+/* --- Header Section inside Card --- */
+.booking-header {
+    background-color: #fff;
+    padding: 2rem 2.5rem;
+    border-bottom: 1px solid #e1e4e8;
+    text-align: center;
+}
+
+.page-title {
+    font-family: 'Roboto Condensed', Arial, sans-serif;
+    color: #005a9f; /* Munich Blue */
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.category-badge {
+    display: inline-block;
+    background-color: #e3f2fd;
+    color: #005a9f;
+    padding: 0.4rem 1.2rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* --- Flow Steps --- */
+.booking-flow {
+    padding: 2.5rem;
+}
+
+.booking-step {
+    margin-bottom: 2.5rem;
+    position: relative;
+}
+
+/* Connecting line effect between steps */
+.booking-step::after {
+    content: '';
+    position: absolute;
+    left: 19px; /* Aligns with circle center */
+    top: 45px;
+    bottom: -35px;
+    width: 2px;
+    background-color: #e1e4e8;
+    z-index: 0;
+}
+
+.booking-step:last-child::after {
+    display: none;
+}
+
+.step-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    background-color: #005a9f;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
+
+.step-title {
+    font-family: 'Roboto Condensed', sans-serif;
+    color: #3a5368;
+    font-size: 1.3rem;
+    margin: 0;
+    font-weight: 700;
+}
+
+/* --- Step 1: Location Grid --- */
+.options-grid {
+    margin-left: 3.5rem; /* Indent to align with title */
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+.location-option {
+    border: 1px solid #bdd4ea;
+    padding: 1rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    background: #fff;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.location-option:hover {
+    border-color: #005a9f;
+    background-color: #f2f6fa;
+}
+
+.location-option.selected {
+    border-color: #005a9f;
+    background-color: #e3f2fd;
+    box-shadow: 0 0 0 1px #005a9f inset;
+}
+
+/* --- Step 2: Calendar --- */
+.calendar-wrapper {
+    margin-left: 3.5rem;
+}
+
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 8px;
+}
+
+.calendar-day {
+    border: 1px solid #bdd4ea;
+    border-radius: 4px;
+    padding: 10px 5px;
+    text-align: center;
+    cursor: pointer;
+    background: #fff;
+}
+
+.calendar-day:hover {
+    border-color: #005a9f;
+    color: #005a9f;
+}
+
+.calendar-day.selected {
+    background-color: #005a9f;
+    color: #fff;
+    border-color: #005a9f;
+}
+
+/* --- Step 3: Time --- */
+.time-slots {
+    margin-left: 3.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 10px;
+}
+
+.time-slot {
+    border: 1px solid #bdd4ea;
+    padding: 0.8rem;
+    text-align: center;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #3a5368;
+}
+
+.time-slot.selected {
+    background-color: #005a9f;
+    color: #fff;
+    border-color: #005a9f;
+}
+
+/* --- Footer Actions --- */
+.booking-footer {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e1e4e8;
+    text-align: center;
+}
+
+.confirm-btn {
+    background-color: #005a9f;
+    color: #fff;
+    font-size: 1.1rem;
+    padding: 1rem 3rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-family: 'Roboto Condensed', sans-serif;
+    width: 100%;
+    max-width: 400px;
+    transition: background 0.3s;
+}
+
+.confirm-btn:hover:not(:disabled) {
+    background-color: #004376;
+}
+
+.confirm-btn:disabled {
+    background-color: #e1e4e8;
+    color: #8d9ca8;
+    cursor: not-allowed;
+}
+
+.disclaimer {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: #8d9ca8;
+}
+
+/* --- Header Back Button --- */
+.back-nav-btn {
+    text-decoration: none;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.4);
+    padding: 0.5rem 1rem;
+    border-radius: 2px;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.back-nav-btn:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .options-grid, .calendar-wrapper, .time-slots {
+        margin-left: 0; /* Remove indent on mobile */
+    }
+    .step-header {
+        margin-bottom: 1rem;
+    }
+    .booking-flow {
+        padding: 1.5rem;
+    }
+}
