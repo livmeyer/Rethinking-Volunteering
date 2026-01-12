@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DigiCoach Munich - Digital Help for Everyone</title>
+    <title>BeurocraticHelper Munich - Digital Help for Everyone</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header class="header">
           <div class="header-content">
             <a href="Index.html" class="logo">
-                <img class="logo-icon" src="logo.svg" alt="DigiCoach Logo">
+                <img class="logo-icon" src="logo.svg" alt="BeurocraticHelper Logo">
                 <span class="logo-text">BeurocraticHelper Munich</span>
             </a>
             <div class="header-actions">
                 <button class="language-toggle" onclick="toggleLanguage()" data-i18n="nav_lang">🌐 English | Deutsch</button>
-                <a href="volunteer-login.html" class="volunteer-login-btn" style="text-decoration: none;" data-i18n="nav_login">Volunteer Login</a>
+                <a href="volunteer-login.html" class="volunteer-login-btn" style="text-decoration: none; display: inline-block;" data-i18n="nav_login">Volunteer Login</a>
             </div>
         </div>
     </header>
@@ -29,6 +29,7 @@
 
     <section class="main-cta">
         <div class="main-cta-content">
+            
             <div class="service-cards">
                 <div class="service-card documents" onclick="window.location.href='appointment.html?category=Documents'">
                     <img class="card-icon" src="file-solid-full.svg" alt="Documents Icon">
@@ -57,31 +58,30 @@
         </div>
     </section>
 
-    <section class="trust-section">
-        <div class="trust-content">
-            <div class="trust-image">
-                <div class="trust-image-placeholder">🤝</div>
-            </div>
-            <div class="trust-text">
-                <h2 data-i18n="trust_title">Our DigiCoaches are here for you</h2>
-                <p data-i18n="trust_text_1">Friendly volunteers help you personally and with patience. They explain everything in simple terms – as many times as you need.</p>
-                <p data-i18n="trust_text_2">All coaches are verified and supported by the City of Munich.</p>
-                <span class="trust-badge" data-i18n="trust_badge">✓ Certified Helpers of the City of Munich</span>
-            </div>
+   <section class="trust-section">
+    <div class="trust-content">
+        <div class="trust-image-placeholder">🤝</div>
+        <div class="trust-text">
+            <h2 data-i18n="trust_title">Find help at your convenience</h2>
+            <p data-i18n="trust_text_1">Your step towards a simplified digital experience.</p>
+            <p data-i18n="trust_text_2">All volunteers are verified and supported by the City of Munich.</p>
+            <span class="trust-badge" data-i18n="trust_badge">✓ Certified Helpers of the City of Munich</span>
         </div>
-    </section>
+    </div>
+</section>
 
-    <section class="volunteer-section">
+    <!-- <section class="volunteer-section">
         <div class="volunteer-content">
             <h2 data-i18n="vol_title">Want to help others?</h2>
             <p data-i18n="vol_desc">Become a DigiCoach! Help people in Munich with digital questions.</p>
             <button class="volunteer-btn" onclick="openSignupModal()" data-i18n="vol_btn">Become a DigiCoach</button>
         </div>
-    </section>
+    </section> -->
 
     <footer class="footer">
         <p data-i18n="footer_text">© 2026 City of Munich | BeurocraticHelper Program</p>
     </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
