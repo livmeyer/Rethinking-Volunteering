@@ -1,0 +1,382 @@
+/* --- Google Fonts Import for Munich.de Look --- */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Roboto+Condensed:wght@400;700&display=swap');
+
+/* --- Global Variables (Munich.de Design System) --- */
+:root {
+    --primary-color: #005a9f;
+    --decorative-font-family: 'Roboto Condensed', Arial, sans-serif;
+    --headings-font-family: 'Roboto Condensed', Arial, sans-serif;
+    --font-family-base: 'Open Sans', Arial, sans-serif;
+    
+    --body-color: #3a5368;
+    --heading-color: #3a5368;
+    
+    --link-color: #005a9f;
+    --link-hover-color: #004376;
+    
+    --header-top-bg-color: #1b98d5;
+    --header-bottom-bg-color: #1b98d5;
+    --header-border-color: #bdd4ea;
+    
+    --primary-button-bg-color: #005a9f;
+    --primary-button-border-color: #005a9f;
+    --primary-button-color: #fff;
+    --primary-button-hover-bg-color: #004376;
+    --primary-button-hover-border-color: #004376;
+    
+    --intro-bg-color: #f2f6fa; /* Light Blue-Grey Background */
+    --teaser-border-color: #bdd4ea;
+    
+    --footer-bottom-bg-color: #005a9f;
+    --footer-bottom-color: #fff;
+    
+    --input-border-color: #5993c0;
+    --focus-outline-color: #005a9f;
+    
+    --radius-sm: 2px; /* Square/Sharp corners per Munich style */
+    --container-width: 1140px;
+    
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-hover: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family-base);
+    line-height: 1.5;
+    color: var(--body-color);
+    background-color: #fff;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* --- Typography --- */
+h1, h2, h3, h4 {
+    font-family: var(--headings-font-family);
+    color: var(--heading-color);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: var(--link-hover-color);
+    text-decoration: underline;
+}
+
+/* --- Header (Shared) --- */
+.header {
+    background-color: var(--header-bottom-bg-color);
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--header-border-color);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+
+.header-content {
+    max-width: var(--container-width);
+    margin: 0 64px;
+    padding: 0 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+}
+
+.logo-icon {
+    width: fit-content;
+    height: fit-content;
+    object-fit: contain;
+    filter: brightness(1) invert(0);
+    flex-shrink: 0;
+}
+
+.logo-text {
+    color: #fff;
+    font-family: var(--headings-font-family);
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+}
+
+.header-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.language-toggle {
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.5);
+    padding: 0.5rem 1rem;
+    font-family: var(--font-family-base);
+    font-size: 0.9rem;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+}
+
+.volunteer-login-btn {
+    background: #fff;
+    color: var(--primary-button-bg-color);
+    border: 1px solid #fff;
+    padding: 0.5rem 1rem;
+    font-family: var(--font-family-base);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    display: inline-block;
+}
+
+/* --- Auth Page Specifics (Login/Signup) --- */
+/* Matches the "Intro" background of the main site */
+.auth-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--intro-bg-color); 
+}
+
+.auth-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 15px;
+}
+
+.auth-card {
+    background: #fff;
+    width: 100%;
+    max-width: 480px;
+    padding: 3rem 2.5rem;
+    border: 1px solid var(--teaser-border-color);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    animation: fadeIn 0.4s ease-out;
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--teaser-border-color);
+    padding-bottom: 1.5rem;
+}
+
+.auth-header h2 {
+    color: var(--color-neutral-grey);
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.auth-header p {
+    color: var(--body-color);
+    font-size: 1rem;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Forms (Used in Auth & Booking) --- */
+.form-group { margin-bottom: 1.2rem; }
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    font-family: var(--headings-font-family);
+    font-size: 0.95rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--input-border-color);
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    color: var(--body-color);
+    font-family: var(--font-family-base);
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--focus-outline-color);
+    box-shadow: 0 0 0 2px rgba(0, 90, 159, 0.1);
+}
+
+.login-btn {
+    width: 100%;
+    background-color: var(--primary-button-bg-color);
+    color: #fff;
+    padding: 1rem;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-weight: 7s00;
+    font-size: medium;
+    font-family: var(--headings-font-family);
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background 0.2s;
+}
+
+.login-btn:hover {
+    background-color: var(--primary-button-hover-bg-color);
+}
+
+.signup-link {
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--body-color);
+}
+
+.signup-link a {
+    font-weight: 600;
+}
+
+/* --- Index Page: Service Cards (2x2 Grid) --- */
+.main-cta {
+    background: #fff;
+    padding: 4rem 0;
+}
+
+.service-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2x2 Grid */
+    gap: 30px;
+    max-width: 800px;
+    margin: 2rem auto;
+}
+
+.service-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+    aspect-ratio: 1 / 1; /* Square */
+    
+    border: 1px solid var(--teaser-border-color);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: var(--shadow-sm);
+}
+
+.service-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: var(--shadow-hover);
+}
+
+/* Pastel Colors */
+.service-card.documents { background-color: #e8f5e9; border-color: #a5d6a7; }
+.service-card.mobility  { background-color: #e1f5fe; border-color: #81d4fa; }
+.service-card.students  { background-color: #f3e5f5; border-color: #ce93d8; }
+.service-card.general   { background-color: #fffde7; border-color: #fff59d; }
+
+.service-card:hover.documents { border-color: #4CAF50; }
+.service-card:hover.mobility  { border-color: #03a9f4; }
+.service-card:hover.students  { border-color: #9c27b0; }
+.service-card:hover.general   { border-color: #fbc02d; }
+
+.card-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 1.5rem;
+    padding: 15px;
+    background: #fff;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.card-title {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+}
+
+.card-description {
+    font-size: 1rem;
+    text-align: center;
+    color: var(--body-color);
+}
+
+/* --- Index Page: Hero --- */
+.hero {
+    background-color: var(--intro-bg-color);
+    text-align: center;
+    padding: 4rem 15px;
+    border-bottom: 1px solid var(--header-border-color);
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    text-transform: uppercase;
+}
+
+/* --- Index Page: Volunteer CTA --- */
+.volunteer-section {
+    background: #fff;
+    text-align: center;
+    padding: 4rem 0;
+    border-top: 1px solid var(--teaser-border-color);
+}
+
+.volunteer-btn {
+    background-color: var(--primary-button-bg-color);
+    color: #fff;
+    padding: 1rem 2.5rem;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: var(--headings-font-family);
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 1.5rem;
+}
+
+/* --- Footer (Shared) --- */
+.footer {
+    background-color: var(--footer-bottom-bg-color);
+    color: var(--footer-bottom-color);
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.9rem;
+    border-top: 1px solid #bdd4ea;
+}
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+    .header-content { flex-direction: column; text-align: center; }
+    .header-actions { width: 100%; justify-content: center; }
+    .service-cards { grid-template-columns: 1fr; max-width: 100%; aspect-ratio: auto; }
+    .service-card { aspect-ratio: auto; }
+}

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeurocraticHelper Munich - Digital Help for Everyone</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+          <div class="header-content">
+            <div class="logo">
+                <img class="logo-icon" src="logo.svg" alt="BeurocraticHelper Logo">
+                <span class="logo-text">BeurocraticHelper Munich</span>
+            </div>
+            <div class="header-actions">
+                <button class="language-toggle" onclick="toggleLanguage()">🌐 English | Deutsch</button>
+                <a href="volunteer-login.html" class="volunteer-login-btn" style="text-decoration: none; display: inline-block;">Volunteer Login</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>How can we help you?</h1>
+            <p>Select a category for your appointment</p>
+        </div>
+    </section>
+
+    <!-- Main CTA Section -->
+    <section class="main-cta">
+        <div class="main-cta-content">
+            <div class="cta-header">
+            </div>
+
+            <div class="service-cards">
+                <div class="service-card documents" onclick="openBooking('Documents & Registration')">
+                    <img class="card-icon" src="file-solid-full.svg" alt="Documents Icon">
+                    <h3 class="card-title">Documents & Registration</h3>
+                    <p class="card-description">Goverment, Ids, Registration/p>
+                </div>
+
+                <div class="service-card mobility" onclick="openBooking('Tickets & Travel')">
+                    <img class="card-icon" src="ticket-solid-full.svg"></img>
+                    <h3 class="card-title">Tickets & Travel</h3>
+                    <p class="card-description">MVV, Deustchlandticket, Parking</p>
+                </div>
+
+                <div class="service-card students" onclick="openBooking('New to Munich')">
+                    <img class="card-icon" src="location-crosshairs-solid-full.svg" alt="Student Icon"></img>
+                    <h3 class="card-title">New in Munich</h3>
+                    <p class="card-description">Regestration, Interigration, Orientation</p>
+                </div>
+
+                <div class="service-card general" onclick="openBooking('Other Questions')">
+                    <img class="card-icon" src="question-solid-full.svg" alt="General Questions Icon"></img>
+                    <h3 class="card-title">General Questions</h3>
+                    <p class="card-description">Other digital assistance</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section class="trust-section">
+        <div class="trust-content">
+            <div class="trust-image">
+                <div class="trust-image-placeholder">🤝</div>
+            </div>
+            <div class="trust-text">
+                <h2>Find help at your convenience</h2>
+                <p>Your step towards a simplified digital experience.</p>
+                <p>All volunteers are verified and supported by the City of Munich.</p>
+                <span class="trust-badge">✓ Certified Helpers of the City of Munich</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Volunteer CTA -->
+    <section class="volunteer-section">
+        <div class="volunteer-content">
+            <h2>Want to help others?</h2>
+            <p>Become a Volunteer! Help people in Munich with digital questions.</p>
+            <button class="volunteer-btn" onclick="openSignupModal()">Become a Volunteer</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2026 City of Munich | BeurocraticHelper Program</p>
+    </footer>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" onclick="closeModal('bookingModal')">&times;</span>
+                <h2 id="modalTitle">Book Your Appointment</h2>
+                <p id="modalCategory"></p>
+            </div>
+            <div class="modal-body">
+                <!-- Step 1: Location -->
+                <div class="booking-step">
+                    <div><span class="step-number">1</span><span class="step-title">Choose a Location</span></div>
+                    <div id="locationList">
+                        <div class="location-option" onclick="selectLocation(this, 'Central Library')">
+                            <div class="location-name">📚 Central Library (Stadtbibliothek Am Gasteig)</div>
+                            <div class="location-address">Rosenheimer Str. 5, 81667 München</div>
+                        </div>
+                        <div class="location-option" onclick="selectLocation(this, 'Moosach Library')">
+                            <div class="location-name">📚 Moosach Library</div>
+                            <div class="location-address">Pelkovenstr. 145, 80992 München</div>
+                        </div>
+                        <div class="location-option" onclick="selectLocation(this, 'Sendling Senior Center')">
+                            <div class="location-name">👵 Sendling Senior Center</div>
+                            <div class="location-address">Gotzinger Str. 45, 81369 München</div>
+                        </div>
+                        <div class="location-option" onclick="selectLocation(this, 'Schwabing Community Center')">
+                            <div class="location-name">🏛️ Schwabing Community Center</div>
+                            <div class="location-address">Belgradstr. 169, 80804 München</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Date -->
+                <div class="booking-step">
+                    <div><span class="step-number">2</span><span class="step-title">Pick a Date</span></div>
+                    <div class="calendar" id="calendar"></div>
+                </div>
+
+                <!-- Step 3: Time -->
+                <div class="booking-step">
+                    <div><span class="step-number">3</span><span class="step-title">Choose a Time</span></div>
+                    <div class="time-slots" id="timeSlots">
+                        <div class="time-slot" onclick="selectTime(this)">09:00</div>
+                        <div class="time-slot" onclick="selectTime(this)">10:00</div>
+                        <div class="time-slot" onclick="selectTime(this)">11:00</div>
+                        <div class="time-slot" onclick="selectTime(this)">13:00</div>
+                        <div class="time-slot" onclick="selectTime(this)">14:00</div>
+                        <div class="time-slot" onclick="selectTime(this)">15:00</div>
+                        <div class="time-slot" onclick="selectTime(this)">16:00</div>
+                    </div>
+                </div>
+
+                <button class="confirm-btn" id="confirmBtn" onclick="confirmBooking()" disabled>Confirm Appointment</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" onclick="closeModal('loginModal')">&times;</span>
+                <h2>Volunteer Login</h2>
+                <p>Access your volunteer dashboard</p>
+            </div>
+            <div class="modal-body">
+                <form class="login-form" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" required placeholder="your.email@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" required placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="login-btn">Login to Dashboard</button>
+                    <div class="signup-link">
+                        Don't have an account? <a href="#" onclick="openSignupModal(); closeModal('loginModal'); return false;">Sign up as volunteer</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    Signup Modal
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" onclick="closeModal('signupModal')">&times;</span>
+                <h2>Become a Volunteer</h2>
+                <p>Join the team</p>
+            </div>
+            <div class="modal-body">
+                <form class="login-form" onsubmit="handleSignup(event)">
+                    <div class="form-group">
+                        <label for="signupName">Full Name</label>
+                        <input type="text" id="signupName" required placeholder="Max Mustermann">
+                    </div>
+                    <div class="form-group">
+                        <label for="signupEmail">Email Address</label>
+                        <input type="email" id="signupEmail" required placeholder="your.email@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="signupPassword">Password</label>
+                        <input type="password" id="signupPassword" required placeholder="••••••••">
+                    </div>
+                    <div class="form-group">
+                        <label for="signupPhone">Phone Number</label>
+                        <input type="tel" id="signupPhone" required placeholder="+49 123 456789">
+                    </div>
+                    <button type="submit" class="login-btn">Create Volunteer Account</button>
+                    <div class="signup-link">
+                        Already have an account? <a href="#" onclick="openLoginModal(); closeModal('signupModal'); return false;">Login here</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div> -->
+
+    <script src="script.js"></script>
+</body>
+</html>

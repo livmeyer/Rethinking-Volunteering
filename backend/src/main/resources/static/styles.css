@@ -1,0 +1,689 @@
+/* --- Google Fonts Import for Munich.de Look --- */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Roboto+Condensed:wght@400;700&display=swap');
+
+/* --- Global Variables (Munich.de Design System) --- */
+:root {
+    --primary-color: #005a9f;
+    --decorative-font-family: 'Roboto Condensed', Arial, sans-serif;
+    --headings-font-family: 'Roboto Condensed', Arial, sans-serif;
+    --font-family-base: 'Open Sans', Arial, sans-serif;
+    
+    --body-color: #3a5368;
+    --tagline-color: #005a9f;
+    --heading-color: #3a5368;
+    
+    --link-color: #005a9f;
+    --link-hover-color: #004376;
+    --focus-outline-color: #005a9f;
+    
+    --header-top-bg-color: #1b98d5;
+    --header-bottom-bg-color: #1b98d5;
+    --header-border-color: #bdd4ea;
+    
+    --primary-button-bg-color: #005a9f;
+    --primary-button-border-color: #005a9f;
+    --primary-button-color: #fff;
+    --primary-button-hover-bg-color: #004376;
+    --primary-button-hover-border-color: #004376;
+    --primary-button-hover-color: #fff;
+    --primary-button-disabled-bg-color: #e1e4e8;
+    
+    --secondary-button-bg-color: #fff;
+    --secondary-button-border-color: #005a9f;
+    --secondary-button-color: #005a9f;
+    --secondary-button-hover-bg-color: #fff;
+    --secondary-button-hover-border-color: #004376;
+    --secondary-button-hover-color: #004376;
+    
+    --intro-bg-color: #f2f6fa;
+    --teaserlist-bg-color: #f2f6fa;
+    --teaser-border-color: #bdd4ea;
+    
+    --footer-top-bg-color: #f2f6fa;
+    --footer-bottom-bg-color: #005a9f;
+    --footer-bottom-color: #fff;
+    
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-hover: 0 4px 8px rgba(0,0,0,0.15);
+    
+    --radius-sm: 2px; /* Munich.de tends to be squarer */
+    --container-width: 1140px; /* Standard bootstrap-like width */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family-base);
+    line-height: 1.5;
+    color: var(--body-color);
+    background-color: #fff;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* --- Layout Utilities --- */
+.container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+section {
+    padding: 3rem 0;
+}
+
+/* --- Typography --- */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--headings-font-family);
+    color: var(--heading-color);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: var(--link-hover-color);
+    text-decoration: underline;
+}
+
+/* --- Header --- */
+.header {
+    background-color: var(--header-bottom-bg-color);
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--header-border-color);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+/* --- Header --- */
+.header-content {
+    max-width: var(--container-width);
+    margin: 0 64px;
+    padding: 0 15px;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    gap: 1rem;
+    
+}
+.logo {
+    .logo-icon {
+    width: fit-content;  
+    height: fit-content; 
+    object-fit: contain;
+    filter: brightness(1) invert(0);
+    flex-shrink: 0;
+}
+}
+
+.logo-icon {
+    width: fit-content; 
+    height: fit-content; 
+    
+
+    object-fit: contain;
+    filter: brightness(1) invert(0); 
+    flex-shrink: 0; /* Prevents it from smushing on small screens */
+}
+
+.logo-text {
+    color: #fff;
+    font-family: var(--headings-font-family);
+    
+    /* 2. Make text smaller */
+    font-size: 1.1rem; /* Reduced from 1.5rem */
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1.2; /* Tighter line height for multi-line appearance if needed */
+}
+.header-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+/* Buttons in Header */
+.language-toggle {
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.5);
+    padding: 0.5rem 1rem;
+    font-family: var(--font-family-base);
+    font-size: 0.9rem;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+}
+
+.volunteer-login-btn {
+    background: #fff;
+    color: var(--primary-button-bg-color);
+    border: 1px solid #fff;
+    padding: 0.5rem 1rem;
+    font-family: var(--font-family-base);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s;
+}
+
+.volunteer-login-btn:hover {
+    background: #f2f2f2;
+}
+
+/* --- Hero Section --- */
+.hero {
+    background-color: var(--intro-bg-color); /* Light blue-grey */
+    text-align: center;
+    padding: 4rem 15px;
+    border-bottom: 1px solid var(--header-border-color);
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    color: var(--heading-color);
+    text-transform: uppercase; /* Munich style often uses uppercase headlines */
+}
+
+.hero p {
+    font-size: 1.25rem;
+    color: var(--body-color);
+    font-weight: 400;
+}
+
+/* --- Service Cards Container --- */
+.main-cta {
+    background: #fff;
+    padding: 4rem 0;
+}
+
+.service-cards {
+    display: grid;
+    /* STRICT 2x2 GRID: "Square divided into 4 sections" */
+    grid-template-columns: 1fr 1fr; 
+    gap: 30px; /* Space between the squares */
+    
+    /* CENTRALIZATION */
+    max-width: 800px; /* Constrain width to keep it compact and centered */
+    margin: 2rem auto; /* Center the grid horizontally */
+}
+
+/* --- Service Card Base Styles --- */
+.service-card {
+    /* Layout & Sizing */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Centers content vertically inside the square */
+    padding: 3rem 2rem; /* Bigger padding */
+    
+    /* SHAPE: Force a perfect square */
+    aspect-ratio: 1 / 1; 
+    
+    /* Base Styles */
+    border: 1px solid var(--teaser-border-color);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* Hover Effect: Lift & Intensify */
+.service-card:hover {
+    transform: translateY(-5px) scale(1.02); /* Slight grow effect */
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+/* --- Specific Category Colors (Pastels) --- */
+
+/* 1. Documents: Light Green */
+.service-card.documents {
+    background-color: #e8f5e9;
+    border-color: #a5d6a7;
+}
+.service-card.documents:hover {
+    background-color: #c8e6c9;
+    border-color: #4CAF50;
+}
+
+/* 2. Mobility: Light Blue */
+.service-card.mobility {
+    background-color: #e1f5fe;
+    border-color: #81d4fa;
+}
+.service-card.mobility:hover {
+    background-color: #b3e5fc;
+    border-color: #03a9f4;
+}
+
+/* 3. New to Munich: Light Purple */
+.service-card.students {
+    background-color: #f3e5f5;
+    border-color: #ce93d8;
+}
+.service-card.students:hover {
+    background-color: #e1bee7;
+    border-color: #9c27b0;
+}
+
+/* 4. General: Light Yellow */
+.service-card.general {
+    background-color: #fffde7;
+    border-color: #fff59d;
+}
+.service-card.general:hover {
+    background-color: #fff9c4;
+    border-color: #fbc02d;
+}
+
+/* --- Icon & Text Styling --- */
+.card-icon {
+    width: 90px; /* Bigger Icon */
+    height: 90px;
+    margin-bottom: 1.5rem;
+    padding: 20px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.service-card:hover .card-icon {
+    transform: scale(1.1); /* Icon pops on hover */
+}
+
+.card-title {
+    font-size: 1.5rem; /* Bigger Title */
+    margin-bottom: 0.5rem;
+}
+
+.card-description {
+    font-size: 1.1rem;
+    max-width: 80%; /* Keeps text nice and centered */
+}
+
+/* --- Responsive: Stack on Mobile --- */
+@media (max-width: 700px) {
+    .service-cards {
+        grid-template-columns: 1fr; /* 1 column stack */
+        max-width: 100%;
+        gap: 20px;
+    }
+    
+    .service-card {
+        aspect-ratio: auto; /* Remove square constraint on phones */
+        padding: 2rem;
+    }
+}
+
+/* Icon Colors using the new variables */
+.card-title {
+    font-family: var(--headings-font-family);
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    color: var(--heading-color);
+    text-transform: none;
+}
+
+.card-description {
+    font-size: 1rem;
+    color: var(--body-color);
+    line-height: 1.5;
+}
+
+/* --- Trust Section --- */
+.trust-section {
+    background-color: var(--intro-bg-color);
+    padding: 4rem 0;
+    border-top: 1px solid var(--teaser-border-color);
+}
+
+.trust-content {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.trust-image-placeholder {
+    width: 150px;
+    height: 150px;
+    background: #fff;
+    border: 1px solid var(--teaser-border-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    flex-shrink: 0;
+    color: var(--primary-color);
+}
+
+.trust-text h2 {
+    color: var(--heading-color);
+    font-size: 2rem;
+}
+
+.trust-badge {
+    display: inline-block;
+    background: #fff;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-sm);
+    margin-top: 1rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* --- Volunteer CTA --- */
+.volunteer-section {
+    background: #fff;
+    text-align: center;
+    padding: 4rem 0;
+    border-top: 1px solid var(--teaser-border-color);
+}
+
+/* Primary Action Button */
+.volunteer-btn {
+    background-color: var(--primary-button-bg-color);
+    color: var(--primary-button-color);
+    border: 1px solid var(--primary-button-border-color);
+    padding: 1rem 2.5rem;
+    font-family: var(--headings-font-family);
+    font-size: 1.2rem;
+    border-radius: var(--radius-sm); /* Munich style is square/slightly rounded */
+    cursor: pointer;
+    font-weight: 700;
+    transition: background-color 0.2s, border-color 0.2s;
+    margin-top: 1.5rem;
+    text-transform: uppercase;
+}
+
+.volunteer-btn:hover {
+    background-color: var(--primary-button-hover-bg-color);
+    border-color: var(--primary-button-hover-border-color);
+}
+
+/* --- Footer --- */
+.footer {
+    background-color: var(--footer-bottom-bg-color);
+    color: var(--footer-bottom-color);
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.9rem;
+    border-top: 1px solid var(--footer-bottom-border-color, #bdd4ea);
+}
+
+.footer p {
+    opacity: 0.9;
+}
+
+/* --- Modal Styles --- */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1000; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(58, 83, 104, 0.7); /* Using body-color with opacity */
+    backdrop-filter: blur(2px);
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.modal-content {
+    background-color: #fff;
+    margin: 5vh auto;
+    border-radius: var(--radius-sm);
+    width: 95%; 
+    max-width: 800px;
+    max-height: 90vh; 
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    animation: slideUp 0.3s;
+}
+
+@keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.modal-header {
+    background-color: var(--header-bottom-bg-color);
+    padding: 1.5rem 2rem;
+    color: #fff;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.modal-header h2 {
+    color: #fff;
+    margin: 0;
+}
+
+.modal-body {
+    padding: 2rem;
+    overflow-y: auto;
+}
+
+.close {
+    position: absolute;
+    right: 1.5rem;
+    top: 1.5rem;
+    color: #fff;
+    font-size: 2rem;
+    cursor: pointer;
+    line-height: 0.8;
+    opacity: 0.8;
+}
+
+.close:hover { opacity: 1; }
+
+/* Booking Form Elements */
+.booking-step {
+    margin-bottom: 2rem;
+    background: var(--intro-bg-color);
+    padding: 1.5rem;
+    border: 1px solid var(--teaser-border-color);
+    border-radius: var(--radius-sm);
+}
+
+.step-title {
+    font-family: var(--headings-font-family);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    display: block;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--divider-border-color, #bdd4ea);
+    padding-bottom: 0.5rem;
+}
+
+.location-option {
+    background: #fff;
+    padding: 1rem;
+    border: 1px solid var(--input-border-color);
+    border-radius: var(--radius-sm);
+    margin-bottom: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.location-option:hover {
+    border-color: var(--primary-color);
+}
+
+.location-option.selected {
+    border-color: var(--primary-color);
+    background-color: #f2f6fa;
+    box-shadow: 0 0 0 1px var(--primary-color) inset;
+}
+
+.location-name {
+    color: var(--heading-color);
+    font-weight: 700;
+    font-family: var(--headings-font-family);
+}
+
+.location-address {
+    color: var(--body-color);
+}
+
+/* Calendar & Time Slots */
+.calendar, .time-slots {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 0.5rem;
+}
+
+.calendar-day, .time-slot {
+    background: #fff;
+    border: 1px solid var(--input-border-color);
+    border-radius: var(--radius-sm);
+    padding: 0.8rem 0.4rem;
+    text-align: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--body-color);
+    transition: all 0.2s;
+}
+
+.calendar-day:hover, .time-slot:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.calendar-day.selected, .time-slot.selected {
+    background-color: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+}
+
+.confirm-btn {
+    width: 100%;
+    background-color: var(--primary-button-bg-color);
+    color: var(--primary-button-color);
+    border: 1px solid var(--primary-button-border-color);
+    padding: 1rem;
+    font-family: var(--headings-font-family);
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    text-transform: uppercase;
+    margin-top: 1rem;
+}
+
+.confirm-btn:disabled {
+    background-color: var(--primary-button-disabled-bg-color);
+    border-color: var(--primary-button-disabled-border-color);
+    color: var(--primary-button-disabled-color);
+    cursor: not-allowed;
+}
+
+/* --- Form Inputs (Login/Signup) --- */
+.form-group { margin-bottom: 1.2rem; }
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    color: var(--label-color);
+    font-family: var(--headings-font-family);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--input-border-color);
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    color: var(--input-color);
+    font-family: var(--font-family-base);
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--focus-outline-color);
+    box-shadow: 0 0 0 2px rgba(0, 90, 159, 0.2);
+}
+
+.login-btn {
+    width: 100%;
+    background-color: var(--primary-button-bg-color);
+    color: #fff;
+    padding: 1rem;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    font-family: var(--headings-font-family);
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.login-btn:hover {
+    background-color: var(--primary-button-hover-bg-color);
+}
+
+.signup-link {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 900px) {
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+        padding-bottom: 1rem;
+    }
+    
+    .header-actions {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .trust-content {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (max-width: 600px) {
+    .service-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .modal-content {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        border-radius: 0;
+    }
+}

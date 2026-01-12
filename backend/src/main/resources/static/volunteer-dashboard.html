@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DigiCoach Volunteer Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #0D99D6 0%, #0B7FB8 100%);
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            color: white;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-circle {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #0D99D6;
+            font-size: 1.5rem;
+        }
+
+        .logo-text {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: white;
+            color: #0D99D6;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #0D99D6;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* Dashboard Sections */
+        .dashboard-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #333;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 1rem 2rem;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background: #0D99D6;
+            color: white;
+        }
+
+        .tab:hover {
+            background: #e0e0e0;
+        }
+
+        .tab.active:hover {
+            background: #0B7FB8;
+        }
+
+        /* Location Preferences */
+        .location-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .location-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .location-item.selected {
+            border-color: #0D99D6;
+            background: #f0f8fd;
+        }
+
+        .location-info {
+            flex: 1;
+        }
+
+        .location-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .location-address {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkbox {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
+
+        /* Availability Calendar */
+        .calendar-container {
+            margin-top: 1.5rem;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: #0D99D6;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: #0B7FB8;
+        }
+
+        .current-month {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .weekday {
+            text-align: center;
+            font-weight: 600;
+            color: #666;
+            padding: 0.5rem;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            padding: 0.5rem;
+        }
+
+        .calendar-day:hover:not(.other-month):not(.past) {
+            border-color: #0D99D6;
+            background: #f8fbfd;
+        }
+
+        .calendar-day.available {
+            background: #e8f5e9;
+            border-color: #4CAF50;
+        }
+
+        .calendar-day.available:hover {
+            background: #c8e6c9;
+        }
+
+        .calendar-day.other-month {
+            opacity: 0.3;
+            cursor: default;
+        }
+
+        .calendar-day.past {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .day-number {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .availability-indicator {
+            font-size: 0.7rem;
+            color: #4CAF50;
+            font-weight: 600;
+        }
+
+        /* Time Slots */
+        .time-slots-container {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: #f8f8f8;
+            border-radius: 10px;
+        }
+
+        .time-slots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 1rem;
+        }
+
+        .time-slot {
+            padding: 1rem;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .time-slot:hover {
+            border-color: #0D99D6;
+        }
+
+        .time-slot.selected {
+            background: #0D99D6;
+            color: white;
+            border-color: #0D99D6;
+        }
+
+        /* Session Logging */
+        .session-form {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            padding: 1rem;
+            font-size: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #0D99D6;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn-primary {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(76,175,80,0.3);
+        }
+
+        .btn-primary:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76,175,80,0.4);
+        }
+
+        .btn-secondary {
+            background: #0D99D6;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: #0B7FB8;
+            transform: translateY(-2px);
+        }
+
+        /* Session History */
+        .session-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .session-card {
+            padding: 1.5rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 1.5rem;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .session-card:hover {
+            border-color: #0D99D6;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .session-date {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #0D99D6;
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .session-details h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .session-details p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .session-status {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .status-completed {
+            background: #e8f5e9;
+            color: #4CAF50;
+        }
+
+        .status-upcoming {
+            background: #fff3e0;
+            color: #FF9800;
+        }
+
+        /* Certificate Section */
+        .certificate-container {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+        }
+
+        .certificate-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+
+        .certificate-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .certificate-text {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .certificate-btn {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: white;
+            border: none;
+            padding: 1.2rem 3rem;
+            border-radius: 30px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(255,165,0,0.4);
+        }
+
+        .certificate-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(255,165,0,0.5);
+        }
+
+        .certificate-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .calendar-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .session-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-circle">M</div>
+                <span class="logo-text">DigiCoach Dashboard</span>
+            </div>
+            <div class="user-info">
+                <div class="user-avatar">👤</div>
+                <span style="font-weight: 600;">Max Mustermann</span>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-number" id="completedSessions">12</div>
+                <div class="stat-label">Sessions Completed</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 48%"></div>
+                </div>
+                <div style="margin-top: 0.5rem; color: #666;">48% to Certificate</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">📅</div>
+                <div class="stat-number" id="upcomingSessions">3</div>
+                <div class="stat-label">Upcoming Sessions</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-number">4.8</div>
+                <div class="stat-label">Average Rating</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-number" id="sessionsToGo">13</div>
+                <div class="stat-label">Sessions to Certificate</div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('availability')">My Availability</button>
+            <button class="tab" onclick="switchTab('sessions')">Log Session</button>
+            <button class="tab" onclick="switchTab('history')">Session History</button>
+            <button class="tab" onclick="switchTab('certificate')">Certificate</button>
+        </div>
+
+        <!-- Availability Tab -->
+        <div id="availabilityTab" class="dashboard-section">
+            <div class="section-header">
+                <h2 class="section-title">Set Your Availability</h2>
+            </div>
+
+            <!-- Location Preferences -->
+            <h3 style="font-size: 1.4rem; margin-bottom: 1rem; color: #333;">📍 Preferred Locations</h3>
+            <div class="location-list">
+                <div class="location-item" id="loc1">
+                    <div class="location-info">
+                        <div class="location-name">📚 Central Library (Stadtbibliothek Am Gasteig)</div>
+                        <div class="location-address">Rosenheimer Str. 5, 81667 München</div>
+                    </div>
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" class="checkbox" onchange="toggleLocation('loc1', this.checked)">
+                    </div>
+                </div>
+
+                <div class="location-item" id="loc2">
+                    <div class="location-info">
+                        <div class="location-name">📚 Moosach Library</div>
+                        <div class="location-address">Pelkovenstr. 145, 80992 München</div>
+                    </div>
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" class="checkbox" onchange="toggleLocation('loc2', this.checked)">
+                    </div>
+                </div>
+
+                <div class="location-item" id="loc3">
+                    <div class="location-info">
+                        <div class="location-name">👵 Sendling Senior Center</div>
+                        <div class="location-address">Gotzinger Str. 45, 81369 München</div>
+                    </div>
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" class="checkbox" onchange="toggleLocation('loc3', this.checked)">
+                    </div>
+                </div>
+
+                <div class="location-item" id="loc4">
+                    <div class="location-info">
+                        <div class="location-name">🏛️ Schwabing Community Center</div>
+                        <div class="location-address">Belgradstr. 169, 80804 München</div>
+                    </div>
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" class="checkbox" onchange="toggleLocation('loc4', this.checked)">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calendar -->
+            <div class="calendar-container">
+                <h3 style="font-size: 1.4rem; margin-bottom: 1rem; margin-top: 2rem; color: #333;">📅 Set Available Days</h3>
+                <div class="calendar-header">
+                    <div class="calendar-nav">
+                        <button class="nav-btn" onclick="previousMonth()">← Previous</button>
+                        <span class="current-month" id="currentMonth">December 2024</span>
+                        <button class="nav-btn" onclick="nextMonth()">Next →</button>
+                    </div>
+                </div>
+
+                <div class="weekdays">
+                    <div class="weekday">Mon</div>
+                    <div class="weekday">Tue</div>
+                    <div class="weekday">Wed</div>
+                    <div class="weekday">Thu</div>
+                    <div class="weekday">Fri</div>
+                    <div class="weekday">Sat</div>
+                    <div class="weekday">Sun</div>
+                </div>
+
+                <div class="calendar-grid" id="calendarGrid"></div>
+            </div>
+
+            <!-- Time Slots -->
+            <div class="time-slots-container" id="timeSlotsContainer" style="display: none;">
+                <h3 style="font-size: 1.3rem; margin-bottom: 1rem;">Select Available Time Slots for <span id="selectedDate"></span></h3>
+                <div class="time-slots-grid">
+                    <div class="time-slot" onclick="toggleTimeSlot(this)">09:00</div>
+                    <div class="time-slot" onclick="toggleTimeSlot(this)">10:00</div>
+                    <div class="time-slot" onclick="toggleTimeSlot(this)">11:00</div>
+                    <div class="time-slot" onclick="toggleTimeSlot(this)">12:00</div>
+                    <div class="time-slot" onclick="toggleTimeSlot(this)">13:00</div>
+                    <div class="time-slot" onclick="toggleTimeSlot(this)">14:00</div>
+                    <div class="time-slot" onclick="toggleTimeSlot(this)">15:00</div>
+                    <div class="time-slot" onclick="toggleTimeSlot(this)">16:00</div>
+                    <div class="time-slot" onclick="toggleTimeSlot(this)">17:00</div>
+                </div>
+                <button class="btn-primary" style="margin-top: 1rem; width: 100%;" onclick="saveTimeSlots()">Save Time Slots</button>
+            </div>
+
+            <button class="btn-secondary" style="margin-top: 2rem; width: 100%;" onclick="saveAvailability()">Save All Availability Settings</button>
+        </div>
+
+        <!-- Log Session Tab -->
+        <div id="sessionsTab" class="dashboard-section" style="display: none;">
+            <div class="section-header">
+                <h2 class="section-title">Log a Completed Session</h2>
+            </div>
+
+            <form class="session-form" onsubmit="logSession(event)">
+                <div class="form-group">
+                    <label class="form-label">Session Date</label>
+                    <input type="date" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Session Duration</label>
+                    <select class="form-select" required>
+                        <option value="">Select duration...</option>
+                        <option value="30">30 minutes</option>
+                        <option value="45">45 minutes</option>
+                        <option value="60">1 hour</option>
+                        <option value="90">1.5 hours</option>
+                        <option value="120">2 hours</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Location</label>
+                    <select class="form-select" required>
+                        <option value="">Select location...</option>
+                        <option value="central">Central Library (Stadtbibliothek Am Gasteig)</option>
+                        <option value="moosach">Moosach Library</option>
+                        <option value="sendling">Sendling Senior Center</option>
+                        <option value="schwabing">Schwabing Community Center</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Help Category</label>
+                    <select class="form-select" required>
+                        <option value="">Select category...</option>
+                        <option value="documents">Documents & Registration</option>
+                        <option value="mobility">Tickets & Travel</option>
+                        <option value="students">New to Munich</option>
+                        <option value="general">Other Questions</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Session Notes</label>
+                    <textarea class="form-textarea" placeholder="What did you help with? Any follow-up needed?"></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary">Log Session</button>
+            </form>
+        </div>
+
+        <!-- Session History Tab -->
+        <div id="historyTab" class="dashboard-section" style="display: none;">
+            <div class="section-header">
+                <h2 class="section-title">Session History</h2>
+            </div>
+
+            <div class="session-list">
+                <div class="session-card">
+                    <div class="session-date">
+                        <div style="font-size: 1.5rem; font-weight: 700;">15</div>
+                        <div>Dec 2024</div>
+                    </div>
+                    <div class="session-details">
+                        <h4>Documents & Registration Help</h4>
+                        <p>📍 Central Library | ⏱️ 1 hour | Helped with online residence registration</p>
+                    </div>
+                    <div class="session-status status-completed">Completed</div>
+                </div>
+
+                <div class="session-card">
+                    <div class="session-date">
+                        <div style="font-size: 1.5rem; font-weight: 700;">22</div>
+                        <div>Dec 2024</div>
+                    </div>
+                    <div class="session-details">
+                        <h4>MVV Ticket App Tutorial</h4>
+                        <p>📍 Moosach Library | ⏱️ 45 minutes</p>
+                    </div>
+                    <div class="session-status status-upcoming">Upcoming</div>
+                </div>
+
+                <div class="session-card">
+                    <div class="session-date">
+                        <div style="font-size: 1.5rem; font-weight: 700;">12</div>
+                        <div>Dec 2024</div>
+                    </div>
+                    <div class="session-details">
+                        <h4>Email Setup & Security</h4>
+                        <p>📍 Sendling Senior Center | ⏱️ 1.5 hours | Set up email with 2FA</p>
+                    </div>
+                    <div class="session-status status-completed">Completed</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Certificate Tab -->
+        <div id="certificateTab" class="dashboard-section" style="display: none;">
+            <div class="section-header">
+                <h2 class="section-title">DigiCoach Certificate</h2>
+            </div>
+
+            <div class="certificate-container">
+                <div class="certificate-icon">🏆</div>
+                <h3 class="certificate-title">Earn Your DigiCoach Certificate</h3>
+                <p class="certificate-text">Complete 25 sessions to receive your official DigiCoach certificate from the City of Munich.</p>
+                
+                <div style="max-width: 500px; margin: 2rem auto;">
+                    <div class="progress-bar" style="height: 20px;">
+                        <div class="progress-fill" style="width: 48%"></div>
+                    </div>
+                    <p style="margin-top: 1rem; font-size: 1.3rem; font-weight: 600; color: #333;">
+                        <span id="certProgress">12</span> of 25 sessions completed
+                    </p>
+                </div>
+
+                <button class="certificate-btn" id="claimCertBtn" disabled onclick="claimCertificate()">
+                    Claim Certificate
+                </button>
+                <p style="margin-top: 1rem; color: #999; font-size: 0.95rem;" id="certMessage">
+                    Complete 13 more sessions to unlock your certificate
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentMonth = new Date();
+        let availableDates = {};
+        let selectedDay = null;
+        let completedSessions = 12;
+
+        function generateCalendar() {
+            const grid = document.getElementById('calendarGrid');
+            grid.innerHTML = '';
+
+            const year = currentMonth.getFullYear();
+            const month = currentMonth.getMonth();
+            
+            document.getElementById('currentMonth').textContent = 
+                currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const prevLastDay = new Date(year, month, 0);
+            
+            const firstDayOfWeek = firstDay.getDay() === 0 ? 7 : firstDay.getDay();
+            const lastDate = lastDay.getDate();
+            const prevLastDate = prevLastDay.getDate();
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            // Previous month days
+            for (let i = firstDayOfWeek - 1; i > 0; i--) {
+                const day = document.createElement('div');
+                day.className = 'calendar-day other-month';
+                day.innerHTML = `<div class="day-number">${prevLastDate - i + 1}</div>`;
+                grid.appendChild(day);
+            }
+
+            // Current month days
+            for (let i = 1; i <= lastDate; i++) {
+                const day = document.createElement('div');
+                const currentDate = new Date(year, month, i);
+                const dateKey = `${year}-${month + 1}-${i}`;
+                
+                day.className = 'calendar-day';
+                
+                if (currentDate < today) {
+                    day.classList.add('past');
+                }
+                
+                if (availableDates[dateKey]) {
+                    day.classList.add('available');
+                    day.innerHTML = `
+                        <div class="day-number">${i}</div>
+                        <div class="availability-indicator">✓ Available</div>
+                    `;
+                } else {
+                    day.innerHTML = `<div class="day-number">${i}</div>`;
+                }
+                
+                if (currentDate >= today) {
+                    day.onclick = () => selectDay(dateKey, i);
+                }
+                
+                grid.appendChild(day);
+            }
+
+            // Next month days
+            const remainingCells = 42 - (firstDayOfWeek - 1 + lastDate);
+            for (let i = 1; i <= remainingCells; i++) {
+                const day = document.createElement('div');
+                day.className = 'calendar-day other-month';
+                day.innerHTML = `<div class="day-number">${i}</div>`;
+                grid.appendChild(day);
+            }
+        }
+
+        function selectDay(dateKey, dayNumber) {
+            selectedDay = dateKey;
+            document.getElementById('selectedDate').textContent = 
+                new Date(currentMonth.getFullYear(), currentMonth.getMonth(), dayNumber)
+                    .toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            
+            document.getElementById('timeSlotsContainer').style.display = 'block';
+            
+            // Load existing time slots if available
+            if (availableDates[dateKey]) {
+                document.querySelectorAll('.time-slot').forEach(slot => {
+                    if (availableDates[dateKey].includes(slot.textContent)) {
+                        slot.classList.add('selected');
+                    } else {
+                        slot.classList.remove('selected');
+                    }
+                });
+            } else {
+                document.querySelectorAll('.time-slot').forEach(slot => {
+                    slot.classList.remove('selected');
+                });
+            }
+        }
+
+        function toggleTimeSlot(element) {
+            element.classList.toggle('selected');
+        }
+
+        function saveTimeSlots() {
+            if (!selectedDay) return;
+            
+            const selectedSlots = Array.from(document.querySelectorAll('.time-slot.selected'))
+                .map(slot => slot.textContent);
+            
+            if (selectedSlots.length > 0) {
+                availableDates[selectedDay] = selectedSlots;
+            } else {
+                delete availableDates[selectedDay];
+            }
+            
+            generateCalendar();
+            alert(`Time slots saved for ${document.getElementById('selectedDate').textContent}!\nSelected: ${selectedSlots.join(', ')}`);
+        }
+
+        function previousMonth() {
+            currentMonth.setMonth(currentMonth.getMonth() - 1);
+            generateCalendar();
+        }
+
+        function nextMonth() {
+            currentMonth.setMonth(currentMonth.getMonth() + 1);
+            generateCalendar();
+        }
+
+        function toggleLocation(locationId, checked) {
+            const element = document.getElementById(locationId);
+            if (checked) {
+                element.classList.add('selected');
+            } else {
+                element.classList.remove('selected');
+            }
+        }
+
+        function saveAvailability() {
+            const selectedLocations = Array.from(document.querySelectorAll('.location-item.selected'))
+                .map(loc => loc.querySelector('.location-name').textContent);
+            
+            const availabilityCount = Object.keys(availableDates).length;
+            
+            alert(`Availability Settings Saved!\n\nLocations: ${selectedLocations.length} selected\nAvailable Days: ${availabilityCount} days\n\nUsers can now book sessions with you at these times and locations.`);
+        }
+
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.getElementById('availabilityTab').style.display = 'none';
+            document.getElementById('sessionsTab').style.display = 'none';
+            document.getElementById('historyTab').style.display = 'none';
+            document.getElementById('certificateTab').style.display = 'none';
+
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+
+            // Show selected tab
+            if (tabName === 'availability') {
+                document.getElementById('availabilityTab').style.display = 'block';
+                document.querySelectorAll('.tab')[0].classList.add('active');
+            } else if (tabName === 'sessions') {
+                document.getElementById('sessionsTab').style.display = 'block';
+                document.querySelectorAll('.tab')[1].classList.add('active');
+            } else if (tabName === 'history') {
+                document.getElementById('historyTab').style.display = 'block';
+                document.querySelectorAll('.tab')[2].classList.add('active');
+            } else if (tabName === 'certificate') {
+                document.getElementById('certificateTab').style.display = 'block';
+                document.querySelectorAll('.tab')[3].classList.add('active');
+            }
+        }
+
+        function logSession(event) {
+            event.preventDefault();
+            completedSessions++;
+            
+            // Update stats
+            document.getElementById('completedSessions').textContent = completedSessions;
+            document.getElementById('sessionsToGo').textContent = Math.max(0, 25 - completedSessions);
+            
+            const progress = (completedSessions / 25) * 100;
+            document.querySelectorAll('.progress-fill').forEach(bar => {
+                bar.style.width = progress + '%';
+            });
+            
+            // Update certificate tab
+            document.getElementById('certProgress').textContent = completedSessions;
+            
+            if (completedSessions >= 25) {
+                document.getElementById('claimCertBtn').disabled = false;
+                document.getElementById('certMessage').textContent = 'Congratulations! You can now claim your certificate.';
+                document.getElementById('certMessage').style.color = '#4CAF50';
+            } else {
+                document.getElementById('certMessage').textContent = 
+                    `Complete ${25 - completedSessions} more sessions to unlock your certificate`;
+            }
+            
+            alert('Session logged successfully!\n\nYour progress has been updated.');
+            event.target.reset();
+        }
+
+        function claimCertificate() {
+            alert('🎉 Congratulations!\n\nYour DigiCoach Certificate is being generated.\n\nYou will receive an email with:\n- Official PDF certificate\n- Digital badge for LinkedIn\n- Letter of recommendation\n\nThank you for your dedication to helping Munich residents!');
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                alert('Logging out...\n\nRedirecting to login page.');
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Initialize calendar on load
+        generateCalendar();
+    </script>
+</body>
+</html>

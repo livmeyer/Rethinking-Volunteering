@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer Login | Munich DigiCoach</title>
+    <link rel="stylesheet" href="volunteer-styles.css">
+</head>
+<body class="auth-page">
+
+    <header class="header">
+        <div class="header-content">
+            <a href="Index.html" class="logo">
+                <img class="logo-icon" src="logo.svg" alt="DigiCoach Logo">
+                <span class="logo-text">BeurocraticHelper Munich</span>
+            </a>
+            
+            <div class="header-actions">
+                <a href="Index.html" class="volunteer-login-btn" style="background-color: transparent; border: 1px solid #fff; color: #fff;">
+                    &larr; Back to Home
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="auth-container">
+        
+        <div id="loginSection" class="auth-card">
+            <div class="auth-header">
+                <h2>Volunteer Login</h2>
+                <p>Access your DigiCoach dashboard</p>
+            </div>
+            
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" required placeholder="name@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="login-btn">Login to Dashboard</button>
+                
+                <div class="signup-link">
+                    Don't have an account? <a href="#" id="showSignupBtn">Sign up as volunteer</a>
+                </div>
+            </form>
+        </div>
+
+        <div id="signupSection" class="auth-card" style="display: none;">
+            <div class="auth-header">
+                <h2>Become a Volunteer</h2>
+                <p>Join the Munich DigiCoach team</p>
+            </div>
+            
+            <form class="login-form" id="signupForm">
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" required placeholder="Max Mustermann">
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email Address</label>
+                    <input type="email" id="signupEmail" required placeholder="name@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="login-btn">Create Volunteer Account</button>
+                
+                <div class="signup-link">
+                    Already have an account? <a href="#" id="showLoginBtn">Login here</a>
+                </div>
+            </form>
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 City of Munich | DigiCoach Program</p>
+    </footer>
+
+    <script src="login-script.js"></script>
+</body>
+</html>
