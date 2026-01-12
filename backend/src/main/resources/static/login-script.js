@@ -1,7 +1,3 @@
-/* File: login-script.js
-   Purpose: Handles interactions for the Volunteer Login/Signup page
-   Backend Endpoints: /api/volunteers/login, /api/volunteers/registration
-*/
 
 document.addEventListener('DOMContentLoaded', () => {
     
@@ -25,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
         loginSection.style.display = 'block';
     });
 
-    // --- Form Submission Logic ---
     
     // 1. Handle Login
     const loginForm = document.getElementById('loginForm');
@@ -42,17 +37,21 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.disabled = true;
 
         try {
-            // UPDATED ENDPOINT
             const response = await fetch('/api/volunteers/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password })
             });
 
-            const data = await response.json();
+            let data;
+            const contentType = response.headers.get("content-type");
+            if (contentType && contentType.indexOf("application/json") !== -1) {
+                data = await response.json();
+            } else {
+                data = { success: response.ok, message: await response.text() };
+            }
 
-            if (data.success) {
-                // Redirect to dashboard on success
+            if (response.ok && (data.success || data.id)) {
                 window.location.href = 'volunteer-dashboard.html'; 
             } else {
                 alert(data.message || "Invalid credentials. Please try again.");
@@ -74,38 +73,36 @@ document.addEventListener('DOMContentLoaded', () => {
         const name = document.getElementById('signupName').value;
         const email = document.getElementById('signupEmail').value;
         const password = document.getElementById('signupPassword').value;
-        const phone = document.getElementById('signupPhone').value;
+        
         
         const submitBtn = signupForm.querySelector('button');
         const originalText = submitBtn.textContent;
 
-        // UI Feedback
         submitBtn.textContent = "Creating Account...";
         submitBtn.disabled = true;
 
         try {
-            // UPDATED ENDPOINT
             const response = await fetch('/api/volunteers/registration', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
+                // Only sending fields that exist in your Volunteer.java
                 body: JSON.stringify({ 
-                    name, 
-                    email, 
-                    password,
-                    phone 
+                    name: name, 
+                    email: email, 
+                    password: password
                 })
             });
 
-            const data = await response.json();
-
-            if (data.success) {
-                alert(`Account Created!\n\nWelcome, ${name}.\nPlease check your email (${email}) to verify your account.`);
+            // Handle response
+            if (response.ok) {
+                alert(`Account Created!\n\nWelcome, ${name}.\nPlease login with your new credentials.`);
                 
                 // Automatically switch back to login view
                 signupSection.style.display = 'none';
                 loginSection.style.display = 'block';
             } else {
-                alert("Registration failed: " + (data.message || "Unknown error"));
+                const errorData = await response.text(); // Get server error message
+                alert("Registration failed: " + errorData);
             }
         } catch (error) {
             console.error('Registration error:', error);
