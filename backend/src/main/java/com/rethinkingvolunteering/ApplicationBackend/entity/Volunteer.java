@@ -18,9 +18,10 @@ public class Volunteer {
     private String password;
 
     @OneToMany(mappedBy="volunteer")
-    private List<TimeSlot> timeSlots;
+    private List<TimeSlot> appointments;
 
     private int appointmentCount;
+
 
     public Volunteer(){
 
@@ -31,6 +32,7 @@ public class Volunteer {
         this.email = email;
         this.password = password;
         this.appointmentCount = 0;
+        this.appointments = null;
     }
 
     public void setId(Long id) {
@@ -72,6 +74,8 @@ public class Volunteer {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public List<TimeSlot> getAppointments() { return this.appointments; }
 
     @Override
     public String toString() {
