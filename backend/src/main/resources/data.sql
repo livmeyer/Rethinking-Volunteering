@@ -24,3 +24,6 @@ INSERT INTO time_slot (id, start_time, end_time, volunteer_id, topic, location, 
                                                                                                               (11, '2025-01-18 09:00:00', '2025-01-18 09:30:00', 1, 'TECHNIK', 'MUENCHEN_ZENTRUM', true, 'Peter Huber'),
                                                                                                               (12, '2025-01-18 10:00:00', '2025-01-18 10:30:00', 2, 'ANMELDUNG', 'MUENCHEN_NORD', true, 'Maria Klein'),
                                                                                                               (13, '2025-01-19 14:00:00', '2025-01-19 14:30:00', 3, 'MVV', 'MUENCHEN_SUED', true, 'Thomas Braun');
+
+ALTER TABLE volunteer ALTER COLUMN id RESTART WITH 100;
+ALTER TABLE time_slot ALTER COLUMN id RESTART WITH 100;

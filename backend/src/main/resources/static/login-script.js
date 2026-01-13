@@ -87,7 +87,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify({ name, email, password })
             });
 
-            if (response.ok) {
+            const data = await response.json();
+
+            if (data.success === true) {
                 // Your controller returns the Volunteer object, which means success
                 alert(`Account Created!\n\nWelcome, ${name}.\nPlease login with your new credentials.`);
                 signupSection.style.display = 'none';
