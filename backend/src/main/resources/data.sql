@@ -1,9 +1,9 @@
 -- ===== VOLUNTEERS =====
 -- Passwort ist jeweils "password123"
 INSERT INTO volunteer (id, email, password, name, appointment_count) VALUES
-                                                                         (1, 'anna@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMye1lXhKolq9J5GSioePMHEUdF3kKs6qNu', 'Anna Schmidt', 0),
-                                                                         (2, 'max@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMye1lXhKolq9J5GSioePMHEUdF3kKs6qNu', 'Max Müller', 8),
-                                                                         (3, 'lisa@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMye1lXhKolq9J5GSioePMHEUdF3kKs6qNu', 'Lisa Weber', 5);
+                                                                         (1, 'anna@example.com', '', 'Anna Schmidt', 0),
+                                                                         (2, 'max@example.com', '', 'Max Müller', 8),
+                                                                         (3, 'lisa@example.com', '', 'Lisa Weber', 5);
 
 -- ===== TIMESLOTS =====
 -- Verfügbare Termine
