@@ -65,7 +65,7 @@ public class VolunteerService {
         Map<String, Object> m = new HashMap<>();
         m.put("upcoming", getUpcomingAppointments(v));
         m.put("past", getPastAppointments(v));
-        m.put("progress", (double) (getPastAppointments(v).size() / 25));
+        m.put("progress", getPastAppointments(v).size() / 25.0);
         return m;
     }
 

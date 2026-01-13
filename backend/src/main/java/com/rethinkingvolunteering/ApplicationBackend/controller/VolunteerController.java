@@ -62,7 +62,9 @@ public class VolunteerController {
             );
         }
 
-        return volunteerService.getDashboard(v);
+        Map<String, Object> d = volunteerService.getDashboard(v);
+        System.out.println(d); //testing
+        return d;
     }
 
     public record VolunteerRegisterRequest(String name, String email, String password) {}
