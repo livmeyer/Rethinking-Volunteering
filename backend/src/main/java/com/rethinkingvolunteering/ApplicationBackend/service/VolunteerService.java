@@ -7,7 +7,9 @@ import com.rethinkingvolunteering.ApplicationBackend.repository.VolunteerReposit
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -54,6 +56,14 @@ public class VolunteerService {
 
     public List<TimeSlot> getPastAppointments(Volunteer v) {
         return timeSlotRepository.getTimeSlotsByVolunteerId(v.getId());
+    }
+
+    public Map<String, Object> getDashboard(Volunteer v) {
+        Map<String, Object> m = new HashMap<>();
+        m.put("upcoming", getUpcomingAppointments(v));
+        m.put("past", getPastAppointments(v));
+        m.put("progress", (double) (getPastAppointments(v).size() / 25));
+        return m;
     }
 
 
