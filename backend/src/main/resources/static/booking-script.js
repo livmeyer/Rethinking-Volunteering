@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
         case "New in Munich": selectedCategoryEnum = "NEW_IN_MUNICH"; break;
         case "Travel": selectedCategoryEnum = "TRAVEL"; break;
         case "Documents": selectedCategoryEnum = "DOCUMENTS"; break;
-        case "General": selectedCategoryEnum = "GENERAL"; break; 
+        case "General": selectedCategoryEnum = "GENERAL"; break;
         default: selectedCategoryEnum = null;
     }
 });
@@ -188,12 +188,12 @@ async function confirmBooking() {
     btn.disabled = true;
 
     try {
-        const response = await fetch('/api/appointments/book', {
-            method: 'POST',
+        const response = await fetch('/api/timeslots/book', {
+            method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
                 slotId: selectedSlotId,
-                customerName: "Guest Citizen" 
+                customerName: "Test Customer"
             })
         });
 

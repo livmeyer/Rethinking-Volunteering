@@ -49,11 +49,12 @@ public class TimeSlotController {
     }
 
     @PutMapping("/book")
-    public Map<String, Boolean> bookTimeSlot(@RequestParam TimeSlot timeSlot) {
+    public Map<String, Boolean> bookTimeSlot(@RequestBody TimeSlotToBook timeSlot) {
         return timeSlotService.bookTimesSlot(timeSlot);
     }
     
     public record GetLocationsRequest(Topic topic) {}
+    public record TimeSlotToBook(int slotId, String customerName) {}
     public record GetDatesRequest(Topic topic, Location location) {}
     public record getAvailableDates(Topic topic, Location location) {}
     public record GetTimeslotsRequest(Topic topic, Location location, @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {}

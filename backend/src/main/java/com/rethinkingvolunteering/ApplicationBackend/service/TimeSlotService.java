@@ -37,7 +37,6 @@ public class TimeSlotService {
 
     public List<TimeSlot> getAvailableDates(Topic topic, Location location) {
         List<TimeSlot> temp = timeSlotRepository.findByTopicAndLocation(topic, location);
-        System.out.println("TimeSlotsFound: " + temp.size());
         return temp;
     }
 
@@ -66,10 +65,12 @@ public class TimeSlotService {
         return timeSlot;
     }
 
-    public Map<String, Boolean> bookTimesSlot(TimeSlot timeSlot) {
-        Optional<TimeSlot> optionalTimeSlot = timeSlotRepository.findById(timeSlot.getId());
+    public Map<String, Boolean> bookTimesSlot(TimeSlotController.TimeSlotToBook timeSlotToBook) {
+        Optional<TimeSlot> optionalTimeSlot = timeSlotRepository.findById(timeSlotToBook.slotId());
         if  (optionalTimeSlot.isPresent() && !optionalTimeSlot.get().isBooked()) {
             optionalTimeSlot.get().setBooked(true);
+            optionalTimeSlot.get().setCustomerName(timeSlotToBook.customerName());
+            System.out.println("TimeSlot to be booked: " + optionalTimeSlot.get().getId());
             timeSlotRepository.save(optionalTimeSlot.get());
         }
         return Map.of("Success", Boolean.FALSE);
