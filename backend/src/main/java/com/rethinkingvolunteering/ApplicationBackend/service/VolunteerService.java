@@ -41,7 +41,7 @@ public class VolunteerService {
     }
 
     public void addAppointment(Volunteer v, TimeSlot timeslot) {
-        timeslot.setVolunteer(v);
+        timeslot.setVolunteerId(v.getId());
     }
 
     public List<TimeSlot> getUpcomingAppointments(Volunteer v) {

@@ -18,7 +18,7 @@ public class TimeSlot {
     private LocalDateTime endTime;
 
     @ManyToOne
-    private Volunteer volunteer;
+    private int volunteerId;
 
     @Enumerated(EnumType.STRING)
     private Topic topic;
@@ -34,8 +34,8 @@ public class TimeSlot {
 
     }
 
-    public TimeSlot(Volunteer volunteer, Topic topic, Location location, LocalDateTime startTime, LocalDateTime endTime) {
-        this.volunteer = volunteer;
+    public TimeSlot(int volunteerId, Topic topic, Location location, LocalDateTime startTime, LocalDateTime endTime) {
+        this.volunteerId = volunteerId;
         this.location = location;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -92,12 +92,12 @@ public class TimeSlot {
         this.topic = topic;
     }
 
-    public Volunteer getVolunteer() {
-        return volunteer;
+    public int getVolunteerId() {
+        return volunteerId;
     }
 
-    public void setVolunteer(Volunteer volunteer) {
-        this.volunteer = volunteer;
+    public void setVolunteerId(int volunteerId) {
+        this.volunteerId = volunteerId;
     }
 
     public Location getLocation() {

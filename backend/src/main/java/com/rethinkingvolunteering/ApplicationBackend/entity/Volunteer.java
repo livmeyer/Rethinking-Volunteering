@@ -10,7 +10,7 @@ public class Volunteer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     private String name;
 
@@ -18,7 +18,7 @@ public class Volunteer {
 
     private String password;
 
-    @OneToMany(mappedBy="volunteer")
+    @OneToMany(mappedBy="volunteerId")
     private List<TimeSlot> appointments;
 
 
@@ -44,11 +44,11 @@ public class Volunteer {
         this.appointmentCount = 0;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 

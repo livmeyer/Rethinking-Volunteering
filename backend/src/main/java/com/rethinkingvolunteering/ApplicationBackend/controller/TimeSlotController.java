@@ -1,7 +1,7 @@
 package com.rethinkingvolunteering.ApplicationBackend.controller;
 
 
-import com.rethinkingvolunteering.ApplicationBackend.entity.TimeSlot;
+
 import com.rethinkingvolunteering.ApplicationBackend.enums.Location;
 import com.rethinkingvolunteering.ApplicationBackend.repository.TimeSlotRepository;
 import com.rethinkingvolunteering.ApplicationBackend.service.TimeSlotService;
@@ -40,6 +40,4 @@ public class TimeSlotController {
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return this.timeSlotService.getAvailableTimeSlots(location, date);
     }
-
-
 }
