@@ -26,11 +26,22 @@ public class Volunteer {
 
     }
 
+    public int getAppointmentCount() {
+        return appointmentCount;
+    }
+
+    public void setAppointmentCount(int appointmentCount) {
+        this.appointmentCount = appointmentCount;
+    }
+
+    private int appointmentCount;
+
     public Volunteer(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.appointments = new ArrayList<>();
+        this.appointmentCount = 0;
     }
 
     public void setId(Long id) {
