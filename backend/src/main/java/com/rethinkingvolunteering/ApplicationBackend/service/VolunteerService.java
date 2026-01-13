@@ -55,7 +55,7 @@ public class VolunteerService {
     }
 
     public List<TimeSlot> getPastAppointments(Volunteer v) {
-        return timeSlotRepository.getTimeSlotsByVolunteerId(v.getId());
+        return timeSlotRepository.getPastTimeSlotsByVolunteerId(v.getId(), LocalDateTime.now());
     }
 
     public Map<String, Object> getDashboard(Volunteer v) {
