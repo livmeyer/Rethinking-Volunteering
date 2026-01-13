@@ -38,8 +38,8 @@ public class VolunteerController {
     }
 
     @PostMapping("/newAppointment")
-    public boolean newAppointment(@RequestBody AddAppointmentRequest body) {
-        return true;
+    public void newAppointment(@RequestBody AddAppointmentRequest body) {
+//        volunteerService.addAppointment(body.id(), body.timeSlot());
     }
 
     public record VolunteerRegisterRequest(String name, String email, String password) {}

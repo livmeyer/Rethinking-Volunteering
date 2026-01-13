@@ -1,5 +1,6 @@
 package com.rethinkingvolunteering.ApplicationBackend.service;
 
+import com.rethinkingvolunteering.ApplicationBackend.entity.TimeSlot;
 import com.rethinkingvolunteering.ApplicationBackend.entity.Volunteer;
 import com.rethinkingvolunteering.ApplicationBackend.repository.VolunteerRepository;
 import org.springframework.stereotype.Service;
@@ -33,5 +34,9 @@ public class VolunteerService {
         v.setPassword(cleanPassword);
 
         return volunteerRepository.save(v);
+    }
+
+    public void addAppointment(Volunteer volunteer, TimeSlot timeslot) {
+        timeslot.setVolunteer(volunteer);
     }
 }

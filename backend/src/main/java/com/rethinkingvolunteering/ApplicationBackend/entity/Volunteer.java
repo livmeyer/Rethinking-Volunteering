@@ -2,6 +2,7 @@ package com.rethinkingvolunteering.ApplicationBackend.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,8 +21,6 @@ public class Volunteer {
     @OneToMany(mappedBy="volunteer")
     private List<TimeSlot> appointments;
 
-    private int appointmentCount;
-
 
     public Volunteer(){
 
@@ -31,8 +30,7 @@ public class Volunteer {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.appointmentCount = 0;
-        this.appointments = null;
+        this.appointments = new ArrayList<>();
     }
 
     public void setId(Long id) {
@@ -43,13 +41,6 @@ public class Volunteer {
         return id;
     }
 
-    public int getAppointmentCount() {
-        return appointmentCount;
-    }
-
-    public void setAppointmentCount(int appointmentCount) {
-        this.appointmentCount = appointmentCount;
-    }
 
     public String getEmail() {
         return email;
@@ -83,7 +74,7 @@ public class Volunteer {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
-                ", appointmentCount=" + appointmentCount +
+                ", appointmentCount=" + appointments.size() +
                 '}';
     }
 }
