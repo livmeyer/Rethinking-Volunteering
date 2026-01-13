@@ -41,12 +41,12 @@ public class TimeSlotController {
         return this.timeSlotService.getAvailableTimeSlots(req.topic, req.location, req.date);
     }
 
-    @PostMapping("timeslot")
+    @PostMapping("/timeslot")
     public TimeSlot createTimeSlot(@RequestBody PostTimeSlot req) {
         return timeSlotService.createTimeSlot(req.volunteer, req.topic, req.location, req.time);
     }
 
-    @PutMapping("book")
+    @PutMapping("/book")
     public Map<String, Boolean> bookTimeSlot(TimeSlot timeSlot) {
         return timeSlotService.bookTimesSlot(timeSlot);
     }
