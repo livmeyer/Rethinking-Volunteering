@@ -46,10 +46,6 @@ public class VolunteerService {
         return volunteerRepository.save(v);
     }
 
-    public void addAppointment(Volunteer v, TimeSlot timeslot) {
-        timeslot.setVolunteerId(v.getId());
-    }
-
     public List<TimeSlot> getUpcomingAppointments(Volunteer v) {
         return timeSlotRepository.getUpcomingTimeSlotsByVolunteerId(v.getId(), LocalDateTime.now());
     }

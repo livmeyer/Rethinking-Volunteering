@@ -32,7 +32,7 @@ public class TimeSlotController {
     }
 
     @GetMapping("/dates")
-    public List<LocalDate> getAvailableDates(@RequestParam GetDatesRequest req) {
+    public List<LocalDate> getAvailableDates(@RequestBody GetDatesRequest req) {
         return this.timeSlotService.getAvailableDates(req.topic, req.location);
     }
 
@@ -53,6 +53,7 @@ public class TimeSlotController {
 
     public record GetLocationsRequest(Topic topic) {}
     public record GetDatesRequest(Topic topic, Location location) {}
+    public record getAvailableDates(Topic topic, Location location) {}
     public record GetTimeslotsRequest(Topic topic, Location location, @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {}
     public record PostTimeSlot(Volunteer volunteer,  Topic topic, Location location, LocalDateTime time) {}
 }
