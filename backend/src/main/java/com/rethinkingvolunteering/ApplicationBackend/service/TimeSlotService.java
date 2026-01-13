@@ -35,11 +35,10 @@ public class TimeSlotService {
                 .distinct().toList();
     }
 
-    public List<LocalDate> getAvailableDates(Topic topic, Location location) {
-        return timeSlotRepository.findByTopicAndLocation(topic, location).stream()
-                .filter(o->!o.isBooked())
-                .map(o -> o.getStartTime().toLocalDate())
-                .sorted().collect(Collectors.toList());
+    public List<TimeSlot> getAvailableDates(Topic topic, Location location) {
+        List<TimeSlot> temp = timeSlotRepository.findByTopicAndLocation(topic, location);
+        System.out.println("TimeSlotsFound: " + temp.size());
+        return temp;
     }
 
     public List<LocalDateTime> getAvailableTimeSlots(Topic topic, Location location, LocalDate date) {

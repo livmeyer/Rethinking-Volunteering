@@ -29,8 +29,8 @@ public class TimeSlotController {
     }
 
     @GetMapping("/dates")
-    public List<LocalDate> getAvailableDates(@RequestBody GetDatesRequest req) {
-        return this.timeSlotService.getAvailableDates(req.topic, req.location);
+    public List<TimeSlot> getAvailableDates(@RequestParam Topic topic, @RequestParam Location location) {
+        return this.timeSlotService.getAvailableDates(topic, location);
     }
 
     @GetMapping("/timeslots")
