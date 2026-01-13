@@ -4,10 +4,10 @@ public enum Topic {
 
     // Add Topics here
 
-    BUERGERSERVICE("Bürgerservice", "Hilfe bei Formulare und Anträgen"),
-    ANMELDUNG("Anmeldung/KVR", "Hilfe bei An-/Ummeldung und mehr"),
-    MVV("Öffentlicher Nahverkehr/MVV", "Hilfe zur MVV/MVG App, Tickets und Abos"),
-    TECHNIK("Technische Hilfe", "Hilfe zu Smartphone, Computer, Internet & Software");
+    DOCUMENTS_REGISTRATION("Documents & Registration", "Government, IDs, Registration"),
+    TICKETS_TRAVEL("Tickets & Travel", "MVV, Deutschlandticket, Parking"),
+    NEW_IN_MUNICH("New in Munich", "Registration, Integration, Orientation"),
+    GENERAL_QUESTIONS("General Questions", "Other digital assistance");
 
 
     private final String displayName;
