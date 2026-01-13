@@ -4,10 +4,10 @@ public enum Topic {
 
     // Add Topics here
 
-    DOCUMENTS_REGISTRATION("Documents & Registration", "Government, IDs, Registration"),
-    TICKETS_TRAVEL("Tickets & Travel", "MVV, Deutschlandticket, Parking"),
+    DOCUMENTS("Documents & Registration", "Government, IDs, Registration"),
+    TRAVEL("Tickets & Travel", "MVV, Deutschlandticket, Parking"),
     NEW_IN_MUNICH("New in Munich", "Registration, Integration, Orientation"),
-    GENERAL_QUESTIONS("General Questions", "Other digital assistance");
+    GENERAL("General Questions", "Other digital assistance");
 
 
     private final String displayName;

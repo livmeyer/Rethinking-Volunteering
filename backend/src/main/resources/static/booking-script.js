@@ -1,7 +1,7 @@
 /* File: booking-script.js */
 
 // State variables
-let currentCategoryEnum = "GENERAL"; 
+let selectedCategoryEnum = null;
 let selectedLocationEnum = null;     
 let selectedSlotId = null;           
 let availableSlots = []; // Stores the raw data from backend
@@ -14,9 +14,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Optional: Just for display purposes
     if(catParam) {
         const displayCategory = catParam.replace(/([A-Z])/g, ' $1').trim();
+        selectedCategoryEnum = displayCategory;
         document.getElementById('selectedCategoryDisplay').textContent = "Service: " + displayCategory;
     } else {
         document.getElementById('selectedCategoryDisplay').textContent = "General Assistance";
+    }
+    switch(selectedCategoryEnum) {
+        case "New in Munich": selectedCategoryEnum = "NEW_IN_MUNICH"; break;
+        case "Travel": selectedCategoryEnum = "TRAVEL"; break;
+        case "Documents": selectedCategoryEnum = "DOCUMENTS"; break;
+        case "General": selectedCategoryEnum = "GENERAL"; break;
+        default: selectedCategoryEnum = null;
     }
 });
 
@@ -28,6 +36,7 @@ function selectLocation(element, backendEnum, prettyName) {
     
     // State Update
     selectedLocationEnum = backendEnum;
+
     
     // Reset & Disable subsequent steps
     resetSteps();
@@ -52,12 +61,15 @@ async function fetchAvailableSlots() {
     try {
         // CALLING THE BACKEND
         // We fetch ALL available slots for this location
-        const response = await fetch(`/api/timeslots/dates=${selectedLocationEnum}`);
+            const response = await fetch(`/api/timeslots/dates?topic=${selectedCategoryEnum}&location=${selectedLocationEnum}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        });
         
-        if (!response.ok) throw new Error("Network response was not ok");
+        // if (!response.ok) throw new Error("Network response was not ok");
         
         availableSlots = await response.json();
-        
+
         // Unlock Step 2
         document.getElementById('dateStep').classList.remove('disabled-step');
         
@@ -93,7 +105,7 @@ function renderCalendar() {
         
         // CHECK AVAILABILITY: Does our backend data contain this date?
         // We look for ANY slot in availableSlots that starts on this date
-        const hasSlots = availableSlots.some(slot => slot.startTime.startsWith(dateKey) && !slot.booked);
+            const hasSlots = availableSlots.some(slot => slot.startTime.startsWith(dateKey));
 
         const dayEl = document.createElement('div');
         dayEl.className = 'calendar-day';
@@ -176,12 +188,12 @@ async function confirmBooking() {
     btn.disabled = true;
 
     try {
-        const response = await fetch('/api/appointments/book', {
-            method: 'POST',
+        const response = await fetch('/api/timeslots/book', {
+            method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
                 slotId: selectedSlotId,
-                customerName: "Guest Citizen" 
+                customerName: "Test Customer"
             })
         });
 

@@ -29,8 +29,8 @@ public class TimeSlotController {
     }
 
     @GetMapping("/dates")
-    public List<LocalDate> getAvailableDates(@RequestBody GetDatesRequest req) {
-        return this.timeSlotService.getAvailableDates(req.topic, req.location);
+    public List<TimeSlot> getAvailableDates(@RequestParam Topic topic, @RequestParam Location location) {
+        return this.timeSlotService.getAvailableDates(topic, location);
     }
 
     @GetMapping("/timeslots")
@@ -49,11 +49,12 @@ public class TimeSlotController {
     }
 
     @PutMapping("/book")
-    public Map<String, Boolean> bookTimeSlot(@RequestParam TimeSlot timeSlot) {
+    public Map<String, Boolean> bookTimeSlot(@RequestBody TimeSlotToBook timeSlot) {
         return timeSlotService.bookTimesSlot(timeSlot);
     }
     
     public record GetLocationsRequest(Topic topic) {}
+    public record TimeSlotToBook(int slotId, String customerName) {}
     public record GetDatesRequest(Topic topic, Location location) {}
     public record GetTimeslotsRequest(Topic topic, Location location, @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {}
     public record GetBookedSessions(Volunteer volunteer) {}
