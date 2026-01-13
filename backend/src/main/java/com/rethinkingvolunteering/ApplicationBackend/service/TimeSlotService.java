@@ -23,11 +23,9 @@ import java.util.stream.Collectors;
 public class TimeSlotService {
 
     private final TimeSlotRepository timeSlotRepository;
-    private final VolunteerRepository volunteerRepository;
 
     public TimeSlotService(TimeSlotRepository repository, VolunteerRepository volunteerRepository) {
         this.timeSlotRepository = repository;
-        this.volunteerRepository = volunteerRepository;
     }
 
     public List<Location> getAvailableLocations(Topic topic){
@@ -53,9 +51,15 @@ public class TimeSlotService {
                 .collect(Collectors.toList());
     }
 
-    public TimeSlot createTimeSlot(Volunteer volunteer, Topic topic, Location location, LocalDateTime time) {
+    public List<TimeSlot> getBookedSessions(Volunteer volunteer) {
+        return timeSlotRepository.findByVolunteerId(volunteer.getId()).stream()
+                .filter(o-> o.getStartTime().isBefore(LocalDateTime.now()) && o.isBooked())
+                .toList();
+    }
+
+    public TimeSlot createTimeSlot(int volunteerId, Topic topic, Location location, LocalDateTime time) {
         TimeSlot timeSlot = new TimeSlot();
-        timeSlot.setVolunteerId(volunteer.getId());
+        timeSlot.setVolunteerId(volunteerId);
         timeSlot.setTopic(topic);
         timeSlot.setLocation(location);
         timeSlot.setStartTime(time);

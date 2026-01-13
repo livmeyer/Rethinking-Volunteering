@@ -22,6 +22,8 @@ public interface TimeSlotRepository extends JpaRepository<TimeSlot, Integer> {
 
     List<TimeSlot> findByTopicAndLocation (Topic topic, Location location);
 
+    List<TimeSlot> findByVolunteerId (Integer id);
+
     Optional<TimeSlot> findById (Long Id);
 
     @Query("SELECT t FROM TimeSlot t WHERE t.volunteerId = :id AND t.startTime < :time")

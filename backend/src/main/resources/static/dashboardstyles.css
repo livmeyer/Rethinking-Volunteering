@@ -1,0 +1,306 @@
+/* --- Dashboard Page Specifics --- */
+.dashboard-page {
+    background-color: #f2f6fa; /* Munich light grey/blue bg */
+    min-height: 100vh;
+}
+
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 15px;
+}
+
+/* --- User Profile in Header --- */
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: #fff;
+}
+
+.user-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.logout-btn {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.5);
+    color: #fff;
+    padding: 5px 15px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+}
+
+.logout-btn:hover {
+    background: #fff;
+    color: var(--primary-color);
+}
+
+/* --- Dashboard Header --- */
+.dashboard-header {
+    margin-bottom: 2rem;
+}
+
+.dashboard-header h1 {
+    color: var(--primary-color);
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.dashboard-header p {
+    color: var(--body-color);
+}
+
+/* --- Stats Grid --- */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-bottom: 3rem;
+}
+
+/* .stat-card {
+    background: #fff;
+    padding: 1.5rem;
+    border: 1px solid var(--teaser-border-color);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.stat-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+.stat-number { font-size: 2.5rem; font-weight: 700; color: var(--primary-color); line-height: 1; margin-bottom: 5px; }
+.stat-label { font-size: 0.9rem; color: #666; font-weight: 600; } */
+
+.stat-icon {
+    /* Fixed size for uniformity */
+    width: 60px;
+    height: 60px;
+    
+    /* Ensures images don't look squashed/stretched */
+    object-fit: contain; 
+    
+    /* Center the image */
+    display: block;
+    margin: 0 auto 1rem auto; 
+    
+    /* Optional: Add a subtle transition if you want hover effects later */
+    transition: transform 0.2s;
+}
+
+/* Hover effect for the icon (Optional) */
+.stat-card:hover .stat-icon {
+    transform: scale(1.1);
+}
+
+.stat-number { 
+    font-size: 2.5rem; 
+    font-weight: 700; 
+    color: var(--primary-color); 
+    line-height: 1; 
+    margin-bottom: 5px;
+    text-align: center; /* Ensure number is centered */
+}
+
+.stat-label { 
+    font-size: 0.9rem; 
+    color: #666; 
+    font-weight: 600; 
+    text-align: center; /* Ensure text is centered */
+    display: block;
+}
+
+/* Progress Bar inside Card */
+.progress-bar-container {
+    background: #e1e4e8;
+    height: 8px;
+    border-radius: 4px;
+    margin-top: 15px;
+    overflow: hidden;
+}
+.progress-bar-fill {
+    background: #4CAF50; /* Green for success */
+    height: 100%;
+    border-radius: 4px;
+}
+.progress-text { font-size: 0.8rem; color: #888; margin-top: 5px; }
+
+/* --- Tabs --- */
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 0; /* Attach to content below */
+    flex-wrap: wrap;
+}
+
+.tab {
+    padding: 12px 25px;
+    background: #e1e4e8;
+    border: none;
+    border-radius: 4px 4px 0 0;
+    cursor: pointer;
+    font-weight: 600;
+    color: #555;
+    font-family: var(--headings-font-family);
+    transition: all 0.2s;
+}
+
+.tab:hover { background: #d1d5db; }
+.tab.active {
+    background: #fff;
+    color: var(--primary-color);
+    border-top: 3px solid var(--primary-color);
+}
+
+/* --- Tab Content Area --- */
+.tab-content {
+    background: #fff;
+    padding: 2.5rem;
+    border-radius: 0 4px 4px 4px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    min-height: 400px;
+}
+
+.section-title {
+    color: var(--primary-color);
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.subsection { margin-bottom: 2.5rem; }
+.subsection h3 { font-size: 1.1rem; margin-bottom: 1rem; color: #333; }
+
+/* --- Locations --- */
+.location-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px;
+}
+
+.location-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.location-item:hover { border-color: var(--primary-color); background: #f9fcff; }
+.location-item input[type="checkbox"] { transform: scale(1.2); }
+
+.location-name { font-weight: 700; color: #333; }
+.location-address { font-size: 0.9rem; color: #666; }
+
+/* --- Calendar (Simple Grid) --- */
+.calendar-wrapper { max-width: 500px; }
+.calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+.calendar-grid { 
+    display: grid; 
+    grid-template-columns: repeat(7, 1fr); 
+    gap: 5px; 
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    border: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 0.9rem;
+}
+.calendar-day:hover { border-color: var(--primary-color); color: var(--primary-color); }
+.calendar-day.available { background-color: #e8f5e9; border-color: #4CAF50; color: #2e7d32; font-weight: bold; }
+.calendar-day.other-month { color: #ccc; pointer-events: none; }
+
+/* --- Time Slots --- */
+.time-slots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+.time-slot {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 3px;
+}
+.time-slot.selected { background: var(--primary-color); color: #fff; border-color: var(--primary-color); }
+
+/* --- Buttons --- */
+.btn-primary {
+    background: var(--primary-button-bg-color);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+}
+.btn-primary:hover { background: var(--primary-button-hover-bg-color); }
+
+.btn-secondary {
+    background: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 10px 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+/* --- History List --- */
+.history-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+.history-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
+    min-width: 50px;
+    color: var(--primary-color);
+}
+.history-date .day { font-size: 1.5rem; font-weight: 700; line-height: 1; }
+.history-date .month { font-size: 0.8rem; font-weight: 700; }
+
+.history-info h4 { margin: 0 0 5px 0; font-size: 1.1rem; }
+.history-info p { margin: 0; color: #666; font-size: 0.9rem; }
+
+.history-status {
+    margin-left: auto;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+.history-status.completed { background: #e8f5e9; color: #2e7d32; }
+.history-status.upcoming { background: #fff3e0; color: #ef6c00; }
+
+/* --- Certificate Box --- */
+.cert-box { text-align: center; padding: 2rem; }
+.cert-icon { font-size: 4rem; margin-bottom: 1rem; }
+.cert-progress { max-width: 400px; margin: 2rem auto; }
+.progress-bar-container.large { height: 15px; }
+.cert-note { color: #888; font-size: 0.9rem; margin-top: 10px; }
+.btn-primary.disabled { background: #ccc; cursor: not-allowed; }
+
+/* Forms */
+.form-group { margin-bottom: 1.5rem; }
+.form-group label { display: block; margin-bottom: 5px; font-weight: 600; }
+.form-group input, .form-group select, .form-group textarea {
+    width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 3px;
+}
