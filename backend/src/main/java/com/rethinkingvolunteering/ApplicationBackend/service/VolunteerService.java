@@ -2,6 +2,7 @@ package com.rethinkingvolunteering.ApplicationBackend.service;
 
 import com.rethinkingvolunteering.ApplicationBackend.entity.TimeSlot;
 import com.rethinkingvolunteering.ApplicationBackend.entity.Volunteer;
+import com.rethinkingvolunteering.ApplicationBackend.repository.TimeSlotRepository;
 import com.rethinkingvolunteering.ApplicationBackend.repository.VolunteerRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +15,11 @@ public class VolunteerService {
 
     private final VolunteerRepository volunteerRepository;
 
-    public VolunteerService(VolunteerRepository volunteerRepository) {
+    private final TimeSlotRepository timeSlotRepository;
+
+    public VolunteerService(VolunteerRepository volunteerRepository, TimeSlotRepository timeSlotRepository) {
         this.volunteerRepository = volunteerRepository;
+        this.timeSlotRepository = timeSlotRepository;
     }
 
     public Volunteer registerVolunteer(String name, String email, String password) {
@@ -45,16 +49,11 @@ public class VolunteerService {
     }
 
     public List<TimeSlot> getUpcomingAppointments(Volunteer v) {
-        List<TimeSlot> a = v.getAppointments();
-        a.removeIf(x -> LocalDateTime.now().isAfter(x.getEndTime()));
-        return a;
+        return timeSlotRepository.getUpcomingTimeSlotsByVolunteerId(v.getId(), LocalDateTime.now());
     }
 
     public List<TimeSlot> getPastAppointments(Volunteer v) {
-        return v.getAppointments()
-                .stream()
-                .filter(x -> !getUpcomingAppointments(v).contains(x))
-                .toList();
+        return timeSlotRepository.getTimeSlotsByVolunteerId(v.getId());
     }
 
 

@@ -15,9 +15,6 @@ public class TimeSlot {
 
     private LocalDateTime startTime;
 
-    private LocalDateTime endTime;
-
-    @ManyToOne
     private int volunteerId;
 
     @Enumerated(EnumType.STRING)
@@ -34,11 +31,10 @@ public class TimeSlot {
 
     }
 
-    public TimeSlot(int volunteerId, Topic topic, Location location, LocalDateTime startTime, LocalDateTime endTime) {
+    public TimeSlot(int volunteerId, Topic topic, Location location, LocalDateTime startTime) {
         this.volunteerId = volunteerId;
         this.location = location;
         this.startTime = startTime;
-        this.endTime = endTime;
         this.topic = topic;
         this.isBooked = false;
         this.customerName = "";
@@ -50,14 +46,6 @@ public class TimeSlot {
 
     public Long getId() {
         return id;
-    }
-
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
     }
 
     public boolean isBooked() {

@@ -18,9 +18,6 @@ public class Volunteer {
 
     private String password;
 
-    @OneToMany(mappedBy="volunteerId")
-    private List<TimeSlot> appointments;
-
 
     public Volunteer(){
 
@@ -40,7 +37,6 @@ public class Volunteer {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.appointments = new ArrayList<>();
         this.appointmentCount = 0;
     }
 
@@ -77,15 +73,12 @@ public class Volunteer {
         this.password = password;
     }
 
-    public List<TimeSlot> getAppointments() { return this.appointments; }
-
     @Override
     public String toString() {
         return "Volunteer{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
-                ", appointmentCount=" + appointments.size() +
                 '}';
     }
 }
