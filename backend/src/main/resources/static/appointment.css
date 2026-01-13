@@ -250,6 +250,41 @@
     border-color: #fff;
 }
 
+/* Error State Styling */
+.calendar-error {
+    grid-column: 1 / -1; /* <--- THIS IS THE KEY FIX */
+    width: 100%;
+    text-align: center;
+    padding: 2rem;
+    color: #721c24; 
+    background-color: #f8d7da; 
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    box-sizing: border-box; /* Ensures padding doesn't break width */
+}
+
+.calendar-error p {
+    margin: 0 0 1rem 0;
+    font-weight: 600;
+}
+
+.retry-btn-small {
+    background: #fff;
+    color: #721c24;
+    border: 1px solid #721c24;
+    padding: 8px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.retry-btn-small:hover {
+    background: #721c24;
+    color: #fff;
+}
+
 /* Responsive */
 @media (max-width: 600px) {
     .options-grid, .calendar-wrapper, .time-slots {
@@ -262,3 +297,4 @@
         padding: 1.5rem;
     }
 }
+
