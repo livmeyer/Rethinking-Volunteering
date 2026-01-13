@@ -2,17 +2,21 @@ package com.rethinkingvolunteering.ApplicationBackend.service;
 
 import com.rethinkingvolunteering.ApplicationBackend.entity.TimeSlot;
 import com.rethinkingvolunteering.ApplicationBackend.entity.Volunteer;
+import com.rethinkingvolunteering.ApplicationBackend.repository.TimeSlotRepository;
 import com.rethinkingvolunteering.ApplicationBackend.repository.VolunteerRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 public class VolunteerService {
 
     private final VolunteerRepository volunteerRepository;
+//    private final TimeSlotRepository timeSlotRepository;
 
     public VolunteerService(VolunteerRepository volunteerRepository) {
         this.volunteerRepository = volunteerRepository;
@@ -40,21 +44,26 @@ public class VolunteerService {
         return volunteerRepository.save(v);
     }
 
-    public void addAppointment(Volunteer v, TimeSlot timeslot) {
-        timeslot.setVolunteerId(v.getId());
-    }
 
-    public List<TimeSlot> getUpcomingAppointments(Volunteer v) {
+    private List<TimeSlot> getUpcomingAppointments(Volunteer v) {
         List<TimeSlot> a = v.getAppointments();
         a.removeIf(x -> LocalDateTime.now().isAfter(x.getEndTime()));
         return a;
     }
 
-    public List<TimeSlot> getPastAppointments(Volunteer v) {
+    private List<TimeSlot> getPastAppointments(Volunteer v) {
         return v.getAppointments()
                 .stream()
-                .filter(x -> !getUpcomingAppointments(v).contains(x))
+                .filter(x -> x.attended())
                 .toList();
+    }
+
+    public Map<String, Object> getDashboard(Volunteer v) {
+        Map<String, Object> m = new HashMap<>();
+        m.put("upcoming", getUpcomingAppointments(v));
+        m.put("past", getPastAppointments(v));
+        m.put("progress", (double) (getPastAppointments(v).size() / 25));
+        return m;
     }
 
 

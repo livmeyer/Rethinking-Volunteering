@@ -4,9 +4,10 @@ import com.rethinkingvolunteering.ApplicationBackend.entity.TimeSlot;
 import com.rethinkingvolunteering.ApplicationBackend.entity.Volunteer;
 import com.rethinkingvolunteering.ApplicationBackend.repository.VolunteerRepository;
 import com.rethinkingvolunteering.ApplicationBackend.service.VolunteerService;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Map;
 
@@ -49,12 +50,21 @@ public class VolunteerController {
         return Map.of("success", ok);
     }
 
-    @PostMapping("/newAppointment")
-    public void newAppointment(@RequestBody AddAppointmentRequest body) {
-//        volunteerService.addAppointment(body.id(), body.timeSlot());
+    // Dashboard
+    @GetMapping("/dashboard")
+    public Map<String, Object> getDashboard(@RequestParam String email) {
+        Volunteer v = volunteerRepository.findByEmail(email);
+        if (v == null) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Volunteer not found with email: " + email
+            );
+        }
+
+        return volunteerService.getDashboard(v);
     }
+
 
     public record VolunteerRegisterRequest(String name, String email, String password) {}
     public record VolunteerLoginRequest(String email, String password) {}
-    public record AddAppointmentRequest(TimeSlot timeslot, Volunteer volunteer) {}
 }

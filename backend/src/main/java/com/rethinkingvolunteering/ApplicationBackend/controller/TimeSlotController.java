@@ -2,6 +2,8 @@ package com.rethinkingvolunteering.ApplicationBackend.controller;
 
 
 
+import com.rethinkingvolunteering.ApplicationBackend.entity.TimeSlot;
+import com.rethinkingvolunteering.ApplicationBackend.entity.Volunteer;
 import com.rethinkingvolunteering.ApplicationBackend.enums.Location;
 import com.rethinkingvolunteering.ApplicationBackend.repository.TimeSlotRepository;
 import com.rethinkingvolunteering.ApplicationBackend.service.TimeSlotService;
@@ -24,6 +26,20 @@ public class TimeSlotController {
         this.timeSlotService = timeSlotService;
     }
 
+    /*
+
+    @PostMapping("/addTimeSlot")
+    public void addTimeSlot(@RequestBody AddAppointmentRequest body) {
+        timeSlotService.addAppointment(
+                body.email(),
+                body.location(),
+                body.date(),
+                body.time(),
+                body.topic());
+    }
+
+     */
+
     @GetMapping("/locations")
     public List<Location> getAvailableLocations() {
         return this.timeSlotRepository.findAllLocations();
@@ -40,4 +56,7 @@ public class TimeSlotController {
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return this.timeSlotService.getAvailableTimeSlots(location, date);
     }
+
+    public record AddAppointmentRequest(TimeSlot timeslot, Volunteer volunteer) {}
+
 }

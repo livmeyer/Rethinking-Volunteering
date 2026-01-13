@@ -30,6 +30,8 @@ public class TimeSlot {
 
     private String customerName;
 
+    private boolean attended;
+
     public TimeSlot() {
 
     }
@@ -42,6 +44,7 @@ public class TimeSlot {
         this.topic = topic;
         this.isBooked = false;
         this.customerName = "";
+        this.attended = false;
     }
 
     public void setId(Long id) {
@@ -108,4 +111,11 @@ public class TimeSlot {
         this.location = location;
     }
 
+    public boolean attended() {
+        return attended;
+    }
+
+    public void setAttended(boolean wasAttended) {
+        this.attended = wasAttended;
+    }
 }
