@@ -1,6 +1,7 @@
 // dashboard.js (minimal)
 
 document.addEventListener("DOMContentLoaded", async () => {
+
     // Assume email is known
     const email = "anna@example.com"; // TODO: replace with dynamic email
 
