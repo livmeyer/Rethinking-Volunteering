@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -63,7 +64,6 @@ public class VolunteerController {
 
         return volunteerService.getDashboard(v);
     }
-
 
     public record VolunteerRegisterRequest(String name, String email, String password) {}
     public record VolunteerLoginRequest(String email, String password) {}

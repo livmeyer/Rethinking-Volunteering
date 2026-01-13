@@ -27,8 +27,9 @@ public class TimeSlot {
 
     private String customerName;
 
-    public TimeSlot() {
+    private boolean completed;
 
+    public TimeSlot() {
     }
 
     public TimeSlot(int volunteerId, Topic topic, Location location, LocalDateTime startTime) {
@@ -36,6 +37,7 @@ public class TimeSlot {
         this.location = location;
         this.startTime = startTime;
         this.topic = topic;
+        this.completed = false;
         this.isBooked = false;
         this.customerName = "";
     }
@@ -96,4 +98,11 @@ public class TimeSlot {
         this.location = location;
     }
 
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
 }

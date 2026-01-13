@@ -55,6 +55,7 @@ public class TimeSlotService {
 
     public TimeSlot createTimeSlot(Volunteer volunteer, Topic topic, Location location, LocalDateTime time) {
         TimeSlot timeSlot = new TimeSlot();
+        timeSlot.setVolunteerId(volunteer.getId());
         timeSlot.setTopic(topic);
         timeSlot.setLocation(location);
         timeSlot.setStartTime(time);

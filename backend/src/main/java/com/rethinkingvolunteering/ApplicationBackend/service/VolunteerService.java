@@ -58,6 +58,13 @@ public class VolunteerService {
         return timeSlotRepository.getPastTimeSlotsByVolunteerId(v.getId(), LocalDateTime.now());
     }
 
+    public void setCompleted(List<TimeSlot> completedTimeSlots) {
+        for(TimeSlot t: completedTimeSlots) {
+            t.setCompleted(true);
+            timeSlotRepository.save(t);
+        }
+    }
+
     public Map<String, Object> getDashboard(Volunteer v) {
         Map<String, Object> m = new HashMap<>();
         m.put("upcoming", getUpcomingAppointments(v));
