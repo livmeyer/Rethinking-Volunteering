@@ -3,6 +3,7 @@ package com.rethinkingvolunteering.ApplicationBackend.service;
 import com.rethinkingvolunteering.ApplicationBackend.entity.TimeSlot;
 import com.rethinkingvolunteering.ApplicationBackend.entity.Volunteer;
 import com.rethinkingvolunteering.ApplicationBackend.enums.Location;
+import com.rethinkingvolunteering.ApplicationBackend.enums.Topic;
 import com.rethinkingvolunteering.ApplicationBackend.repository.TimeSlotRepository;
 import com.rethinkingvolunteering.ApplicationBackend.repository.VolunteerRepository;
 import org.springframework.stereotype.Service;
@@ -24,14 +25,21 @@ public class TimeSlotService {
         this.volunteerRepository = volunteerRepository;
     }
 
-    public List<LocalDate> getAvailableDates(Location location) {
-        return timeSlotRepository.findByLocationEquals(location).stream()
+    public List<Location> getAvailableLocations(Topic topic){
+        return timeSlotRepository.findByTopic(topic).stream()
+                .filter(o->!o.isBooked())
+                .map(TimeSlot::getLocation)
+                .distinct().toList();
+    }
+
+    public List<LocalDate> getAvailableDates(Topic topic, Location location) {
+        return timeSlotRepository.findByTopicAndLocation(topic, location).stream()
                 .map(o -> o.getStartTime().toLocalDate())
                 .sorted().collect(Collectors.toList());
     }
 
-    public List<LocalDateTime> getAvailableTimeSlots(Location location, LocalDate date) {
-        return timeSlotRepository.findByLocationEquals(location).stream()
+    public List<LocalDateTime> getAvailableTimeSlots(Topic topic, Location location, LocalDate date) {
+        return timeSlotRepository.findByTopicAndLocation(topic, location).stream()
                 .map(TimeSlot::getStartTime)
                 .filter(startTime -> startTime.toLocalDate().equals(date))
                 .sorted()
