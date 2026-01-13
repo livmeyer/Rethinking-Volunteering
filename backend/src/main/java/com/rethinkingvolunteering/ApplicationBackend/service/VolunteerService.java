@@ -5,6 +5,10 @@ import com.rethinkingvolunteering.ApplicationBackend.entity.Volunteer;
 import com.rethinkingvolunteering.ApplicationBackend.repository.VolunteerRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class VolunteerService {
 
@@ -36,7 +40,22 @@ public class VolunteerService {
         return volunteerRepository.save(v);
     }
 
-    public void addAppointment(Volunteer volunteer, TimeSlot timeslot) {
-        timeslot.setVolunteer(volunteer);
+    public void addAppointment(Volunteer v, TimeSlot timeslot) {
+        timeslot.setVolunteer(v);
     }
+
+    public List<TimeSlot> getUpcomingAppointments(Volunteer v) {
+        List<TimeSlot> a = v.getAppointments();
+        a.removeIf(x -> LocalDateTime.now().isAfter(x.getEndTime()));
+        return a;
+    }
+
+    public List<TimeSlot> getPastAppointments(Volunteer v) {
+        return v.getAppointments()
+                .stream()
+                .filter(x -> !getUpcomingAppointments(v).contains(x))
+                .toList();
+    }
+
+
 }
