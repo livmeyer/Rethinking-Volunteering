@@ -1,113 +1,205 @@
-let selectedLocation = null;
-let selectedDate = null;
-let selectedTime = null;
-let currentCategory = "General"; // Default
+/* File: booking-script.js */
+
+// State variables
+let currentCategoryEnum = "GENERAL"; 
+let selectedLocationEnum = null;     
+let selectedSlotId = null;           
+let availableSlots = []; // Stores the raw data from backend
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Get Category from URL (e.g., appointment.html?category=Documents)
+    // 1. Get Category from URL
     const urlParams = new URLSearchParams(window.location.search);
-    const catParam = urlParams.get('category');
-    
-    if(catParam) {
-        currentCategory = catParam.replace(/([A-Z])/g, ' $1').trim(); // Add spaces if needed
-    }
-    
-    document.getElementById('selectedCategoryDisplay').textContent = "Category: " + currentCategory;
+    const catParam = urlParams.get('category'); 
 
-    // 2. Initialize Calendar
-    generateCalendar();
+    // Optional: Just for display purposes
+    if(catParam) {
+        const displayCategory = catParam.replace(/([A-Z])/g, ' $1').trim();
+        document.getElementById('selectedCategoryDisplay').textContent = "Service: " + displayCategory;
+    } else {
+        document.getElementById('selectedCategoryDisplay').textContent = "General Assistance";
+    }
 });
 
-// --- Selection Logic ---
-
-function selectLocation(element, locationName) {
-    // Visual selection
+// --- Step 1: Location Selection ---
+function selectLocation(element, backendEnum, prettyName) {
+    // UI Update
     document.querySelectorAll('.location-option').forEach(opt => opt.classList.remove('selected'));
     element.classList.add('selected');
     
-    // State update
-    selectedLocation = locationName;
-    checkConfirmButton();
-}
-
-function selectTime(element) {
-    document.querySelectorAll('.time-slot').forEach(slot => slot.classList.remove('selected'));
-    element.classList.add('selected');
-    selectedTime = element.textContent;
-    checkConfirmButton();
-}
-
-function generateCalendar() {
-    const calendar = document.getElementById('calendar');
-    calendar.innerHTML = '';
-    const today = new Date();
+    // State Update
+    selectedLocationEnum = backendEnum;
     
-    // Generate next 14 days
-    for (let i = 0; i < 14; i++) {
-        const date = new Date(today);
-        date.setDate(today.getDate() + i);
-        
-        // Skip weekends for bureaucracy? (Optional: remove if weekends allowed)
-        if(date.getDay() === 0 || date.getDay() === 6) continue;
+    // Reset & Disable subsequent steps
+    resetSteps();
 
-        const day = document.createElement('div');
-        day.className = 'calendar-day';
-        day.innerHTML = `<div>${date.toLocaleDateString('en-US', {weekday: 'short'})}</div><div>${date.getDate()}</div>`;
+    // Fetch Data
+    fetchAvailableSlots();
+}
+
+function resetSteps() {
+    selectedSlotId = null;
+    document.getElementById('calendar').innerHTML = '<p style="padding:1rem; color:#666;">Loading availability...</p>';
+    document.getElementById('timeSlots').innerHTML = '';
+    document.getElementById('confirmBtn').disabled = true;
+    
+    // Re-lock steps
+    document.getElementById('dateStep').classList.add('disabled-step');
+    document.getElementById('timeStep').classList.add('disabled-step');
+}
+
+// --- Step 2: Fetch Data from Backend ---
+async function fetchAvailableSlots() {
+    try {
+        // CALLING THE BACKEND
+        // We fetch ALL available slots for this location
+        const response = await fetch(`/api/timeslots/dates=${selectedLocationEnum}`);
         
-        day.onclick = function() {
-            document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
-            this.classList.add('selected');
-            selectedDate = date.toLocaleDateString('de-DE'); // DD.MM.YYYY
-            checkConfirmButton();
-        };
-        calendar.appendChild(day);
+        if (!response.ok) throw new Error("Network response was not ok");
+        
+        availableSlots = await response.json();
+        
+        // Unlock Step 2
+        document.getElementById('dateStep').classList.remove('disabled-step');
+        
+        renderCalendar();
+
+   } catch (error) {
+        console.error("Error fetching slots:", error);
+        
+        // Better looking error UI with a Retry button
+        document.getElementById('calendar').innerHTML = `
+            <div class="calendar-error">
+                <p>⚠️ Could not load appointments.</p>
+                <button class="retry-btn-small" onclick="fetchAvailableSlots()">Try Again</button>
+            </div>
+        `;
     }
 }
 
-function checkConfirmButton() {
-    const btn = document.getElementById('confirmBtn');
-    btn.disabled = !(selectedLocation && selectedDate && selectedTime);
+// --- Step 3: Render 30-Day Calendar ---
+function renderCalendar() {
+    const calendar = document.getElementById('calendar');
+    calendar.innerHTML = '';
+
+    const today = new Date();
+    
+    // Generate exactly 30 days
+    for (let i = 0; i < 30; i++) {
+        const dateObj = new Date(today);
+        dateObj.setDate(today.getDate() + i);
+        
+        // Format YYYY-MM-DD for comparison with backend data
+        const dateKey = dateObj.toISOString().split('T')[0];
+        
+        // CHECK AVAILABILITY: Does our backend data contain this date?
+        // We look for ANY slot in availableSlots that starts on this date
+        const hasSlots = availableSlots.some(slot => slot.startTime.startsWith(dateKey) && !slot.booked);
+
+        const dayEl = document.createElement('div');
+        dayEl.className = 'calendar-day';
+        
+        // Content
+        dayEl.innerHTML = `
+            <div>${dateObj.toLocaleDateString('en-US', {weekday: 'short'})}</div>
+            <div>${dateObj.getDate()}</div>
+        `;
+
+        // Interaction Logic
+        if (hasSlots) {
+            dayEl.onclick = function() {
+                // UI Selection
+                document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
+                this.classList.add('selected');
+                
+                // Unlock Step 3
+                document.getElementById('timeStep').classList.remove('disabled-step');
+                
+                // Render Times for this specific date
+                renderTimeSlots(dateKey);
+            };
+        } else {
+            // Disable if no slots
+            dayEl.classList.add('disabled');
+            dayEl.title = "No appointments available";
+        }
+
+        calendar.appendChild(dayEl);
+    }
 }
 
-// --- Backend Submission ---
+// --- Step 4: Render Time Slots ---
+function renderTimeSlots(selectedDateKey) {
+    const timeDiv = document.getElementById('timeSlots');
+    timeDiv.innerHTML = '';
+    
+    // Filter slots for the selected date
+    const slotsForDay = availableSlots.filter(slot => 
+        slot.startTime.startsWith(selectedDateKey) && !slot.booked
+    );
 
+    // Sort by time
+    slotsForDay.sort((a, b) => a.startTime.localeCompare(b.startTime));
+
+    if (slotsForDay.length === 0) {
+        timeDiv.innerHTML = '<p>No slots available.</p>';
+        return;
+    }
+
+    slotsForDay.forEach(slot => {
+        // Extract "09:00" from ISO string
+        const timeStr = slot.startTime.split('T')[1].substring(0, 5);
+
+        const slotEl = document.createElement('div');
+        slotEl.className = 'time-slot';
+        slotEl.textContent = timeStr;
+
+        slotEl.onclick = function() {
+            document.querySelectorAll('.time-slot').forEach(t => t.classList.remove('selected'));
+            this.classList.add('selected');
+            
+            // SAVE THE ID FOR BOOKING
+            selectedSlotId = slot.id; 
+            document.getElementById('confirmBtn').disabled = false;
+        };
+
+        timeDiv.appendChild(slotEl);
+    });
+}
+
+// --- Step 5: Confirm Booking ---
 async function confirmBooking() {
-    const confirmBtn = document.getElementById('confirmBtn');
-    confirmBtn.textContent = "Processing...";
-    confirmBtn.disabled = true;
+    if (!selectedSlotId) return;
 
-    const bookingData = {
-        category: currentCategory,
-        location: selectedLocation,
-        date: selectedDate,
-        time: selectedTime
-    };
+    const btn = document.getElementById('confirmBtn');
+    const originalText = btn.textContent;
+    btn.textContent = "Processing...";
+    btn.disabled = true;
 
     try {
-        // Send to your generic booking endpoint
-        // NOTE: Ensure your Java controller has an endpoint for this, 
-        // e.g. @PostMapping("/api/appointments")
-        const response = await fetch('/api/appointments', {
+        const response = await fetch('/api/appointments/book', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(bookingData)
+            body: JSON.stringify({ 
+                slotId: selectedSlotId,
+                customerName: "Guest Citizen" 
+            })
         });
 
-        const data = await response.json();
+        const success = await response.json(); 
 
-        if (response.ok) {
-            alert(`Appointment Confirmed!\n\nCategory: ${currentCategory}\nLocation: ${selectedLocation}\nDate: ${selectedDate}\nTime: ${selectedTime}`);
-            window.location.href = 'Index.html'; // Return to home
+        if (success) {
+            alert("✅ Appointment Confirmed!\n\nThe slot has been booked. Please check your email.");
+            window.location.href = 'Index.html';
         } else {
-            alert('Booking failed: ' + (data.message || 'Unknown error'));
+            alert("❌ Booking Failed.\nThis slot might have just been taken. Please try another.");
+            // Refresh data to show updated availability
+            fetchAvailableSlots(); 
         }
     } catch (error) {
-        console.error('Booking Error:', error);
-        // Fallback for demo if backend isn't ready
-        alert("Demo Confirmation:\nBackend not connected, but your request looks good!");
-        window.location.href = 'Index.html';
+        console.error("Booking Error:", error);
+        alert("Connection Error. Please check your internet.");
     } finally {
-        confirmBtn.textContent = "Confirm Appointment";
-        confirmBtn.disabled = false;
+        btn.textContent = originalText;
+        btn.disabled = false;
     }
 }
