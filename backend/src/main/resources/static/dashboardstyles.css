@@ -54,6 +54,28 @@
     color: var(--body-color);
 }
 
+.handbook-btn {
+    text-decoration: none;
+    background-color: transparent;
+    color: #003366;           /* Matches your Munich theme */
+    padding: 0.5rem 1rem;
+    border: 1px solid #003366;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    margin-right: 1.5rem;     /* Spacing between handbook and user profile */
+    transition: background-color 0.2s;
+}
+
+.handbook-btn:hover {
+    background-color: #f0f4f8; /* Light hover effect */
+}
+
+/* Ensure the parent container aligns items in a row */
+.header-actions {
+    display: flex;
+    align-items: center;
+}
+
 /* --- Stats Grid --- */
 .stats-grid {
     display: grid;
