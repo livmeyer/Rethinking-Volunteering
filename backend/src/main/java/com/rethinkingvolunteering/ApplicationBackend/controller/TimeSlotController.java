@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/timeslots")
@@ -40,7 +41,18 @@ public class TimeSlotController {
         return this.timeSlotService.getAvailableTimeSlots(req.topic, req.location, req.date);
     }
 
+    @PostMapping("timeslot")
+    public TimeSlot createTimeSlot(@RequestBody PostTimeSlot req) {
+        return timeSlotService.createTimeSlot(req.volunteer, req.topic, req.location, req.time);
+    }
+
+    @PutMapping("book")
+    public Map<String, Boolean> bookTimeSlot(TimeSlot timeSlot) {
+        return timeSlotService.bookTimesSlot(timeSlot);
+    }
+
     public record GetLocationsRequest(Topic topic) {}
     public record GetDatesRequest(Topic topic, Location location) {}
     public record GetTimeslotsRequest(Topic topic, Location location, @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {}
+    public record PostTimeSlot(Volunteer volunteer,  Topic topic, Location location, LocalDateTime time) {}
 }

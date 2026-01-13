@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TimeSlotRepository extends JpaRepository<TimeSlot, Integer> {
@@ -20,6 +21,8 @@ public interface TimeSlotRepository extends JpaRepository<TimeSlot, Integer> {
     List<TimeSlot> findByTopic (Topic topic);
 
     List<TimeSlot> findByTopicAndLocation (Topic topic, Location location);
+
+    Optional<TimeSlot> findById (Long Id);
 
     @Query("SELECT t FROM TimeSlot t WHERE t.volunteerId = :id AND t.startTime < :time")
     List<TimeSlot> getPastTimeSlotsByVolunteerId(@Param("id") int id, @Param("time") LocalDateTime time);
