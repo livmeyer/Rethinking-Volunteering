@@ -104,9 +104,7 @@ function toSession(slot) {
         time: slot.startTime.split('T')[1].substring(0, 5),
         topic: slot.topic,
         location: slot.location,
-        status: slot.completed ? "COMPLETED"
-            : slot.booked    ? "PENDING"
-                : "OPEN"
+        status: slot.booked ? (slot.completed ? 'COMPLETED' : 'PENDING') : 'OPEN',
     };
 }
 
@@ -215,7 +213,7 @@ function renderSessions() {
                 <span class="month">${dateObj.toLocaleDateString('en-US', { month: 'short' }).toUpperCase()}</span>
             </div>
             <div class="history-info">
-                <h4>${session.topic}</h4>
+                <h4>${session.topic.replaceAll('_',' ') + ' - ' +  session.id}</h4>
                 <p>${session.location} • ${session.time}</p>
             </div>
             <div class="session-action">
