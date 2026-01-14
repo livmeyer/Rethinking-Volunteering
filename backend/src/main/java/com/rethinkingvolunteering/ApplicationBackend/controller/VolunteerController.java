@@ -1,6 +1,5 @@
 package com.rethinkingvolunteering.ApplicationBackend.controller;
 
-import com.rethinkingvolunteering.ApplicationBackend.entity.TimeSlot;
 import com.rethinkingvolunteering.ApplicationBackend.entity.Volunteer;
 import com.rethinkingvolunteering.ApplicationBackend.enums.Location;
 import com.rethinkingvolunteering.ApplicationBackend.enums.Topic;
