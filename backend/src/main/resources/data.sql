@@ -28,8 +28,8 @@ INSERT INTO time_slot (id, start_time, volunteer_id, topics, location, is_booked
                                                                                                                (22, '2026-01-27 09:00:00', 3, 'TRAVEL', 'CENTRAL_LIBRARY', false, NULL, false),
                                                                                                                (23, '2026-01-27 10:00:00', 1, 'DOCUMENTS', 'MOOSACH', false, NULL, false),
                                                                                                                (24, '2026-01-27 13:30:00', 2, 'NEW_IN_MUNICH', 'SENDLING', false, NULL, false),
-                                                                                                               (25, '2026-01-27 15:00:00', 3, 'GENERAL', 'CENTRAL_LIBRARY', false, NULL, false),
-                                                                                                               (26, '2026-01-28 08:00:00', 1, 'TRAVEL', 'MOOSACH', false, NULL, false),
+                                                                                                               (25, '2025-01-27 15:00:00', 1, 'GENERAL', 'CENTRAL_LIBRARY', true, NULL, true),
+                                                                                                               (26, '2025-01-28 08:00:00', 1, 'TRAVEL', 'MOOSACH', true, NULL, true),
                                                                                                                (27, '2026-01-28 11:30:00', 2, 'DOCUMENTS', 'SENDLING', false, NULL, false),
                                                                                                                (28, '2026-01-28 14:00:00', 3, 'NEW_IN_MUNICH', 'CENTRAL_LIBRARY', false, NULL, false),
                                                                                                                (29, '2026-01-28 16:30:00', 1, 'GENERAL', 'MOOSACH', false, NULL, false),
@@ -37,10 +37,10 @@ INSERT INTO time_slot (id, start_time, volunteer_id, topics, location, is_booked
                                                                                                                (31, '2026-01-29 12:00:00', 3, 'DOCUMENTS', 'CENTRAL_LIBRARY', false, NULL, false),
                                                                                                                (32, '2026-01-29 15:00:00', 1, 'NEW_IN_MUNICH', 'MOOSACH', false, NULL, false),
                                                                                                                (33, '2026-01-30 10:00:00', 2, 'GENERAL', 'CENTRAL_LIBRARY', false, NULL, false),
-                                                                                                               (34, '2026-01-30 13:00:00', 3, 'TRAVEL', 'SENDLING', false, NULL, false),
-                                                                                                               (35, '2026-01-30 14:30:00', 1, 'DOCUMENTS', 'MOOSACH', false, NULL, false),
-                                                                                                               (36, '2026-01-31 09:00:00', 2, 'NEW_IN_MUNICH', 'CENTRAL_LIBRARY', false, NULL, false),
-                                                                                                               (37, '2026-01-31 11:00:00', 3, 'GENERAL', 'SENDLING', false, NULL, false),
+                                                                                                               (34, '2025-01-30 13:00:00', 3, 'TRAVEL', 'SENDLING', true, NULL, true),
+                                                                                                               (35, '2025-01-30 14:30:00', 1, 'DOCUMENTS', 'MOOSACH', true, NULL, true),
+                                                                                                               (36, '2025-01-31 09:00:00', 1, 'NEW_IN_MUNICH', 'CENTRAL_LIBRARY', true, 'Another Test Name', true),
+                                                                                                               (37, '2025-01-31 11:00:00', 1, 'GENERAL', 'SENDLING', true, 'Test Name', true),
                                                                                                                (38, '2026-01-31 15:30:00', 1, 'TRAVEL', 'MOOSACH', false, NULL, false);
 
 -- Bereits gebuchte Termine

@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         nameEl.textContent = volunteerName;
     }
 
-    const response = await fetch(`/api/volunteers/dashboard?id=${encodeURIComponent(volunteerId)}`, {
+    const response = await fetch(`/api/volunteers/dashboard?id=${volunteerId}`, {
         method: "GET",
         headers: { Accept: "application/json" },
     });
