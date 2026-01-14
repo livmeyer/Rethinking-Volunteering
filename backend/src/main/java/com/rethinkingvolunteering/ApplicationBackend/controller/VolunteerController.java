@@ -2,6 +2,8 @@ package com.rethinkingvolunteering.ApplicationBackend.controller;
 
 import com.rethinkingvolunteering.ApplicationBackend.entity.TimeSlot;
 import com.rethinkingvolunteering.ApplicationBackend.entity.Volunteer;
+import com.rethinkingvolunteering.ApplicationBackend.enums.Location;
+import com.rethinkingvolunteering.ApplicationBackend.enums.Topic;
 import com.rethinkingvolunteering.ApplicationBackend.repository.VolunteerRepository;
 import com.rethinkingvolunteering.ApplicationBackend.service.VolunteerService;
 import org.springframework.http.HttpStatus;
@@ -9,6 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -73,6 +77,13 @@ public class VolunteerController {
         return volunteerService.getDashboard(v);
     }
 
+    @PostMapping("/createTimeSlots")
+    public Map<Boolean, String> createTimeSlots(@RequestBody NewBooking newBooking) {
+        return Map.of(false, "Not implemented");
+    }
+
+
+    public record NewBooking(List<Topic> topics, Location location, LocalDate day, List<LocalTime> timeSlots) {}
     public record VolunteerRegisterRequest(String name, String email, String password) {}
     public record VolunteerLoginRequest(String email, String password) {}
 }

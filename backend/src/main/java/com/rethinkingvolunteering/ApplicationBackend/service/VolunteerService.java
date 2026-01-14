@@ -1,5 +1,6 @@
 package com.rethinkingvolunteering.ApplicationBackend.service;
 
+import com.rethinkingvolunteering.ApplicationBackend.controller.VolunteerController;
 import com.rethinkingvolunteering.ApplicationBackend.entity.TimeSlot;
 import com.rethinkingvolunteering.ApplicationBackend.entity.Volunteer;
 import com.rethinkingvolunteering.ApplicationBackend.repository.TimeSlotRepository;
@@ -59,6 +60,10 @@ public class VolunteerService {
             t.setCompleted(true);
             timeSlotRepository.save(t);
         }
+    }
+
+    public void createNewBookings(VolunteerController.NewBooking newBooking) {
+
     }
 
     public Map<String, Object> getDashboard(Volunteer v) {
