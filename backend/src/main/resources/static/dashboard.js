@@ -1,222 +1,269 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Volunteer Dashboard | BeurocraticHelper Munich</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="dashboardstyles.css">
-</head>
-<body class="dashboard-page">
+/* File: dashboard.js */
 
-    <header class="header">
-    <div class="header-content">
-        <a href="Index.html" class="logo">
-            <img class="logo-icon" src="logo.svg" alt="Logo">
-            <span class="logo-text">BeurocraticHelper Munich</span>
-        </a>
-        <div class="header-actions">
-            <a href="handbook.pdf" target="_blank" class="handbook-btn">
-                Download Handbook
-            </a>
+document.addEventListener('DOMContentLoaded', () => {
+    initDashboard();
+});
 
-            <div class="user-profile">
-                <span class="user-name">Welcome, Volunteer</span>
-                <button class="logout-btn" onclick="logout()">Logout</button>
-            </div>
-        </div>
-    </div>
-</header>
+// --- State Management ---
+let currentState = {
+    targetSessions: 25,
+    currentDate: new Date(),
+    selectedDateKey: null,
+    availability: {}, 
+    location: null, 
+    topics: ['DOCUMENTS', 'MOBILITY', 'STUDENTS', 'GENERAL'], 
+    sessions: [] // Will store combined Upcoming + Past
+};
 
-    <main class="dashboard-container">
+function initDashboard() {
+    generateCalendar();
+    fetchDashboardData(); // NEW: Centralized fetch
+}
+
+// --- 1. Backend Integration ---
+
+async function fetchDashboardData() {
+    // 1. Get User Email (Saved during login)
+    const email = localStorage.getItem('currentUserEmail');
+
+    if (!email) {
+        console.warn("No user email found. Redirecting to login...");
+        // window.location.href = 'index.html'; // Uncomment to enforce login
+        return;
+    }
+
+    try {
+        // 2. Fetch from the NEW Dashboard Endpoint
+        const response = await fetch(`/api/volunteers/dashboard?email=${encodeURIComponent(email)}`, {
+            method: "GET",
+            headers: { "Accept": "application/json" }
+        });
         
-        <div class="dashboard-header">
-            <h1>Volunteer Dashboard</h1>
-            <p>Manage your availability and verify your completed sessions.</p>
-        </div>
+        if (!response.ok) throw new Error("Failed to load dashboard data");
 
-        <div class="stats-grid">
-            <div class="stat-card">
-                <img class="stat-icon" src="check-solid-full.svg" alt="Verified Icon">
-                <div class="stat-number" id="completedSessions">0</div>
-                <div class="stat-label">Verified Sessions</div>
-                
-                <div class="progress-bar-container">
-                    <div class="progress-bar-fill" id="statsProgressFill" style="width: 0%"></div>
-                </div>
-                <div class="progress-text" id="statsProgressText">0% to Certificate</div>
+        const data = await response.json();
+
+        // 3. Process Stats (Counters & Progress)
+        updateDashboardStats(data);
+
+        // 4. Process Session List (Combine Upcoming & Past for the list view)
+        const upcoming = Array.isArray(data.upcoming) ? data.upcoming : [];
+        const past = Array.isArray(data.past) ? data.past : [];
+        
+        // Map backend data to frontend structure if needed
+        // We mark past sessions as 'COMPLETED' and upcoming as 'OPEN' or 'PENDING'
+        const upcomingMapped = upcoming.map(s => normalizeSessionData(s, 'OPEN'));
+        const pastMapped = past.map(s => normalizeSessionData(s, 'COMPLETED'));
+
+        currentState.sessions = [...upcomingMapped, ...pastMapped];
+        
+        renderSessions();
+
+    } catch (error) {
+        console.error("Error fetching dashboard:", error);
+        document.getElementById('sessionListContainer').innerHTML = 
+            '<p style="text-align:center; color:red;">Could not load session data.</p>';
+    }
+}
+
+// Helper: Standardize backend data for the UI
+function normalizeSessionData(slot, defaultStatus) {
+    // Guard against missing start time
+    if(!slot.startTime) return slot; 
+
+    return {
+        id: slot.id,
+        // Extract Date: "2026-02-15T09:00:00" -> "2026-02-15"
+        date: slot.startTime.split('T')[0], 
+        // Extract Time: "09:00"
+        time: slot.startTime.split('T')[1].substring(0, 5), 
+        topic: slot.topic || "General",
+        location: slot.location || "Online",
+        status: defaultStatus // 'OPEN', 'PENDING', or 'COMPLETED'
+    };
+}
+
+// --- 2. Render Logic (Stats) ---
+
+function updateDashboardStats(data) {
+    const upcomingCount = Array.isArray(data.upcoming) ? data.upcoming.length : 0;
+    const pastCount = Array.isArray(data.past) ? data.past.length : 0;
+
+    // Update Text Counters
+    const upcomingEl = document.getElementById("upcomingSessions");
+    const pastEl = document.getElementById("completedSessions");
+    
+    if (upcomingEl) upcomingEl.textContent = upcomingCount;
+    if (pastEl) pastEl.textContent = pastCount;
+
+    // Update Progress Bar
+    // Backend might return 0.5 (50%) or 50 (50%). We handle both.
+    const rawProgress = typeof data.progress === "number" ? data.progress : 0;
+    const progressPercent = rawProgress <= 1 ? Math.round(rawProgress * 100) : Math.round(rawProgress);
+
+    const progressText = document.getElementById("statsProgressText");
+    const progressFill = document.getElementById("statsProgressFill");
+    const certFill = document.getElementById("certProgressFill");
+    const certCount = document.getElementById("certProgress");
+
+    if(progressText) progressText.textContent = `${progressPercent}% to Certificate`;
+    if(progressFill) progressFill.style.width = `${progressPercent}%`;
+    
+    // Certificate specific elements
+    if(certFill) certFill.style.width = `${progressPercent}%`;
+    if(certCount) certCount.textContent = pastCount;
+
+    // Update "Sessions to Go"
+    const totalNeeded = currentState.targetSessions;
+    const remaining = Math.max(0, totalNeeded - pastCount);
+    const toGoEl = document.getElementById("sessionsToGo");
+    if(toGoEl) toGoEl.textContent = remaining;
+
+    // Certificate Button Logic
+    const claimBtn = document.getElementById('claimCertBtn');
+    const certMsg = document.getElementById('certMessage');
+
+    if (claimBtn && certMsg) {
+        if (pastCount >= totalNeeded) {
+            claimBtn.classList.remove('disabled');
+            claimBtn.disabled = false;
+            certMsg.textContent = "You are eligible! Click above to claim.";
+            certMsg.style.color = "green";
+        } else {
+            claimBtn.classList.add('disabled');
+            claimBtn.disabled = true;
+            certMsg.textContent = `${remaining} more sessions needed.`;
+            certMsg.style.color = "#888";
+        }
+    }
+}
+
+// --- 3. Render Logic (Session List) ---
+
+function renderSessions() {
+    const container = document.getElementById('sessionListContainer');
+    container.innerHTML = '';
+
+    if (currentState.sessions.length === 0) {
+        container.innerHTML = '<p style="text-align:center; color:#888;">No sessions assigned yet.</p>';
+        return;
+    }
+
+    // Sort by Date (Newest first)
+    currentState.sessions.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    currentState.sessions.forEach(session => {
+        const dateObj = new Date(session.date);
+        const isCompleted = session.status === 'COMPLETED';
+        
+        const item = document.createElement('div');
+        item.className = 'history-item';
+        
+        // Status Badge logic
+        const statusHtml = isCompleted 
+            ? `<span class="history-status completed">Completed</span>`
+            : `<span class="history-status upcoming" style="color:#d97706; background:#fef3c7;">Upcoming</span>`;
+
+        item.innerHTML = `
+            <div class="history-date">
+                <span class="day">${dateObj.getDate()}</span>
+                <span class="month">${dateObj.toLocaleDateString('en-US', { month: 'short' }).toUpperCase()}</span>
             </div>
-
-            <div class="stat-card">
-                <img class="stat-icon" src="calendar-regular-full.svg" alt="Calendar Icon">
-                <div class="stat-number" id="upcomingSessions">0</div>
-                <div class="stat-label">Pending / Upcoming</div>
+            <div class="history-info">
+                <h4>${session.topic}</h4>
+                <p>${session.location} • ${session.time}</p>
             </div>
-
-            <div class="stat-card">
-                <img class="stat-icon" src="certificate-solid-full.svg" alt="Award Icon">
-                <div class="stat-number" id="sessionsToGo">25</div>
-                <div class="stat-label">Sessions to Certificate</div>
+            <div class="session-action">
+                ${statusHtml}
             </div>
-        </div>
+        `;
+        
+        container.appendChild(item);
+    });
+}
 
-        <div class="tabs">
-            <button class="tab active" onclick="switchTab('availability')">My Availability</button>
-            <button class="tab" onclick="switchTab('sessions')">Manage Sessions</button>
-            <button class="tab" onclick="switchTab('certificate')">Certificate</button>
-        </div>
+// --- 4. Interaction Handlers (Tabs, Calendar, etc.) ---
 
-        <div class="tab-content">
+function switchTab(tabName) {
+    document.querySelectorAll('.dashboard-section').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+    
+    const target = document.getElementById(tabName + 'Tab');
+    if (target) target.style.display = 'block';
 
-            <div id="availabilityTab" class="dashboard-section active-section">
-                <h2 class="section-title">Set Your Availability</h2>
+    // Simple index mapping for tabs (0=Availability, 1=Sessions, 2=Certificate)
+    const tabs = document.querySelectorAll('.tabs .tab');
+    if(tabs.length >= 3) {
+        if(tabName === 'availability') tabs[0].classList.add('active');
+        if(tabName === 'sessions') tabs[1].classList.add('active');
+        if(tabName === 'certificate') tabs[2].classList.add('active');
+    }
+}
 
-                <div class="subsection">
-                    <h3>📂 Preferred Categories</h3>
-                    <div class="location-list">
-                        
-                        <label class="location-item" id="topicDocs">
-                            <input type="checkbox" checked onchange="toggleTopic('DOCUMENTS', this.checked)">
-                            <div class="location-info">
-                                <div class="location-name">📄 Documents & Registration</div>
-                                <div class="location-address">Forms, IDs, Bureaucracy</div>
-                            </div>
-                        </label>
+function selectSingleLocation(inputElement, locationEnum) {
+    currentState.location = locationEnum;
+    document.querySelectorAll('.location-item').forEach(item => item.classList.remove('selected'));
+    const parentLabel = inputElement.closest('.location-item');
+    if (parentLabel) parentLabel.classList.add('selected');
+}
 
-                        <label class="location-item" id="topicTravel">
-                            <input type="checkbox" checked onchange="toggleTopic('MOBILITY', this.checked)">
-                            <div class="location-info">
-                                <div class="location-name">🎟️ Tickets & Travel</div>
-                                <div class="location-address">MVV App, Deutschlandticket</div>
-                            </div>
-                        </label>
+function toggleTopic(topicEnum, isChecked) {
+    if (isChecked) {
+        if (!currentState.topics.includes(topicEnum)) currentState.topics.push(topicEnum);
+    } else {
+        currentState.topics = currentState.topics.filter(t => t !== topicEnum);
+    }
+}
 
-                        <label class="location-item" id="topicNew">
-                            <input type="checkbox" checked onchange="toggleTopic('STUDENTS', this.checked)">
-                            <div class="location-info">
-                                <div class="location-name">📍 New in Munich</div>
-                                <div class="location-address">Orientation, City Guide</div>
-                            </div>
-                        </label>
+function claimCertificate() { 
+    alert("Certificate Request Sent! We will email you shortly."); 
+}
 
-                        <label class="location-item" id="topicGen">
-                            <input type="checkbox" checked onchange="toggleTopic('GENERAL', this.checked)">
-                            <div class="location-info">
-                                <div class="location-name">❓ General Help</div>
-                                <div class="location-address">Other digital questions</div>
-                            </div>
-                        </label>
-                    </div>
-                </div>
+function logout() {
+    localStorage.removeItem('currentUserEmail'); // Clear session
+    window.location.href = "index.html"; 
+}
 
-                <div class="subsection">
-                    <h3>📍 Preferred Location</h3>
-                    <div class="location-list">
-                        <label class="location-item" id="loc1">
-                            <input type="radio" name="locationGroup" onchange="selectSingleLocation(this, 'CENTRAL_LIBRARY')">
-                            <div class="location-info">
-                                <div class="location-name">📚 Central Library (Am Gasteig)</div>
-                                <div class="location-address">Rosenheimer Str. 5</div>
-                            </div>
-                        </label>
+// --- 5. Calendar Logic (Display Only) ---
+function generateCalendar() {
+    const grid = document.getElementById('calendarGrid');
+    const monthLabel = document.getElementById('currentMonth');
+    if(!grid) return;
 
-                        <label class="location-item" id="loc2">
-                            <input type="radio" name="locationGroup" onchange="selectSingleLocation(this, 'MOOSACH')">
-                            <div class="location-info">
-                                <div class="location-name">📚 Moosach Library</div>
-                                <div class="location-address">Pelkovenstr. 145</div>
-                            </div>
-                        </label>
+    const year = currentState.currentDate.getFullYear();
+    const month = currentState.currentDate.getMonth();
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    
+    if(monthLabel) monthLabel.textContent = `${monthNames[month]} ${year}`;
+    grid.innerHTML = '';
 
-                        <label class="location-item" id="loc3">
-                            <input type="radio" name="locationGroup" onchange="selectSingleLocation(this, 'SENDLING')">
-                            <div class="location-info">
-                                <div class="location-name">👵 Sendling Senior Center</div>
-                                <div class="location-address">Gotzinger Str. 45</div>
-                            </div>
-                        </label>
+    // Generate 30 days for simplicity in this demo
+    for(let i=1; i<=30; i++) {
+        const day = document.createElement('div');
+        day.className = 'calendar-day';
+        day.textContent = i;
+        day.onclick = () => {
+            document.querySelectorAll('.calendar-day').forEach(d => d.style.border = '1px solid #eee');
+            day.style.border = '2px solid var(--primary-color)';
+            
+            const dateText = document.getElementById('selectedDateText');
+            if(dateText) dateText.textContent = `${monthNames[month]} ${i}`;
+            
+            const timeSlots = document.getElementById('timeSlotsContainer');
+            if(timeSlots) timeSlots.style.display = 'block';
+        };
+        grid.appendChild(day);
+    }
+}
 
-                        <label class="location-item" id="loc4">
-                            <input type="radio" name="locationGroup" onchange="selectSingleLocation(this, 'SCHWABING')">
-                            <div class="location-info">
-                                <div class="location-name">🏛️ Schwabing Community Center</div>
-                                <div class="location-address">Belgradstr. 169</div>
-                            </div>
-                        </label>
-                    </div>
-                </div>
+function previousMonth() { currentState.currentDate.setMonth(currentState.currentDate.getMonth() - 1); generateCalendar(); }
+function nextMonth() { currentState.currentDate.setMonth(currentState.currentDate.getMonth() + 1); generateCalendar(); }
+function toggleTimeSlot(el) { el.classList.toggle('selected'); }
 
-                <div class="subsection">
-                    <h3>📅 Set Available Days</h3>
-                    <div class="calendar-wrapper">
-                        <div class="calendar-header">
-                            <button class="nav-btn" onclick="previousMonth()">&larr;</button>
-                            <span class="current-month" id="currentMonth"></span>
-                            <button class="nav-btn" onclick="nextMonth()">&rarr;</button>
-                        </div>
-                        <div class="calendar-grid" id="calendarGrid"></div>
-                    </div>
-                </div>
-
-                <div id="timeSlotsContainer" class="subsection" style="display:none; margin-top: 2rem;">
-                    <h3>🕒 Select Times for <span id="selectedDateText" style="color:var(--primary-color)"></span></h3>
-                    <div class="time-slots-grid">
-                        <div class="time-slot" onclick="toggleTimeSlot(this)">09:00</div>
-                        <div class="time-slot" onclick="toggleTimeSlot(this)">10:00</div>
-                        <div class="time-slot" onclick="toggleTimeSlot(this)">11:00</div>
-                        <div class="time-slot" onclick="toggleTimeSlot(this)">13:00</div>
-                        <div class="time-slot" onclick="toggleTimeSlot(this)">14:00</div>
-                        <div class="time-slot" onclick="toggleTimeSlot(this)">15:00</div>
-                    </div>
-                    <button class="btn-primary" onclick="saveTimeSlots()">Save Slots for this Day</button>
-                </div>
-
-                <div class="action-bar">
-                    <button class="btn-secondary" onclick="saveAvailability()">Save All Availability Changes</button>
-                </div>
-            </div>
-
-            <div id="sessionsTab" class="dashboard-section" style="display:none;">
-                <h2 class="section-title">Verify Completed Sessions</h2>
-                <p style="margin-bottom: 20px; color: #666;">
-                    Please mark the sessions you have successfully completed. Clicking "Save" will update your progress towards the certificate.
-                </p>
-
-                <div id="sessionListContainer" class="history-list">
-                    <p style="text-align:center; padding: 2rem;">Loading sessions...</p>
-                </div>
-
-                <div class="action-bar" style="margin-top: 2rem; border-top: 1px solid #eee; padding-top: 1.5rem;">
-                    <button class="btn-primary" onclick="saveVerifiedSessions()">Save Verified Sessions</button>
-                </div>
-            </div>
-
-            <div id="certificateTab" class="dashboard-section" style="display:none;">
-                <div class="cert-box">
-                    <div class="cert-icon" style="font-size: 4rem;">🏆</div>
-                    <h2>Get Certified</h2>
-                    <p>Complete 25 sessions to earn your official DigiCoach Certificate.</p>
-                    
-                    <div class="cert-progress">
-                        <div class="progress-bar-container large">
-                            <div class="progress-bar-fill" id="certProgressFill" style="width: 0%"></div>
-                        </div>
-                        <p class="progress-text-large"><span id="certProgress">0</span> / 25 Sessions</p>
-                    </div>
-
-                    <button id="claimCertBtn" class="btn-primary disabled" disabled onclick="claimCertificate()">Claim Certificate</button>
-                    <p class="cert-note" id="certMessage">25 more sessions needed.</p>
-                </div>
-            </div>
-
-        </div>
-    </main>
-
-    <footer class="footer">
-        <p>© 2026 City of Munich | BeurocraticHelper Program</p>
-    </footer>
-
-    <!-- <script src="dashboard.js"></script> -->
-    <script src="dashboard_new.js"></script>
-</body>
-</html>
+function saveAvailability() {
+    console.log("Saving availability:", {
+        location: currentState.location,
+        topics: currentState.topics
+    });
+    alert("Availability Settings Saved!");
+}
