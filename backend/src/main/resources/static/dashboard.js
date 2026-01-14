@@ -44,17 +44,17 @@ function updateStats(data) {
     const upcomingCount = (data.upcoming || []).length;
     const remaining = Math.max(0, state.targetSessions - pastCount);
     
-    // // Text Counters
-    // setText('upcomingSessions', upcomingCount);
-    // setText('completedSessions', pastCount);
-    // setText('sessionsToGo', remaining);
+    // Text Counters
+    setText('upcomingSessions', upcomingCount);
+    setText('completedSessions', pastCount);
+    setText('sessionsToGo', remaining);
 
-    // // Progress Bar
-    // const progress = Math.round((data.progress || 0) * 100);
-    // setText('statsProgressText', `${progress}% to Certificate`);
-    // setStyle('statsProgressFill', 'width', `${progress}%`);
-    // setStyle('certProgressFill', 'width', `${progress}%`);
-    // setText('certProgress', pastCount);
+    // Progress Bar
+    const progress = Math.round((data.progress || 0) * 100);
+    setText('statsProgressText', `${progress}% to Certificate`);
+    setStyle('statsProgressFill', 'width', `${progress}%`);
+    setStyle('certProgressFill', 'width', `${progress}%`);
+    setText('certProgress', pastCount);
 
     // Certificate Button
     const btn = document.getElementById('claimCertBtn');
