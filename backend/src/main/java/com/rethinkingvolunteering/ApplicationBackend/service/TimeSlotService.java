@@ -50,9 +50,7 @@ public class TimeSlotService {
     }
 
     public List<TimeSlot> getBookedSessions(Volunteer volunteer) {
-        return timeSlotRepository.findByVolunteerId(volunteer.getId()).stream()
-                .filter(o-> o.getStartTime().isBefore(LocalDateTime.now()) && o.isBooked())
-                .toList();
+        return timeSlotRepository.findByVolunteerId(volunteer.getId());
     }
 
     public TimeSlot createTimeSlot(int volunteerId, Topic topic, Location location, LocalDateTime time) {
