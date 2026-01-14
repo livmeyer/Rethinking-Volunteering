@@ -27,11 +27,6 @@ const translations = {
         trust_text_2: "All volunteers are verified and supported by the City of Munich.",
         trust_badge: "✓ Certified Helpers of the City of Munich",
         
-        // // Volunteer Section
-        // vol_title: "Want to help others?",
-        // vol_desc: "Become a DigiCoach! Help people in Munich with digital questions.",
-        // vol_btn: "Become a DigiCoach",
-        
         // Footer
         footer_text: "© 2026 City of Munich | BeurocraticHelper Program"
     },
@@ -59,11 +54,6 @@ const translations = {
         trust_text_1: "Ihr Schritt zu einem einfacheren digitalen Erlebnis",
         trust_text_2: "Alle Freiwilligen sind von der Stadt München geprüft und unterstützt",
         trust_badge: "✓ Zertifizierte Helfer der Stadt München",
-        
-        // // Volunteer Section
-        // vol_title: "Möchten Sie anderen helfen?",
-        // vol_desc: "Werden Sie DigiCoach! Helfen Sie Menschen in München bei digitalen Fragen.",
-        // vol_btn: "DigiCoach werden",
         
         // Footer
         footer_text: "© 2026 Stadt München | BeurocraticHelper Programm"
