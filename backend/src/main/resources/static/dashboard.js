@@ -63,18 +63,36 @@ async function displayDashboardInformation() {
     upcomingEl.textContent = String(upcomingCount);
     pastEl.textContent = String(pastCount);
 
-    // progress: backend returns a number. We handle both cases:
-// - 0..1 (recommended)
-// - 0..100 (if backend already sends percent)
+    // Certificate section text
+    const certProgressEl = document.getElementById("certProgress");
+    if (certProgressEl) certProgressEl.textContent = String(pastCount);
+
+    const remaining = Math.max(0, currentState.targetSessions - pastCount);
+
+    const certMsg = document.getElementById("certMessage");
+    const claimBtn = document.getElementById("claimCertBtn");
+
+    if (certMsg && claimBtn) {
+        if (pastCount >= currentState.targetSessions) {
+            claimBtn.classList.remove("disabled");
+            claimBtn.disabled = false;
+            certMsg.textContent = "You are eligible! Click above to claim.";
+            certMsg.style.color = "green";
+        } else {
+            claimBtn.classList.add("disabled");
+            claimBtn.disabled = true;
+            certMsg.textContent = `${remaining} more sessions needed.`;
+            certMsg.style.color = "#888";
+        }
+    }
+
     const rawProgress = typeof dashboardData.progress === "number" ? dashboardData.progress : 0;
     const progressPercent = rawProgress <= 1 ? Math.round(rawProgress * 100) : Math.round(rawProgress);
 
     document.getElementById("statsProgressText").textContent = `${progressPercent}% to Certificate`;
     document.getElementById("statsProgressFill").style.width = `${progressPercent}%`;
-
-// sessions remaining = 25 - past sessions
-    const totalNeeded = 25;
-    const remaining = Math.max(0, totalNeeded - pastCount);
+    document.getElementById("certProgressFill").style.width = `${progressPercent}%`;
+    document.getElementById("certProgress").textContent = String(pastCount);
     document.getElementById("sessionsToGo").textContent = String(remaining);
 
 }
