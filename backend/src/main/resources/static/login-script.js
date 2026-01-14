@@ -50,7 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data.success === true) {
                 localStorage.setItem("volunteerId", String(data.volunteerId));
                 if (typeof data.volunteerName === "string") {
-                    localStorage.setItem("volunteerName", data.volunteerName);
+                    const firstName = data.volunteerName.trim().split(" ")[0];
+                    localStorage.setItem("volunteerName", firstName);
                 }
                 window.location.href = 'volunteer-dashboard.html'; 
             } else {
