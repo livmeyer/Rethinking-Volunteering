@@ -79,6 +79,18 @@ async function displayDashboardInformation() {
 
 }
 
+function toSession(slot) {
+    return {
+        id: slot.id,
+        date: slot.startTime.split('T')[0],
+        time: slot.startTime.split('T')[1].substring(0, 5),
+        topic: slot.topic,
+        location: slot.location,
+        status: slot.completed ? "COMPLETED"
+            : slot.booked    ? "PENDING"
+                : "OPEN"
+    };
+}
 
 async function fetchSessionsFromBackend() {
     // 1. Get Volunteer ID (Saved during login)
@@ -92,27 +104,18 @@ async function fetchSessionsFromBackend() {
     }
 
     try {
-        // GET /api/volunteers/{id}/sessions
-        const response = await fetch(`/api/volunteers/${volunteerId}/sessions`);
+        const response = await fetch(`/api/volunteers/dashboard?id=${volunteerId}`);
 
         if (!response.ok) throw new Error("Failed to load sessions");
 
         const backendData = await response.json();
 
         // 2. Transform Java Data -> Dashboard Format
-        currentState.sessions = backendData.map(slot => ({
-            id: slot.id,
-            // Extract Date: "2026-02-15T09:00:00" -> "2026-02-15"
-            date: slot.startTime.split('T')[0],
-            // Extract Time: "09:00"
-            time: slot.startTime.split('T')[1].substring(0, 5),
-            topic: slot.topic,
-            location: slot.location,
-            // If 'booked' is true, we treat it as PENDING verification.
-            // You might need a specific 'completed' flag in Java later,
-            // but for now let's assume if it exists here, it's ready to verify.
-            status: slot.booked ? 'PENDING' : 'OPEN'
-        }));
+        currentState.sessions = {
+            past: backendData.past.map(toSession),
+            upcoming: backendData.upcoming.map(toSession),
+            progress: backendData.progress
+        };
 
         renderSessions();
         updateStatsUI();
@@ -327,4 +330,4 @@ function saveAvailability() {
 }
 
 function claimCertificate() { alert("Certificate Request Sent!"); }
-function logout() { window.location.href = "Index.html"; }
+function logout() { window.location.href = "index.html"; }
