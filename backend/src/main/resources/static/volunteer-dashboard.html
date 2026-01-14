@@ -20,7 +20,7 @@
                 Download Handbook
             </a>
             <div class="user-profile">
-                <span class="user-name">Welcome, Volunteer</span>
+                <span class="user-name" id="headerUserName">Welcome, Volunteer</span>
                 <button class="logout-btn" onclick="logout()">Logout</button>
             </div>
         </div>
@@ -49,7 +49,7 @@
             <div class="stat-card">
                 <img class="stat-icon" src="calendar-regular-full.svg" alt="Calendar Icon">
                 <div class="stat-number" id="upcomingSessions">0</div>
-                <div class="stat-label">Pending / Upcoming</div>
+                <div class="stat-label">Upcoming Sessions</div>
             </div>
 
             <div class="stat-card">
@@ -77,7 +77,7 @@
                         <label class="location-item" id="topicDocs">
                             <input type="checkbox" checked onchange="toggleTopic('DOCUMENTS', this.checked)">
                             <div class="location-info">
-                                <div class="location-name">📄 Documents & Registration</div>
+                                <div class="location-name"> Documents & Registration</div>
                                 <div class="location-address">Forms, IDs, Bureaucracy</div>
                             </div>
                         </label>
@@ -85,7 +85,7 @@
                         <label class="location-item" id="topicTravel">
                             <input type="checkbox" checked onchange="toggleTopic('MOBILITY', this.checked)">
                             <div class="location-info">
-                                <div class="location-name">🎟️ Tickets & Travel</div>
+                                <div class="location-name"> Tickets & Travel</div>
                                 <div class="location-address">MVV App, Deutschlandticket</div>
                             </div>
                         </label>
@@ -93,7 +93,7 @@
                         <label class="location-item" id="topicNew">
                             <input type="checkbox" checked onchange="toggleTopic('STUDENTS', this.checked)">
                             <div class="location-info">
-                                <div class="location-name">📍 New in Munich</div>
+                                <div class="location-name"> New in Munich</div>
                                 <div class="location-address">Orientation, City Guide</div>
                             </div>
                         </label>
@@ -101,7 +101,7 @@
                         <label class="location-item" id="topicGen">
                             <input type="checkbox" checked onchange="toggleTopic('GENERAL', this.checked)">
                             <div class="location-info">
-                                <div class="location-name">❓ General Help</div>
+                                <div class="location-name"> General Help</div>
                                 <div class="location-address">Other digital questions</div>
                             </div>
                         </label>
@@ -114,7 +114,7 @@
                         <label class="location-item" id="loc1">
                             <input type="radio" name="locationGroup" onchange="selectSingleLocation(this, 'CENTRAL_LIBRARY')">
                             <div class="location-info">
-                                <div class="location-name">📚 Central Library (Am Gasteig)</div>
+                                <div class="location-name"> Central Library (Am Gasteig)</div>
                                 <div class="location-address">Rosenheimer Str. 5</div>
                             </div>
                         </label>
@@ -122,7 +122,7 @@
                         <label class="location-item" id="loc2">
                             <input type="radio" name="locationGroup" onchange="selectSingleLocation(this, 'MOOSACH')">
                             <div class="location-info">
-                                <div class="location-name">📚 Moosach Library</div>
+                                <div class="location-name"> Moosach Library</div>
                                 <div class="location-address">Pelkovenstr. 145</div>
                             </div>
                         </label>
@@ -130,7 +130,7 @@
                         <label class="location-item" id="loc3">
                             <input type="radio" name="locationGroup" onchange="selectSingleLocation(this, 'SENDLING')">
                             <div class="location-info">
-                                <div class="location-name">👵 Sendling Senior Center</div>
+                                <div class="location-name"> Sendling Senior Center</div>
                                 <div class="location-address">Gotzinger Str. 45</div>
                             </div>
                         </label>
@@ -138,7 +138,7 @@
                         <label class="location-item" id="loc4">
                             <input type="radio" name="locationGroup" onchange="selectSingleLocation(this, 'SCHWABING')">
                             <div class="location-info">
-                                <div class="location-name">🏛️ Schwabing Community Center</div>
+                                <div class="location-name">️ Schwabing Community Center</div>
                                 <div class="location-address">Belgradstr. 169</div>
                             </div>
                         </label>

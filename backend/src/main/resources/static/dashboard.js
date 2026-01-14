@@ -32,10 +32,17 @@ async function displayDashboardInformation() {
     }
 
     const volunteerName = localStorage.getItem("volunteerName");
+    const headerNameEl = document.getElementById("headerUserName");
+    if (headerNameEl && volunteerName) {
+        headerNameEl.textContent = `Welcome, ${volunteerName}`;
+    }
+        /*
     const nameEl = document.getElementById("volunteerName");
     if (nameEl && volunteerName) {
         nameEl.textContent = volunteerName;
     }
+     */
+
 
     const response = await fetch(`/api/volunteers/dashboard?id=${volunteerId}`, {
         method: "GET",
@@ -237,7 +244,7 @@ function updateStatsUI() {
 
     // Update Stats Cards
     document.getElementById('completedSessions').textContent = completedCount;
-    document.getElementById('upcomingSessions').textContent = pendingCount;
+  //  document.getElementById('upcomingSessions').textContent = pendingCount;
     document.getElementById('sessionsToGo').textContent = Math.max(0, target - completedCount);
 
     // Update Progress Bars
