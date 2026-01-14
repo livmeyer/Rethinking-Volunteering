@@ -219,7 +219,7 @@ function renderSessions() {
                 <span class="month">${dateObj.toLocaleDateString('en-US', { month: 'short' }).toUpperCase()}</span>
             </div>
             <div class="history-info">
-                <h4>${session.topic.replaceAll('_',' ') + ' - ' +  session.id}</h4>
+                <h4>${session.topic.replaceAll('_',' ')}</h4>
                 <p>${session.location} • ${session.time}</p>
             </div>
             <div class="session-action">
