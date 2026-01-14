@@ -17,8 +17,8 @@ public class TimeSlot {
 
     private int volunteerId;
 
-    @Enumerated(EnumType.STRING)
-    private Topic topic;
+    @Column(name="topics")
+    private String topics;
 
     @Enumerated(EnumType.STRING)
     private Location location;
@@ -32,11 +32,11 @@ public class TimeSlot {
     public TimeSlot() {
     }
 
-    public TimeSlot(int volunteerId, Topic topic, Location location, LocalDateTime startTime) {
+    public TimeSlot(int volunteerId, String topics, Location location, LocalDateTime startTime) {
         this.volunteerId = volunteerId;
         this.location = location;
         this.startTime = startTime;
-        this.topic = topic;
+        this.topics = topics;
         this.completed = false;
         this.isBooked = false;
         this.customerName = "";
@@ -74,12 +74,12 @@ public class TimeSlot {
         this.startTime = startTime;
     }
 
-    public Topic getTopic() {
-        return topic;
+    public String getTopic() {
+        return topics;
     }
 
-    public void setTopic(Topic topic) {
-        this.topic = topic;
+    public void setTopic(String topics) {
+        this.topics = topics;
     }
 
     public int getVolunteerId() {

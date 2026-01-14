@@ -79,11 +79,11 @@ public class VolunteerController {
 
     @PostMapping("/createTimeSlots")
     public Map<Boolean, String> createTimeSlots(@RequestBody NewBooking newBooking) {
-        return Map.of(false, "Not implemented");
+        return volunteerService.createTimeSlots(newBooking);
     }
 
 
-    public record NewBooking(List<Topic> topics, Location location, LocalDate day, List<LocalTime> timeSlots) {}
+    public record NewBooking(int volunteerId, List<Topic> topics, Location location, LocalDate day, List<LocalTime> timeSlots) {}
     public record VolunteerRegisterRequest(String name, String email, String password) {}
     public record VolunteerLoginRequest(String email, String password) {}
 }

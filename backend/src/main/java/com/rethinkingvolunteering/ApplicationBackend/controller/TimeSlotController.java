@@ -43,10 +43,10 @@ public class TimeSlotController {
         return timeSlotService.getBookedSessions(req.volunteer);
     }
     
-    @PostMapping("/timeslot")
+    /* @PostMapping("/timeslot")
     public TimeSlot createTimeSlot(@RequestBody PostTimeSlot req) {
         return timeSlotService.createTimeSlot(req.volunteer.getId(), req.topic, req.location, req.time);
-    }
+    } */
 
     @PutMapping("/book")
     public Map<String, Boolean> bookTimeSlot(@RequestBody TimeSlotToBook timeSlot) {
