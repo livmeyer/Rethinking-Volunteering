@@ -82,7 +82,7 @@ function renderSessionList(upcoming, past) {
     const allSessions = [
         ...upcoming.map(s => ({ ...s, status: 'Upcoming' })),
         ...past.map(s => ({ ...s, status: 'Completed' }))
-    ].sort((a, b) => new Date(b.startTime) - new Date(a.startTime)); // Newest first
+    ].sort((a, b) => new Date(a.startTime) - new Date(b.startTime)); // Newest first
 
     if (allSessions.length === 0) {
         container.innerHTML = '<p style="text-align:center; color:#888;">No sessions found.</p>';
@@ -206,7 +206,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const totalNeeded = 25;
     const remaining = Math.max(0, totalNeeded - pastCount);
     document.getElementById("sessionsToGo").textContent = String(remaining);
-
+    renderSessionList(dashboardData.upcoming, dashboardData.past)
 });
 
 // --- Helpers ---
