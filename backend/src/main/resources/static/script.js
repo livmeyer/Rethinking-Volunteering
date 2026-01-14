@@ -28,7 +28,7 @@ const translations = {
         trust_badge: "✓ Certified Helpers of the City of Munich",
         
         // Footer
-        footer_text: "© 2026 City of Munich | BeurocraticHelper Program"
+        footer_text: "© 2026 City of Munich"
     },
     de: {
         // Header
@@ -56,7 +56,7 @@ const translations = {
         trust_badge: "✓ Zertifizierte Helfer der Stadt München",
         
         // Footer
-        footer_text: "© 2026 Stadt München | BeurocraticHelper Programm"
+        footer_text: "© 2026 Stadt München"
     }
 };
 
