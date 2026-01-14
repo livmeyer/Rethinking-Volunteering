@@ -1,5 +1,16 @@
 // dashboard.js (minimal)
 
+// --- State Management ---
+let currentState = {
+    targetSessions: 25,
+    currentDate: new Date(),
+    selectedDateKey: null,
+    availability: {}, 
+    location: null, // Single location selection
+    topics: ['DOCUMENTS', 'MOBILITY', 'STUDENTS', 'GENERAL'], // Default topics
+    sessions: [] 
+};
+
 
 async function saveTimeSlots() {
     // Validation
