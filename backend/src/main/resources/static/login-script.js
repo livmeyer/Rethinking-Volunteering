@@ -39,17 +39,19 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.disabled = true;
 
         try {
-            // FIX 1: URL matches @RequestMapping("/api/volunteers") + @PostMapping("/login")
             const response = await fetch('/api/volunteers/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password })
             });
 
-            // FIX 2: Your controller returns Map<String, Boolean> -> { "success": true }
             const data = await response.json();
 
             if (data.success === true) {
+                localStorage.setItem("volunteerId", String(data.volunteerId));
+                if (typeof data.name === "string") {
+                    localStorage.setItem("volunteerName", data.name);
+                }
                 window.location.href = 'volunteer-dashboard.html'; 
             } else {
                 alert("Invalid credentials. Please try again.");

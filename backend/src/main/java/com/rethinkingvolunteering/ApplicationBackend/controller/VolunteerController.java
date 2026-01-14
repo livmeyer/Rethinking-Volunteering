@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/volunteers")
@@ -42,29 +43,34 @@ public class VolunteerController {
 
     // ----- Fake Login -----
     @PostMapping("/login")
-    public Map<String, Boolean> login(@RequestBody VolunteerLoginRequest body) {
+    public Map<String, Object> login(@RequestBody VolunteerLoginRequest body) {
         String email = body.email();
         String password = body.password();
 
         Volunteer volunteer = volunteerRepository.findByEmail(email);
         boolean ok = volunteer != null && passwordEncoder.matches(password, volunteer.getPassword());
-        return Map.of("success", ok);
+        if (!ok) {
+            return Map.of("success", false);
+        }
+        return Map.of(
+                "success", true,
+                "volunteerId", volunteer.getId(),
+                "volunteerName", volunteer.getName()
+        );
     }
 
     // Dashboard
     @GetMapping("/dashboard")
-    public Map<String, Object> getDashboard(@RequestParam String email) {
-        Volunteer v = volunteerRepository.findByEmail(email);
-        if (v == null) {
+    public Map<String, Object> getDashboard(@RequestParam int id) {
+        Optional<Volunteer> o = volunteerRepository.findById(id);
+        if (o.isEmpty()) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND,
-                    "Volunteer not found with email: " + email
+                    "Volunteer not found"
             );
         }
-
-        Map<String, Object> d = volunteerService.getDashboard(v);
-        System.out.println(d); //testing
-        return d;
+        Volunteer v = o.get();
+        return volunteerService.getDashboard(v);
     }
 
     public record VolunteerRegisterRequest(String name, String email, String password) {}

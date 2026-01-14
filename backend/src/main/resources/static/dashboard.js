@@ -2,10 +2,20 @@
 
 document.addEventListener("DOMContentLoaded", async () => {
 
-    // Assume email is known
-    const email = "anna@example.com"; // TODO: replace with dynamic email
+    const volunteerId = localStorage.getItem("volunteerId");
+    if (!volunteerId) {
+        console.warn("No volunteerId found. Redirecting to login...");
+        window.location.href = "volunteer-login.html";
+        return;
+    }
 
-    const response = await fetch(`api/volunteers/dashboard?email=${encodeURIComponent(email)}`, {
+    const volunteerName = localStorage.getItem("volunteerName");
+    const nameEl = document.getElementById("volunteerName");
+    if (nameEl && volunteerName) {
+        nameEl.textContent = volunteerName;
+    }
+
+    const response = await fetch(`/api/volunteers/dashboard?id=${encodeURIComponent(volunteerId)}`, {
         method: "GET",
         headers: { Accept: "application/json" },
     });
