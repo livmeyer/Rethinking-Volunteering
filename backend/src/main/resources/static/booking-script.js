@@ -201,7 +201,7 @@ async function confirmBooking() {
 
         if (success) {
             alert("✅ Appointment Confirmed!\n\nThe slot has been booked. Please check your email.");
-            window.location.href = 'Index.html';
+            window.location.href = 'index.html';
         } else {
             alert("❌ Booking Failed.\nThis slot might have just been taken. Please try another.");
             // Refresh data to show updated availability

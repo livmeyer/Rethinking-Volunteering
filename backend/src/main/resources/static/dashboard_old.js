@@ -269,4 +269,4 @@ function saveAvailability() {
 }
 
 function claimCertificate() { alert("Certificate Request Sent!"); }
-function logout() { window.location.href = "Index.html"; }
+function logout() { window.location.href = "index.html"; }
