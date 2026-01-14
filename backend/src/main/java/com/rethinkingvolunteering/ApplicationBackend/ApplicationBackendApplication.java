@@ -13,6 +13,9 @@ import org.springframework.context.event.EventListener;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Map;
 
 @SpringBootApplication
 public class ApplicationBackendApplication {
@@ -35,5 +38,9 @@ public class ApplicationBackendApplication {
 		volunteerController.volunteerPasswordSetup("anna@example.com", "password123");
 		volunteerController.volunteerPasswordSetup("max@example.com", "password123");
 		volunteerController.volunteerPasswordSetup("lisa@example.com", "password123");
+
+		 /* Map<Boolean, String> ret = volunteerController.createTimeSlots(new VolunteerController.NewBooking(1, List.of(Topic.DOCUMENTS, Topic.TRAVEL), Location.CENTRAL_LIBRARY,
+				LocalDate.now().plusDays(1), List.of(LocalTime.of(11, 00), LocalTime.of(11, 30), LocalTime.of(12, 00))));
+		System.out.println(ret.get(true)); */
 	}
 }

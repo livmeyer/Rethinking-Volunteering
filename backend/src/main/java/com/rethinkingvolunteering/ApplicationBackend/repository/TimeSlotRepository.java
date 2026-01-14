@@ -18,10 +18,11 @@ public interface TimeSlotRepository extends JpaRepository<TimeSlot, Integer> {
 
     List<TimeSlot> findByLocation (Location location);
 
-    List<TimeSlot> findByTopic (Topic topic);
+    @Query("SELECT t FROM TimeSlot t WHERE t.topics LIKE CONCAT('%', :topic, '%')")
+    List<TimeSlot> findByTopic (@Param("topic") Topic topic);
 
-    @Query("SELECT t FROM TimeSlot t WHERE t.topic = :topic AND t.location = :location AND t.isBooked = false")
-    List<TimeSlot> findByTopicAndLocation (@Param("topic") Topic topic, @Param("location") Location location);
+    @Query("SELECT t FROM TimeSlot t WHERE t.topics LIKE CONCAT('%', :topic, '%') AND t.location = :location AND t.isBooked = false")
+    List<TimeSlot> findByTopicAndLocation (@Param("topic") String topic, @Param("location") Location location);
 
     List<TimeSlot> findByVolunteerId (Integer id);
 

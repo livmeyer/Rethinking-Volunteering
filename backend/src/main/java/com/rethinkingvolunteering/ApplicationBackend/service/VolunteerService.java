@@ -3,15 +3,23 @@ package com.rethinkingvolunteering.ApplicationBackend.service;
 import com.rethinkingvolunteering.ApplicationBackend.controller.VolunteerController;
 import com.rethinkingvolunteering.ApplicationBackend.entity.TimeSlot;
 import com.rethinkingvolunteering.ApplicationBackend.entity.Volunteer;
+import com.rethinkingvolunteering.ApplicationBackend.enums.Location;
+import com.rethinkingvolunteering.ApplicationBackend.enums.Topic;
 import com.rethinkingvolunteering.ApplicationBackend.repository.TimeSlotRepository;
 import com.rethinkingvolunteering.ApplicationBackend.repository.VolunteerRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+
 
 @Service
 public class VolunteerService {
@@ -62,8 +70,26 @@ public class VolunteerService {
         }
     }
 
-    public void createNewBookings(VolunteerController.NewBooking newBooking) {
+    public Map<Boolean, String> createTimeSlots(VolunteerController.NewBooking newBooking) {
+        String topics = newBooking.topics().stream()
+                .map(Enum::name)
+                .collect(Collectors.joining(", ", "[", "]"));
+        List<TimeSlot> newTimeSlots = new ArrayList<>();
+        System.out.println(topics);
 
+        for (LocalTime time: newBooking.timeSlots()) {
+            TimeSlot t = new TimeSlot();
+            t.setVolunteerId(newBooking.volunteerId());
+            t.setTopic(topics);
+            t.setLocation(newBooking.location());
+            t.setStartTime(LocalDateTime.of(newBooking.day(), time));
+            t.setCompleted(false);
+            t.setBooked(false);
+            t.setCustomerName("");
+            newTimeSlots.add(t);
+        }
+        timeSlotRepository.saveAll(newTimeSlots);
+        return Map.of(true, "success");
     }
 
     public Map<String, Object> getDashboard(Volunteer v) {

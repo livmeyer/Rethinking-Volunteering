@@ -7,8 +7,8 @@ INSERT INTO volunteer (id, email, password, name, appointment_count) VALUES
 
 -- ===== TIMESLOTS =====
 -- Verfügbare Termine
-INSERT INTO time_slot (id, start_time, volunteer_id, topic, location, is_booked, customer_name, completed) VALUES
-                                                                                                               (1, '2026-01-20 09:00:00', 1, 'DOCUMENTS', 'CENTRAL_LIBRARY', false, NULL, false),
+INSERT INTO time_slot (id, start_time, volunteer_id, topics, location, is_booked, customer_name, completed) VALUES
+                                                                                                               (1, '2026-01-20 09:00:00', 1, '[DOCUMENTS,TRAVEL]', 'CENTRAL_LIBRARY', false, NULL, false),
                                                                                                                (2, '2026-01-20 10:00:00', 1, 'DOCUMENTS', 'CENTRAL_LIBRARY', false, NULL, false),
                                                                                                                (3, '2026-01-20 11:00:00', 1, 'TRAVEL', 'MOOSACH', false, NULL, false),
                                                                                                                (4, '2026-01-21 14:00:00', 2, 'NEW_IN_MUNICH', 'SENDLING', false, NULL, false),
@@ -44,7 +44,7 @@ INSERT INTO time_slot (id, start_time, volunteer_id, topic, location, is_booked,
                                                                                                                (38, '2026-01-31 15:30:00', 1, 'TRAVEL', 'MOOSACH', false, NULL, false);
 
 -- Bereits gebuchte Termine
-INSERT INTO time_slot (id, start_time, volunteer_id, topic, location, is_booked, customer_name, completed) VALUES
+INSERT INTO time_slot (id, start_time, volunteer_id, topics, location, is_booked, customer_name, completed) VALUES
         (11, '2026-01-18 09:00:00', 1, 'GENERAL', 'CENTRAL_LIBRARY', true, 'Peter Huber', true),
         (12, '2026-01-18 10:00:00', 2, 'TRAVEL', 'MOOSACH', true, 'Maria Klein', false),
         (13, '2026-01-19 14:00:00', 3, 'NEW_IN_MUNICH', 'SENDLING', true, 'Thomas Braun', true),

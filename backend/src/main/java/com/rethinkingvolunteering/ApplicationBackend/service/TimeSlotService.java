@@ -36,12 +36,12 @@ public class TimeSlotService {
     }
 
     public List<TimeSlot> getAvailableDates(Topic topic, Location location) {
-        List<TimeSlot> temp = timeSlotRepository.findByTopicAndLocation(topic, location);
+        List<TimeSlot> temp = timeSlotRepository.findByTopicAndLocation(String.valueOf(topic), location);
         return temp;
     }
 
     public List<LocalDateTime> getAvailableTimeSlots(Topic topic, Location location, LocalDate date) {
-        return timeSlotRepository.findByTopicAndLocation(topic, location).stream()
+        return timeSlotRepository.findByTopicAndLocation(String.valueOf(topic), location).stream()
                 .filter(o->!o.isBooked())
                 .map(TimeSlot::getStartTime)
                 .filter(startTime -> startTime.toLocalDate().equals(date))
@@ -53,15 +53,15 @@ public class TimeSlotService {
         return timeSlotRepository.findByVolunteerId(volunteer.getId());
     }
 
-    public TimeSlot createTimeSlot(int volunteerId, Topic topic, Location location, LocalDateTime time) {
+    /* public TimeSlot createTimeSlot(int volunteerId, Topic topic, Location location, LocalDateTime time) {
         TimeSlot timeSlot = new TimeSlot();
         timeSlot.setVolunteerId(volunteerId);
-        timeSlot.setTopic(topic);
+        timeSlot.setTopic(String.valueOf(topic));
         timeSlot.setLocation(location);
         timeSlot.setStartTime(time);
         timeSlotRepository.save(timeSlot);
         return timeSlot;
-    }
+    } */
 
     public Map<String, Boolean> bookTimesSlot(TimeSlotController.TimeSlotToBook timeSlotToBook) {
         Optional<TimeSlot> optionalTimeSlot = timeSlotRepository.findById(timeSlotToBook.slotId());
@@ -70,7 +70,9 @@ public class TimeSlotService {
             optionalTimeSlot.get().setCustomerName(timeSlotToBook.customerName());
             System.out.println("TimeSlot to be booked: " + optionalTimeSlot.get().getId());
             timeSlotRepository.save(optionalTimeSlot.get());
+
+            return Map.of("Success", Boolean.TRUE);
         }
-        return Map.of("Success", Boolean.FALSE);
+        return Map.of("Fail", Boolean.FALSE);
     }
 }
