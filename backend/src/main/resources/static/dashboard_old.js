@@ -20,51 +20,51 @@ function initDashboard() {
     fetchSessionsFromBackend(); // Now calls real API
 }
 
-// --- 1. Backend Integration (Real Data) ---
+// // --- 1. Backend Integration (Real Data) ---
 
-async function fetchSessionsFromBackend() {
-    // 1. Get Volunteer ID (Saved during login)
-    // If testing without login, you can temporarily hardcode: const volunteerId = 1;
-    const volunteerId = localStorage.getItem('volunteerId');
+// async function fetchSessionsFromBackend() {
+//     // 1. Get Volunteer ID (Saved during login)
+//     // If testing without login, you can temporarily hardcode: const volunteerId = 1;
+//     const volunteerId = localStorage.getItem('volunteerId');
 
-    if (!volunteerId) {
-        console.warn("No volunteer ID found. Redirecting to login...");
-        // window.location.href = 'volunteer-login.html'; // Uncomment when ready
-        return;
-    }
+//     if (!volunteerId) {
+//         console.warn("No volunteer ID found. Redirecting to login...");
+//         // window.location.href = 'volunteer-login.html'; // Uncomment when ready
+//         return;
+//     }
 
-    try {
-        // GET /api/volunteers/{id}/sessions
-        const response = await fetch(`/api/volunteers/${volunteerId}/sessions`);
+//     try {
+//         // GET /api/volunteers/{id}/sessions
+//         const response = await fetch(`/api/volunteers/${volunteerId}/sessions`);
         
-        if (!response.ok) throw new Error("Failed to load sessions");
+//         if (!response.ok) throw new Error("Failed to load sessions");
 
-        const backendData = await response.json();
+//         const backendData = await response.json();
 
-        // 2. Transform Java Data -> Dashboard Format
-        currentState.sessions = backendData.map(slot => ({
-            id: slot.id,
-            // Extract Date: "2026-02-15T09:00:00" -> "2026-02-15"
-            date: slot.startTime.split('T')[0], 
-            // Extract Time: "09:00"
-            time: slot.startTime.split('T')[1].substring(0, 5), 
-            topic: slot.topic,
-            location: slot.location,
-            // If 'booked' is true, we treat it as PENDING verification.
-            // You might need a specific 'completed' flag in Java later, 
-            // but for now let's assume if it exists here, it's ready to verify.
-            status: slot.booked ? 'PENDING' : 'OPEN' 
-        }));
+//         // 2. Transform Java Data -> Dashboard Format
+//         currentState.sessions = backendData.map(slot => ({
+//             id: slot.id,
+//             // Extract Date: "2026-02-15T09:00:00" -> "2026-02-15"
+//             date: slot.startTime.split('T')[0], 
+//             // Extract Time: "09:00"
+//             time: slot.startTime.split('T')[1].substring(0, 5), 
+//             topic: slot.topic,
+//             location: slot.location,
+//             // If 'booked' is true, we treat it as PENDING verification.
+//             // You might need a specific 'completed' flag in Java later, 
+//             // but for now let's assume if it exists here, it's ready to verify.
+//             status: slot.booked ? 'PENDING' : 'OPEN' 
+//         }));
         
-        renderSessions();
-        updateStatsUI();
+//         renderSessions();
+//         updateStatsUI();
 
-    } catch (error) {
-        console.error("Error fetching sessions:", error);
-        document.getElementById('sessionListContainer').innerHTML = 
-            '<p style="text-align:center; color:red;">Could not load session data.</p>';
-    }
-}
+//     } catch (error) {
+//         console.error("Error fetching sessions:", error);
+//         document.getElementById('sessionListContainer').innerHTML = 
+//             '<p style="text-align:center; color:red;">Could not load session data.</p>';
+//     }
+// }
 
 async function saveVerifiedSessions() {
     // 1. Find all CHECKED boxes
