@@ -3,7 +3,8 @@
 INSERT INTO volunteer (id, email, password, name, appointment_count) VALUES
         (1, 'anna@example.com', '', 'Anna Schmidt', 0),
         (2, 'max@example.com', '', 'Max Müller', 8),
-        (3, 'lisa@example.com', '', 'Lisa Weber', 5);
+        (3, 'lisa@example.com', '', 'Lisa Weber', 5),
+        (4, 'test@test.com', '', 'Test User', 0);
 
 -- ===== TIMESLOTS =====
 -- Verfügbare Termine

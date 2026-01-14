@@ -53,16 +53,6 @@ public class TimeSlotService {
         return timeSlotRepository.findByVolunteerId(volunteer.getId());
     }
 
-    /* public TimeSlot createTimeSlot(int volunteerId, Topic topic, Location location, LocalDateTime time) {
-        TimeSlot timeSlot = new TimeSlot();
-        timeSlot.setVolunteerId(volunteerId);
-        timeSlot.setTopic(String.valueOf(topic));
-        timeSlot.setLocation(location);
-        timeSlot.setStartTime(time);
-        timeSlotRepository.save(timeSlot);
-        return timeSlot;
-    } */
-
     public Map<String, Boolean> bookTimesSlot(TimeSlotController.TimeSlotToBook timeSlotToBook) {
         Optional<TimeSlot> optionalTimeSlot = timeSlotRepository.findById(timeSlotToBook.slotId());
         if  (optionalTimeSlot.isPresent() && !optionalTimeSlot.get().isBooked()) {

@@ -78,8 +78,9 @@ public class VolunteerController {
     }
 
     @PostMapping("/createTimeSlots")
-    public Map<Boolean, String> createTimeSlots(@RequestBody NewBooking newBooking) {
-        return volunteerService.createTimeSlots(newBooking);
+    public Map<Boolean, String> createTimeSlots(@RequestBody List<NewBooking> newBookings) {
+        System.out.println("Controller aufgerufen");
+        return volunteerService.createTimeSlots(newBookings);
     }
 
 

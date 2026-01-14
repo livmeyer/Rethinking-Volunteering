@@ -15,6 +15,7 @@ let currentState = {
     sessions: []
 };
 
+
 function initDashboard() {
     displayDashboardInformation();
     generateCalendar();
@@ -271,24 +272,6 @@ function updateStatsUI() {
 
 // --- 3. Interaction Handlers ---
 
-function toggleTopic(topicEnum, isChecked) {
-    if (isChecked) {
-        if (!currentState.topics.includes(topicEnum)) currentState.topics.push(topicEnum);
-    } else {
-        currentState.topics = currentState.topics.filter(t => t !== topicEnum);
-    }
-    console.log("Topics:", currentState.topics);
-}
-
-function selectSingleLocation(inputElement, locationEnum) {
-    currentState.location = locationEnum;
-
-    // Visual update
-    document.querySelectorAll('.location-item').forEach(item => item.classList.remove('selected'));
-    const parentLabel = inputElement.closest('.location-item');
-    if (parentLabel) parentLabel.classList.add('selected');
-}
-
 function switchTab(tabName) {
     document.querySelectorAll('.dashboard-section').forEach(el => el.style.display = 'none');
     document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
@@ -328,6 +311,9 @@ function generateCalendar() {
             day.style.border = '2px solid var(--primary-color)';
             document.getElementById('selectedDateText').textContent = `${monthNames[month]} ${i}`;
             document.getElementById('timeSlotsContainer').style.display = 'block';
+
+            const dateString = `${year}-${(month+1).toString().padStart(2, '0')}-${i.toString().padStart(2, '0')}`;
+            setDate(dateString);
         };
         grid.appendChild(day);
     }
@@ -336,21 +322,6 @@ function generateCalendar() {
 function previousMonth() { currentState.currentDate.setMonth(currentState.currentDate.getMonth() - 1); generateCalendar(); }
 function nextMonth() { currentState.currentDate.setMonth(currentState.currentDate.getMonth() + 1); generateCalendar(); }
 
-function toggleTimeSlot(el) { el.classList.toggle('selected'); }
-
-function saveTimeSlots() {
-    // Logic to save specific time slots to currentState.availability
-    alert("Time slots saved locally for this date.");
-}
-
-function saveAvailability() {
-    console.log("Saving full availability:", {
-        location: currentState.location,
-        topics: currentState.topics,
-        calendar: currentState.availability
-    });
-    alert("Availability Settings Saved!");
-}
 
 function claimCertificate() { alert("Certificate Request Sent!"); }
 function logout() { window.location.href = "index.html"; }
