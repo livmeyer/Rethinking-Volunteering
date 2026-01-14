@@ -3,14 +3,9 @@ package com.rethinkingvolunteering.ApplicationBackend.service;
 import com.rethinkingvolunteering.ApplicationBackend.controller.VolunteerController;
 import com.rethinkingvolunteering.ApplicationBackend.entity.TimeSlot;
 import com.rethinkingvolunteering.ApplicationBackend.entity.Volunteer;
-import com.rethinkingvolunteering.ApplicationBackend.enums.Location;
-import com.rethinkingvolunteering.ApplicationBackend.enums.Topic;
 import com.rethinkingvolunteering.ApplicationBackend.repository.TimeSlotRepository;
 import com.rethinkingvolunteering.ApplicationBackend.repository.VolunteerRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;

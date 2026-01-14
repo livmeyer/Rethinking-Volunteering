@@ -8,9 +8,6 @@ import com.rethinkingvolunteering.ApplicationBackend.enums.Topic;
 import com.rethinkingvolunteering.ApplicationBackend.repository.TimeSlotRepository;
 import com.rethinkingvolunteering.ApplicationBackend.repository.VolunteerRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

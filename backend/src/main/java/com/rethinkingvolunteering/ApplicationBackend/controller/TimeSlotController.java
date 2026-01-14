@@ -42,11 +42,6 @@ public class TimeSlotController {
     public List<TimeSlot>  getBookedSessions(@RequestBody GetBookedSessions req) {
         return timeSlotService.getBookedSessions(req.volunteer);
     }
-    
-    /* @PostMapping("/timeslot")
-    public TimeSlot createTimeSlot(@RequestBody PostTimeSlot req) {
-        return timeSlotService.createTimeSlot(req.volunteer.getId(), req.topic, req.location, req.time);
-    } */
 
     @PutMapping("/book")
     public Map<String, Boolean> bookTimeSlot(@RequestBody TimeSlotToBook timeSlot) {
@@ -55,9 +50,6 @@ public class TimeSlotController {
     
     public record GetLocationsRequest(Topic topic) {}
     public record TimeSlotToBook(int slotId, String customerName) {}
-    public record GetDatesRequest(Topic topic, Location location) {}
-    public record getAvailableDates(Topic topic, Location location) {}
     public record GetTimeslotsRequest(Topic topic, Location location, @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {}
     public record GetBookedSessions(Volunteer volunteer) {}
-    public record PostTimeSlot(Volunteer volunteer,  Topic topic, Location location, LocalDateTime time) {}
 }

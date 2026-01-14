@@ -39,9 +39,5 @@ public class ApplicationBackendApplication {
 		volunteerController.volunteerPasswordSetup("max@example.com", "password123");
 		volunteerController.volunteerPasswordSetup("lisa@example.com", "password123");
 		volunteerController.volunteerPasswordSetup("test@test.com", "test");
-
-		 /* Map<Boolean, String> ret = volunteerController.createTimeSlots(new VolunteerController.NewBooking(1, List.of(Topic.DOCUMENTS, Topic.TRAVEL), Location.CENTRAL_LIBRARY,
-				LocalDate.now().plusDays(1), List.of(LocalTime.of(11, 00), LocalTime.of(11, 30), LocalTime.of(12, 00))));
-		System.out.println(ret.get(true)); */
 	}
 }
