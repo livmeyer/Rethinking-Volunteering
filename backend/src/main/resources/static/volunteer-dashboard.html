@@ -75,7 +75,7 @@
                     <div class="location-list">
                         
                         <label class="location-item" id="topicDocs">
-                            <input type="checkbox" checked onchange="toggleTopic('DOCUMENTS', this.checked)">
+                            <input type="checkbox" name="topic" onchange="toggleTopic('DOCUMENTS')">
                             <div class="location-info">
                                 <div class="location-name"> Documents & Registration</div>
                                 <div class="location-address">Forms, IDs, Bureaucracy</div>
@@ -83,7 +83,7 @@
                         </label>
 
                         <label class="location-item" id="topicTravel">
-                            <input type="checkbox" checked onchange="toggleTopic('MOBILITY', this.checked)">
+                            <input type="checkbox" name="topic" onchange="toggleTopic('TRAVEL')">
                             <div class="location-info">
                                 <div class="location-name"> Tickets & Travel</div>
                                 <div class="location-address">MVV App, Deutschlandticket</div>
@@ -91,7 +91,7 @@
                         </label>
 
                         <label class="location-item" id="topicNew">
-                            <input type="checkbox" checked onchange="toggleTopic('STUDENTS', this.checked)">
+                            <input type="checkbox" name="topic" onchange="toggleTopic('NEW_IN_MUNICH')">
                             <div class="location-info">
                                 <div class="location-name"> New in Munich</div>
                                 <div class="location-address">Orientation, City Guide</div>
@@ -99,7 +99,7 @@
                         </label>
 
                         <label class="location-item" id="topicGen">
-                            <input type="checkbox" checked onchange="toggleTopic('GENERAL', this.checked)">
+                            <input type="checkbox" name="topic" onchange="toggleTopic('GENERAL')">
                             <div class="location-info">
                                 <div class="location-name"> General Help</div>
                                 <div class="location-address">Other digital questions</div>
@@ -112,7 +112,7 @@
                     <h3>📍 Preferred Location</h3>
                     <div class="location-list">
                         <label class="location-item" id="loc1">
-                            <input type="radio" name="locationGroup" onchange="selectSingleLocation(this, 'CENTRAL_LIBRARY')">
+                            <input type="radio" name="locationGroup" onchange="setLocation(this, 'CENTRAL_LIBRARY')">
                             <div class="location-info">
                                 <div class="location-name"> Central Library (Am Gasteig)</div>
                                 <div class="location-address">Rosenheimer Str. 5</div>
@@ -120,7 +120,7 @@
                         </label>
 
                         <label class="location-item" id="loc2">
-                            <input type="radio" name="locationGroup" onchange="selectSingleLocation(this, 'MOOSACH')">
+                            <input type="radio" name="locationGroup" onchange="setLocation(this, 'MOOSACH')">
                             <div class="location-info">
                                 <div class="location-name"> Moosach Library</div>
                                 <div class="location-address">Pelkovenstr. 145</div>
@@ -128,7 +128,7 @@
                         </label>
 
                         <label class="location-item" id="loc3">
-                            <input type="radio" name="locationGroup" onchange="selectSingleLocation(this, 'SENDLING')">
+                            <input type="radio" name="locationGroup" onchange="setLocation(this, 'SENDLING')">
                             <div class="location-info">
                                 <div class="location-name"> Sendling Senior Center</div>
                                 <div class="location-address">Gotzinger Str. 45</div>
@@ -136,7 +136,7 @@
                         </label>
 
                         <label class="location-item" id="loc4">
-                            <input type="radio" name="locationGroup" onchange="selectSingleLocation(this, 'SCHWABING')">
+                            <input type="radio" name="locationGroup" onchange="setLocation(this, 'SCHWABING')">
                             <div class="location-info">
                                 <div class="location-name">️ Schwabing Community Center</div>
                                 <div class="location-address">Belgradstr. 169</div>
@@ -160,18 +160,22 @@
                 <div id="timeSlotsContainer" class="subsection" style="display:none; margin-top: 2rem;">
                     <h3>🕒 Select Times for <span id="selectedDateText" style="color:var(--primary-color)"></span></h3>
                     <div class="time-slots-grid">
-                        <div class="time-slot" onclick="toggleTimeSlot(this)">09:00</div>
-                        <div class="time-slot" onclick="toggleTimeSlot(this)">10:00</div>
-                        <div class="time-slot" onclick="toggleTimeSlot(this)">11:00</div>
-                        <div class="time-slot" onclick="toggleTimeSlot(this)">13:00</div>
-                        <div class="time-slot" onclick="toggleTimeSlot(this)">14:00</div>
-                        <div class="time-slot" onclick="toggleTimeSlot(this)">15:00</div>
+                        <div class="time-slot" onclick="toggleTimeSlot(this, 8)">08:00</div>
+                        <div class="time-slot" onclick="toggleTimeSlot(this, 9)">09:00</div>
+                        <div class="time-slot" onclick="toggleTimeSlot(this, 10)">10:00</div>
+                        <div class="time-slot" onclick="toggleTimeSlot(this, 11)">11:00</div>
+                        <div class="time-slot" onclick="toggleTimeSlot(this, 12)">12:00</div>
+                        <div class="time-slot" onclick="toggleTimeSlot(this, 13)">13:00</div>
+                        <div class="time-slot" onclick="toggleTimeSlot(this, 14)">14:00</div>
+                        <div class="time-slot" onclick="toggleTimeSlot(this, 15)">15:00</div>
+                        <div class="time-slot" onclick="toggleTimeSlot(this, 16)">16:00</div>
+                        <div class="time-slot" onclick="toggleTimeSlot(this, 17)">17:00</div>
                     </div>
-                    <button class="btn-primary" onclick="saveTimeSlots()">Save Slots for this Day</button>
+                    <button class="btn-primary" onclick="saveSlotsForDay()">Save Slots for this Day</button>
                 </div>
 
                 <div class="action-bar">
-                    <button class="btn-secondary" onclick="saveAvailability()">Save All Availability Changes</button>
+                    <button class="btn-secondary" onclick="saveAllAvailabilities()">Save All Availability Changes</button>
                 </div>
             </div>
 
@@ -216,5 +220,6 @@
     </footer>
 
     <script src="dashboard.js"></script>
+    <script src="AvailabilityManager.js"></script>
 </body>
 </html>

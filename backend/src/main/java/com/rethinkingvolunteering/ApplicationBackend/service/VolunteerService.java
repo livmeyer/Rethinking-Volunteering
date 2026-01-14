@@ -67,23 +67,23 @@ public class VolunteerService {
         }
     }
 
-    public Map<Boolean, String> createTimeSlots(VolunteerController.NewBooking newBooking) {
-        String topics = newBooking.topics().stream()
-                .map(Enum::name)
-                .collect(Collectors.joining(", ", "[", "]"));
+    public Map<Boolean, String> createTimeSlots(List<VolunteerController.NewBooking> newBookings) {
         List<TimeSlot> newTimeSlots = new ArrayList<>();
-        System.out.println(topics);
-
-        for (LocalTime time: newBooking.timeSlots()) {
-            TimeSlot t = new TimeSlot();
-            t.setVolunteerId(newBooking.volunteerId());
-            t.setTopic(topics);
-            t.setLocation(newBooking.location());
-            t.setStartTime(LocalDateTime.of(newBooking.day(), time));
-            t.setCompleted(false);
-            t.setBooked(false);
-            t.setCustomerName("");
-            newTimeSlots.add(t);
+        for(VolunteerController.NewBooking newBooking: newBookings) {
+            String topics = newBooking.topics().stream()
+                    .map(Enum::name)
+                    .collect(Collectors.joining(", ", "[", "]"));
+            for (LocalTime time: newBooking.timeSlots()) {
+                TimeSlot t = new TimeSlot();
+                t.setVolunteerId(newBooking.volunteerId());
+                t.setTopic(topics);
+                t.setLocation(newBooking.location());
+                t.setStartTime(LocalDateTime.of(newBooking.day(), time));
+                t.setCompleted(false);
+                t.setBooked(false);
+                t.setCustomerName(null);
+                newTimeSlots.add(t);
+            }
         }
         timeSlotRepository.saveAll(newTimeSlots);
         return Map.of(true, "success");
