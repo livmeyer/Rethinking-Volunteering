@@ -1,4 +1,8 @@
-// dashboard.js (minimal)
+/* File: dashboard.js */
+
+document.addEventListener('DOMContentLoaded', () => {
+    initDashboard();
+});
 
 // --- State Management ---
 let currentState = {
