@@ -171,12 +171,12 @@ function renderSessions() {
     const container = document.getElementById('sessionListContainer');
     container.innerHTML = '';
 
-    if (currentState.sessions.length === 0) {
+    if (currentState.sessions.upcoming.length + currentState.sessions.past.length === 0) {
         container.innerHTML = '<p style="text-align:center; color:#888;">No sessions assigned yet.</p>';
         return;
     }
 
-    currentState.sessions.forEach(session => {
+    currentState.sessions.past.forEach(session => {
         const dateObj = new Date(session.date);
         const isCompleted = session.status === 'COMPLETED';
 
@@ -211,8 +211,8 @@ function renderSessions() {
 
 function updateStatsUI() {
     // Calculate stats based on local state
-    const completedCount = currentState.sessions.filter(s => s.status === 'COMPLETED').length;
-    const pendingCount = currentState.sessions.length - completedCount;
+    const completedCount = currentState.sessions.past.filter(s => s.status === 'COMPLETED').length;
+    const pendingCount = currentState.sessions.past.length - completedCount;
 
     const target = currentState.targetSessions;
     const percentage = Math.min(100, Math.round((completedCount / target) * 100));
