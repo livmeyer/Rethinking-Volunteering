@@ -9,6 +9,7 @@ import com.rethinkingvolunteering.ApplicationBackend.repository.TimeSlotReposito
 import com.rethinkingvolunteering.ApplicationBackend.repository.VolunteerRepository;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -50,14 +51,21 @@ public class TimeSlotService {
         return timeSlotRepository.findByVolunteerId(volunteer.getId());
     }
 
-    public Map<String, Boolean> bookTimesSlot(TimeSlotController.TimeSlotToBook timeSlotToBook) {
-        Optional<TimeSlot> optionalTimeSlot = timeSlotRepository.findById(timeSlotToBook.slotId());
+    public Map<String, Boolean> bookTimesSlot(int slotId) {
+        Optional<TimeSlot> optionalTimeSlot = timeSlotRepository.findById(slotId);
         if  (optionalTimeSlot.isPresent() && !optionalTimeSlot.get().isBooked()) {
             optionalTimeSlot.get().setBooked(true);
-            optionalTimeSlot.get().setCustomerName(timeSlotToBook.customerName());
-            System.out.println("TimeSlot to be booked: " + optionalTimeSlot.get().getId());
             timeSlotRepository.save(optionalTimeSlot.get());
+            return Map.of("Success", Boolean.TRUE);
+        }
+        return Map.of("Fail", Boolean.FALSE);
+    }
 
+    public Map<String, Boolean> completeTimesSlot(int slotId) {
+        Optional<TimeSlot> optionalTimeSlot = timeSlotRepository.findById(slotId);
+        if  (optionalTimeSlot.isPresent() && optionalTimeSlot.get().isBooked() && !optionalTimeSlot.get().isCompleted()) {
+            optionalTimeSlot.get().setCompleted(true);
+            timeSlotRepository.save(optionalTimeSlot.get());
             return Map.of("Success", Boolean.TRUE);
         }
         return Map.of("Fail", Boolean.FALSE);

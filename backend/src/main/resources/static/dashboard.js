@@ -153,7 +153,7 @@ async function fetchSessionsFromBackend() {
 
 async function saveVerifiedSessions() {
     // 1. Find all CHECKED boxes
-    const checkboxes = document.querySelectorAll('.session-checkbox:checked');
+    const checkboxes = document.querySelectorAll('#sessionListContainer input[type="checkbox"]:checked');
     const completedIds = Array.from(checkboxes).map(box => parseInt(box.getAttribute('data-id')));
 
     if (completedIds.length === 0) {
@@ -165,18 +165,16 @@ async function saveVerifiedSessions() {
         // 2. Send updates to Backend
         // Loop through each ID and update (or send bulk if backend supports it)
         for (const id of completedIds) {
-            await fetch('/api/volunteers/sessions/update', {
-                method: 'POST',
+            await fetch('/api/timeslots/complete', {
+                method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id: id, completed: true })
+                body: JSON.stringify({ slotId: id })
             });
 
             // Update local state
-            const session = currentState.sessions.find(s => s.id === id);
+            const session = currentState.sessions.past.find(s => s.id === id);
             if(session) session.status = 'COMPLETED';
         }
-
-        alert("✅ Sessions verified! Your certificate progress has been updated.");
 
         // Refresh UI
         renderSessions();

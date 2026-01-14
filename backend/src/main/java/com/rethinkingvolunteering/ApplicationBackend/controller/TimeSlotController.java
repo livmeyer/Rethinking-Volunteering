@@ -45,11 +45,16 @@ public class TimeSlotController {
 
     @PutMapping("/book")
     public Map<String, Boolean> bookTimeSlot(@RequestBody TimeSlotToBook timeSlot) {
-        return timeSlotService.bookTimesSlot(timeSlot);
+        return timeSlotService.bookTimesSlot(timeSlot.slotId);
     }
-    
+
+    @PutMapping("/complete")
+    public Map<String, Boolean> completeTimeSlot(@RequestBody TimeSlotToBook timeSlot) {
+        return timeSlotService.completeTimesSlot(timeSlot.slotId);
+    }
+
     public record GetLocationsRequest(Topic topic) {}
-    public record TimeSlotToBook(int slotId, String customerName) {}
+    public record TimeSlotToBook(int slotId) {}
     public record GetTimeslotsRequest(Topic topic, Location location, @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {}
     public record GetBookedSessions(Volunteer volunteer) {}
 }
