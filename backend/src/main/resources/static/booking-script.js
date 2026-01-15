@@ -5,6 +5,10 @@ let selectedCategoryEnum = null;
 let selectedLocationEnum = null;     
 let selectedSlotId = null;           
 let availableSlots = []; // Stores the raw data from backend
+let currentState = {
+    currentDate: new Date(),
+    currentTopic: ""
+};
 
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Get Category from URL
@@ -91,17 +95,23 @@ async function fetchAvailableSlots() {
 // --- Step 3: Render 30-Day Calendar ---
 function renderCalendar() {
     const calendar = document.getElementById('calendar');
+    const monthLabel = document.getElementById('currentMonth');
+    const year = currentState.currentDate.getFullYear();
+
+    const month = currentState.currentDate.getMonth();
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    monthLabel.textContent = `${monthNames[month]} ${year}`;
     calendar.innerHTML = '';
 
-    const today = new Date();
-    
     // Generate exactly 30 days
-    for (let i = 0; i < 30; i++) {
-        const dateObj = new Date(today);
-        dateObj.setDate(today.getDate() + i);
-        
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    for (let i = 1; i <= daysInMonth; i++) {
+        const dateObj = new Date(year, month, i);
+        dateObj.setHours(3);
+        console.log(dateObj.toISOString());
         // Format YYYY-MM-DD for comparison with backend data
         const dateKey = dateObj.toISOString().split('T')[0];
+        console.log("date: " + dateKey)
         
         // CHECK AVAILABILITY: Does our backend data contain this date?
         // We look for ANY slot in availableSlots that starts on this date
@@ -137,6 +147,7 @@ function renderCalendar() {
 
         calendar.appendChild(dayEl);
     }
+
 }
 
 // --- Step 4: Render Time Slots ---
@@ -214,4 +225,14 @@ async function confirmBooking() {
         btn.textContent = originalText;
         btn.disabled = false;
     }
+}
+
+
+function previousMonth() {
+    currentState.currentDate.setMonth(currentState.currentDate.getMonth() - 1);
+    renderCalendar();
+}
+function nextMonth() {
+    currentState.currentDate.setMonth(currentState.currentDate.getMonth() + 1);
+    renderCalendar();
 }

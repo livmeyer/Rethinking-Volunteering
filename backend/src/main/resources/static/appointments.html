@@ -86,8 +86,12 @@
                         <h3 class="step-title">Pick a Date</h3>
                     </div>
                     <div class="calendar-wrapper">
-                        <div class="calendar" id="calendar">
-                            </div>
+                        <div class="calendar-header">
+                            <button class="nav-btn" onclick="previousMonth()">&larr;</button>
+                            <span class="current-month" id="currentMonth"></span>
+                            <button class="nav-btn" onclick="nextMonth()">&rarr;</button>
+                        </div>
+                        <div class="calendar" id="calendar"></div>
                     </div>
                 </div>
 

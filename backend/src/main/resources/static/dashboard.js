@@ -15,7 +15,6 @@ let currentState = {
     sessions: []
 };
 
-
 function initDashboard() {
     displayDashboardInformation();
     generateCalendar();
@@ -300,7 +299,9 @@ function generateCalendar() {
     // Simple Calendar Generation for Availability Setting
     // (This part logic remains similar to previous step: create days, onclick -> show time slots)
     // For brevity, using a simplified loop
-    for(let i=1; i<=30; i++) {
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    for(let i=1; i<=daysInMonth; i++) {
         const day = document.createElement('div');
         day.className = 'calendar-day';
         day.textContent = i;

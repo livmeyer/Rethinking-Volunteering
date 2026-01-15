@@ -192,6 +192,14 @@
     border-color: #005a9f;
 }
 
+.calendar-wrapper { max-width: 500px; }
+.calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
 /* --- Footer Actions --- */
 .booking-footer {
     margin-top: 3rem;
@@ -248,6 +256,29 @@
 .back-nav-btn:hover {
     background: rgba(255,255,255,0.1);
     border-color: #fff;
+}
+
+/* --- Buttons --- */
+.btn-primary {
+    background: var(--primary-button-bg-color);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+}
+.btn-primary:hover { background: var(--primary-button-hover-bg-color); }
+
+.btn-secondary {
+    background: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 10px 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
 }
 
 /* Error State Styling */
