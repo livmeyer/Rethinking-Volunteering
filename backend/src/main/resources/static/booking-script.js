@@ -107,6 +107,23 @@ function renderCalendar() {
     monthLabel.textContent = `${monthNames[month]} ${year}`;
     calendar.innerHTML = '';
 
+    //offset and weekday names
+    const weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    weekdays.forEach(day => {
+        const header = document.createElement('div');
+        header.className = 'calendar-weekday-header';
+        header.textContent = day;
+        calendar.appendChild(header);
+    });
+
+    const offset = (new Date(year, month, 1).getDay() === 0) ? 6 : new Date(year, month, 1).getDay() - 1;
+
+    for(let i = 0; i < offset; i++) {
+        const emptyDay = document.createElement('div');
+        emptyDay.className = 'calendar-day empty'
+        calendar.appendChild(emptyDay);
+    }
+
     // Generate exactly 30 days
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     for (let i = 1; i <= daysInMonth; i++) {
@@ -126,7 +143,6 @@ function renderCalendar() {
         
         // Content
         dayEl.innerHTML = `
-            <div>${dateObj.toLocaleDateString('en-US', {weekday: 'short'})}</div>
             <div>${dateObj.getDate()}</div>
         `;
 

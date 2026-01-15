@@ -274,6 +274,22 @@
     letter-spacing: 0.5px;
 }
 
+.calendar-weekday-header {
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: #005a9f;
+    padding: 10px 5px;
+    border-bottom: 2px solid #e1e4e8;
+    background-color: #f8f9fa;
+}
+
+.calendar-day.empty {
+    background: transparent;
+    border: none;
+    cursor: default;
+    pointer-events: none;
+}
 
 /* --- Time Slots --- */
 .time-slots-grid {

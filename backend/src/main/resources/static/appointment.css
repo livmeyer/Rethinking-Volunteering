@@ -343,6 +343,23 @@
     box-sizing: border-box; /* Ensures padding doesn't break width */
 }
 
+.calendar-weekday-header {
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: #005a9f;
+    padding: 10px 5px;
+    border-bottom: 2px solid #e1e4e8;
+    background-color: #f8f9fa;
+}
+
+.calendar-day.empty {
+    background: transparent;
+    border: none;
+    cursor: default;
+    pointer-events: none;
+}
+
 .calendar-error p {
     margin: 0 0 1rem 0;
     font-weight: 600;

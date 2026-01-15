@@ -304,10 +304,28 @@ function generateCalendar() {
     monthLabel.textContent = `${monthNames[month]} ${year}`;
     grid.innerHTML = '';
 
+    const weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    weekdays.forEach(day => {
+        const header = document.createElement('div');
+        header.className = 'calendar-weekday-header';
+        header.textContent = day;
+        grid.appendChild(header);
+    });
+
     // Simple Calendar Generation for Availability Setting
     // (This part logic remains similar to previous step: create days, onclick -> show time slots)
     // For brevity, using a simplified loop
     const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    //For the calendar offset
+    const startingDayOfWeek = new Date(year, month, 1).getDay();
+    const offset = (startingDayOfWeek === 0) ? 6 : startingDayOfWeek - 1;
+
+    for(let i = 0; i < offset; i++) {
+        const emptyDay = document.createElement('div');
+        emptyDay.className = 'calendar-day empty'
+        grid.appendChild(emptyDay);
+    }
 
     for(let i=1; i<=daysInMonth; i++) {
         const day = document.createElement('div');
