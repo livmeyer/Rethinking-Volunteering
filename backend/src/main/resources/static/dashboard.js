@@ -288,8 +288,9 @@ function switchTab(tabName) {
     // Simple index mapping for tabs (0=Availability, 1=Sessions, 2=Certificate)
     const tabs = document.querySelectorAll('.tabs .tab');
     if(tabName === 'availability') tabs[0].classList.add('active');
-    if(tabName === 'sessions') tabs[1].classList.add('active');
-    if(tabName === 'certificate') tabs[2].classList.add('active');
+    if(tabName === 'upcomingSessions') tabs[1].classList.add('active');
+    if(tabName === 'pastSessions') tabs[2].classList.add('active');
+    if(tabName === 'certificate') tabs[3].classList.add('active');
 }
 
 // --- 4. Calendar Logic (Display Only) ---

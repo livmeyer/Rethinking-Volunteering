@@ -307,6 +307,7 @@
 }
 .time-slot.selected { background: var(--primary-color); color: #fff; border-color: var(--primary-color); }
 
+
 /* --- Buttons --- */
 .btn-primary {
     background: var(--primary-button-bg-color);

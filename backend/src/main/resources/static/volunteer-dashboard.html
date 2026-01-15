@@ -60,7 +60,8 @@
 
         <div class="tabs">
             <button class="tab active" onclick="switchTab('availability')">My Availability</button>
-            <button class="tab" onclick="switchTab('sessions')">Manage Sessions</button>
+            <button class="tab" onclick="switchTab('upcomingSessions')">Upcoming Sessions</button>
+            <button class="tab" onclick="switchTab('pastSessions')">Past Sessions</button>
             <button class="tab" onclick="switchTab('certificate')">Certificate</button>
         </div>
 
@@ -178,7 +179,11 @@
                 </div>
             </div>
 
-            <div id="sessionsTab" class="dashboard-section" style="display:none;">
+            <div id="upcomingSessionsTab" class="dashboard-section" style="display:none;">
+
+            </div>
+
+            <div id="pastSessionsTab" class="dashboard-section" style="display:none;">
                 <h2 class="section-title">Verify Completed Sessions</h2>
                 <p style="margin-bottom: 20px; color: #666;">
                     Please mark the sessions you have successfully completed. Clicking "Save" will update your progress towards the certificate.
@@ -210,7 +215,6 @@
                     <p class="cert-note" id="certMessage">25 more sessions needed.</p>
                 </div>
             </div>
-
         </div>
     </main>
 
