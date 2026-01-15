@@ -237,6 +237,7 @@ function renderSessions() {
 
         container.appendChild(item);
     });
+    renderUpcoming()
 }
 
 function updateStatsUI() {
