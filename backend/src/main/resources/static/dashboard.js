@@ -203,6 +203,7 @@ function renderSessions() {
 
         const item = document.createElement('div');
         item.className = 'history-item';
+        item.style = "display: flex; align-items: center; gap: 2rem;";
 
         // If completed, disable the checkbox so they can't un-verify it easily
         const checkboxHtml = isCompleted
@@ -229,7 +230,7 @@ function renderSessions() {
                 <h4>${locationName}</h4>
                 <p>${session.topic.replaceAll('_',' ')} • ${session.time}</p>
             </div>
-            <div class="session-action">
+            <div class="session-action" style="margin-left:auto;">
                 ${checkboxHtml}
             </div>
         `;
