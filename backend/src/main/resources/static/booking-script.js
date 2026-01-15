@@ -23,13 +23,15 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         document.getElementById('selectedCategoryDisplay').textContent = "General Assistance";
     }
+    console.log(selectedCategoryEnum);
     switch(selectedCategoryEnum) {
-        case "New in Munich": selectedCategoryEnum = "NEW_IN_MUNICH"; break;
+        case "New In Munich": selectedCategoryEnum = "NEW_IN_MUNICH"; break;
         case "Travel": selectedCategoryEnum = "TRAVEL"; break;
         case "Documents": selectedCategoryEnum = "DOCUMENTS"; break;
         case "General": selectedCategoryEnum = "GENERAL"; break;
         default: selectedCategoryEnum = null;
     }
+    console.log(selectedCategoryEnum);
 });
 
 // --- Step 1: Location Selection ---
