@@ -24,10 +24,10 @@ public interface TimeSlotRepository extends JpaRepository<TimeSlot, Integer> {
 
     List<TimeSlot> findByVolunteerId (Integer id);
 
-    @Query("SELECT t FROM TimeSlot t WHERE t.volunteerId = :id AND t.startTime < :time")
+    @Query("SELECT t FROM TimeSlot t WHERE t.volunteerId = :id AND t.startTime < :time ORDER BY t.startTime DESC")
     List<TimeSlot> getPastTimeSlotsByVolunteerId(@Param("id") int id, @Param("time") LocalDateTime time);
 
 
-    @Query("SELECT t from TimeSlot t WHERE t.volunteerId = :id AND t.startTime > :time")
+    @Query("SELECT t from TimeSlot t WHERE t.volunteerId = :id AND t.startTime > :time ORDER BY t.startTime ASC")
     List<TimeSlot> getUpcomingTimeSlotsByVolunteerId(@Param("id") int id, @Param("time") LocalDateTime time);
 }

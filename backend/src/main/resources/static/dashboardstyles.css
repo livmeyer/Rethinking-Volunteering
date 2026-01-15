@@ -307,6 +307,61 @@
 }
 .time-slot.selected { background: var(--primary-color); color: #fff; border-color: var(--primary-color); }
 
+#sessionListContainer {
+    max-height: 500px;
+    overflow-y: auto;
+    border: 1px solid #e1e4e8;
+    border-radius: 4px;
+    padding: 1rem;
+    background: #fff;
+}
+
+/* Optional: Scroll-Styling für moderneren Look */
+#sessionListContainer::-webkit-scrollbar {
+    width: 8px;
+}
+
+#sessionListContainer::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+#sessionListContainer::-webkit-scrollbar-thumb {
+    background: #005a9f;
+    border-radius: 4px;
+}
+
+#sessionListContainer::-webkit-scrollbar-thumb:hover {
+    background: #004376;
+}
+
+#upcomingListContainer {
+    max-height: 500px;
+    overflow-y: auto;
+    border: 1px solid #e1e4e8;
+    border-radius: 4px;
+    padding: 1rem;
+    background: #fff;
+}
+
+/* Optional: Scroll-Styling für moderneren Look */
+#upcomingListContainer::-webkit-scrollbar {
+    width: 8px;
+}
+
+#upcomingListContainer::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+#upcomingListContainer::-webkit-scrollbar-thumb {
+    background: #005a9f;
+    border-radius: 4px;
+}
+
+#upcomingListContainer::-webkit-scrollbar-thumb:hover {
+    background: #004376;
+}
 
 /* --- Buttons --- */
 .btn-primary {

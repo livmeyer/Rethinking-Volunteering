@@ -19,6 +19,7 @@ function initDashboard() {
     displayDashboardInformation();
     generateCalendar();
     fetchSessionsFromBackend(); // Now calls real API
+    switchTab("upcomingSessions");
 }
 
 // --- 1. Backend Integration (Real Data) ---
@@ -36,12 +37,12 @@ async function displayDashboardInformation() {
     if (headerNameEl && volunteerName) {
         headerNameEl.textContent = `Welcome, ${volunteerName}`;
     }
-        /*
-    const nameEl = document.getElementById("volunteerName");
-    if (nameEl && volunteerName) {
-        nameEl.textContent = volunteerName;
-    }
-     */
+    /*
+const nameEl = document.getElementById("volunteerName");
+if (nameEl && volunteerName) {
+    nameEl.textContent = volunteerName;
+}
+ */
 
 
     const response = await fetch(`/api/volunteers/dashboard?id=${volunteerId}`, {
@@ -100,7 +101,7 @@ async function displayDashboardInformation() {
     document.getElementById("statsProgressFill").style.width = `${progressPercent}%`;
     document.getElementById("certProgressFill").style.width = `${progressPercent}%`;
     document.getElementById("certProgress").textContent = String(pastCount);
-    document.getElementById("sessionsToGo").textContent = String(remaining);
+    //document.getElementById("sessionsToGo").textContent = String(remaining);
 
 }
 
@@ -250,8 +251,8 @@ function updateStatsUI() {
 
     // Update Stats Cards
     document.getElementById('completedSessions').textContent = completedCount;
-  //  document.getElementById('upcomingSessions').textContent = pendingCount;
-    document.getElementById('sessionsToGo').textContent = Math.max(0, target - completedCount);
+    //document.getElementById('upcomingSessions').textContent = pendingCount;
+    //document.getElementById('sessionsToGo').textContent = Math.max(0, target - completedCount);
 
     // Update Progress Bars
     document.getElementById('statsProgressFill').style.width = `${percentage}%`;
@@ -288,8 +289,8 @@ function switchTab(tabName) {
 
     // Simple index mapping for tabs (0=Availability, 1=Sessions, 2=Certificate)
     const tabs = document.querySelectorAll('.tabs .tab');
-    if(tabName === 'availability') tabs[0].classList.add('active');
-    if(tabName === 'upcomingSessions') tabs[1].classList.add('active');
+    if(tabName === 'upcomingSessions') tabs[0].classList.add('active');
+    if(tabName === 'availability') tabs[1].classList.add('active');
     if(tabName === 'pastSessions') tabs[2].classList.add('active');
     if(tabName === 'certificate') tabs[3].classList.add('active');
 }
