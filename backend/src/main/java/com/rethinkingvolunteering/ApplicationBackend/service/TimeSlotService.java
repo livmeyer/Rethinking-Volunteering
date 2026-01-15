@@ -34,8 +34,7 @@ public class TimeSlotService {
     }
 
     public List<TimeSlot> getAvailableDates(Topic topic, Location location) {
-        List<TimeSlot> temp = timeSlotRepository.findByTopicAndLocation(String.valueOf(topic), location);
-        return temp;
+        return timeSlotRepository.findByTopicAndLocation(String.valueOf(topic), location);
     }
 
     public List<LocalDateTime> getAvailableTimeSlots(Topic topic, Location location, LocalDate date) {
