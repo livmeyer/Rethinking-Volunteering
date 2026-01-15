@@ -117,15 +117,4 @@ INSERT INTO time_slot (id, start_time, volunteer_id, topics, location, is_booked
         (96, '2026-02-17 15:30:00', 1, 'TRAVEL', 'CENTRAL_LIBRARY', true, 'Oliver M', true),
         (97, '2026-02-18 09:00:00', 1, 'GENERAL', 'SENDLING', false, NULL, false),
         (98, '2026-02-18 11:00:00', 2, 'TRAVEL', 'CENTRAL_LIBRARY', false, NULL, false),
-        (99, '2026-02-18 14:00:00', 3, 'DOCUMENTS', 'MOOSACH', true, 'Sarah G', true),
-        (100, '2026-02-18 16:00:00', 3, 'NEW_IN_MUNICH', 'CENTRAL_LIBRARY', false, NULL, false),
-        (101, '2026-02-19 09:00:00', 2, 'GENERAL', 'MOOSACH', true, 'Isabel T', false),
-        (102, '2026-02-19 10:30:00', 1, 'DOCUMENTS', 'CENTRAL_LIBRARY', false, NULL, false),
-        (103, '2026-02-19 12:00:00', 1, 'NEW_IN_MUNICH', 'SENDLING', false, NULL, false),
-        (104, '2026-02-19 15:00:00', 3, 'TRAVEL', 'CENTRAL_LIBRARY', false, NULL, false),
-        (105, '2026-02-20 08:30:00', 3, 'GENERAL', 'MOOSACH', false, NULL, false),
-        (106, '2026-02-20 10:00:00', 2, 'DOCUMENTS', 'SENDLING', true, 'Daniel A', true),
-        (107, '2026-02-20 13:00:00', 2, 'TRAVEL', 'CENTRAL_LIBRARY', false, NULL, false),
-        (108, '2026-02-20 16:00:00', 1, 'GENERAL', 'CENTRAL_LIBRARY', false, NULL, false),
-        (109, '2026-02-21 10:00:00', 1, 'TRAVEL', 'MOOSACH', false, NULL, false),
-        (110, '2026-02-21 11:30:00', 3, 'DOCUMENTS', 'CENTRAL_LIBRARY', false, NULL, false);
+        (99, '2026-02-18 14:00:00', 3, 'DOCUMENTS', 'MOOSACH', true, 'Sarah G', true)

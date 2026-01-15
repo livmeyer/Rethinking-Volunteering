@@ -100,6 +100,8 @@ function renderCalendar() {
     const monthLabel = document.getElementById('currentMonth');
     const year = currentState.currentDate.getFullYear();
 
+    document.querySelector('.calendar-navigation').style.display = 'flex';
+
     const month = currentState.currentDate.getMonth();
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     monthLabel.textContent = `${monthNames[month]} ${year}`;

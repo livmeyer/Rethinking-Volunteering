@@ -212,14 +212,22 @@ function renderSessions() {
                  <span class="checkbox-text">Mark Complete</span>
                </label>`;
 
+        let locationName = "";
+        switch(session.location) {
+            case "CENTRAL_LIBRARY": locationName = "Central Library"; break;
+            case "MOOSACH": locationName = "Moosach Library"; break;
+            case "SENDLING": locationName = "Sendling Senior Center"; break;
+            case "SCHWABING": locationName = "Schwabing Community Center"; break;
+            default: locationName = "";
+        }
         item.innerHTML = `
             <div class="history-date">
                 <span class="day">${dateObj.getDate()}</span>
                 <span class="month">${dateObj.toLocaleDateString('en-US', { month: 'short' }).toUpperCase()}</span>
             </div>
             <div class="history-info">
-                <h4>${session.topic.replaceAll('_',' ')}</h4>
-                <p>${session.location} • ${session.time}</p>
+                <h4>${locationName}</h4>
+                <p>${session.topic.replaceAll('_',' ')} • ${session.time}</p>
             </div>
             <div class="session-action">
                 ${checkboxHtml}

@@ -63,14 +63,15 @@
 
 /* Connecting line effect between steps */
 .booking-step::after {
-    content: '';
+    /* content: '';
     position: absolute;
     left: 19px; /* Aligns with circle center */
-    top: 45px;
+    /* top: 45px;
     bottom: -35px;
     width: 2px;
     background-color: #e1e4e8;
-    z-index: 0;
+    z-index: 0;*/
+    display: none
 }
 
 .booking-step:last-child::after {
@@ -279,6 +280,54 @@
     font-weight: 700;
     text-transform: uppercase;
     cursor: pointer;
+}
+
+/* --- Calendar Navigation Buttons --- */
+.calendar-navigation {
+    display: none; /* Initial versteckt */
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Zeige Navigation wenn Step aktiv ist */
+#dateStep:not(.disabled-step) .calendar-navigation {
+    display: flex;
+}
+
+.nav-btn {
+    background: white;
+    color: #005a9f;
+    border: 2px solid #e1e4e8;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.nav-btn:hover {
+    background: #005a9f;
+    color: white;
+    border-color: #005a9f;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 90, 159, 0.2);
+}
+
+.nav-btn:active {
+    transform: scale(0.95);
+}
+
+.current-month {
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #3a5368;
+    letter-spacing: 0.5px;
 }
 
 /* Error State Styling */

@@ -231,6 +231,50 @@
 .calendar-day.available { background-color: #e8f5e9; border-color: #4CAF50; color: #2e7d32; font-weight: bold; }
 .calendar-day.other-month { color: #ccc; pointer-events: none; }
 
+/* --- Calendar Navigation Buttons --- */
+.calendar-navigation {
+    display: flex; /* Hier immer sichtbar, nicht wie auf der Booking-Seite */
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.nav-btn {
+    background: white;
+    color: #005a9f;
+    border: 2px solid #e1e4e8;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.nav-btn:hover {
+    background: #005a9f;
+    color: white;
+    border-color: #005a9f;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 90, 159, 0.2);
+}
+
+.nav-btn:active {
+    transform: scale(0.95);
+}
+
+.current-month {
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #3a5368;
+    letter-spacing: 0.5px;
+}
+
+
 /* --- Time Slots --- */
 .time-slots-grid {
     display: grid;
