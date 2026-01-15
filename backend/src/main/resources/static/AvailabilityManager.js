@@ -74,6 +74,7 @@ async function saveAllAvailabilities() {
 
     if (response.ok) {
         availabilities = [];
+        initDashboard();
         alert('Gespeichert!');
     }
 }
