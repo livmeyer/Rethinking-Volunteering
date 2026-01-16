@@ -231,7 +231,7 @@ async function confirmBooking() {
         const success = await response.json(); 
 
         if (success) {
-            alert("✅ Appointment Confirmed!\n\nThe slot has been booked. Please check your email.");
+            alert("✅ Appointment Confirmed!\n\nThe slot has been booked.");
             window.location.href = 'index.html';
         } else {
             alert("❌ Booking Failed.\nThis slot might have just been taken. Please try another.");
